@@ -20,13 +20,16 @@ import {
   Calendar,
   DollarSign,
   Users,
-  Scale
+  Scale,
+  TrendingUp
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import VersionCompare from "@/components/VersionCompare";
 
 const Analysis = () => {
   const [selectedClause, setSelectedClause] = useState<number | null>(null);
   const [expandedSections, setExpandedSections] = useState<Set<number>>(new Set([1, 2, 3]));
+  const [showVersionCompare, setShowVersionCompare] = useState(false);
   const navigate = useNavigate();
 
   const contractData = {
@@ -35,14 +38,14 @@ const Analysis = () => {
     totalClauses: 24,
     issues: 2,
     lastAnalyzed: "2024-01-15",
+    contractValue: "1850",
+    currency: "EUR",
+    parties: {
+      provider: "NEWPORT SOLUTIONS S.R.L.",
+      beneficiary: "AROBS TRANSILVANIA SOFTWARE S.A."
+    },
     metadata: {
       contractDate: "21.01.2025",
-      parties: {
-        provider: "NEWPORT SOLUTIONS S.R.L.",
-        beneficiary: "AROBS TRANSILVANIA SOFTWARE S.A."
-      },
-      contractValue: "1850",
-      currency: "EUR",
       duration: "Duration of training programs",
       contractObject: "Provision of training program - Python Course"
     }
@@ -141,19 +144,19 @@ const Analysis = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "compliant": return <CheckCircle className="w-4 h-4 text-green-600" />;
-      case "partial": return <AlertTriangle className="w-4 h-4 text-yellow-600" />;
+      case "compliant": return <CheckCircle className="w-4 h-4 text-emerald-600" />;
+      case "partial": return <AlertTriangle className="w-4 h-4 text-amber-600" />;
       case "non-compliant": return <AlertTriangle className="w-4 h-4 text-red-600" />;
-      default: return <Clock className="w-4 h-4 text-gray-400" />;
+      default: return <Clock className="w-4 h-4 text-warm-beige-400" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "compliant": return "border-l-green-500 bg-green-50/50";
-      case "partial": return "border-l-yellow-500 bg-yellow-50/50";
+      case "compliant": return "border-l-emerald-500 bg-emerald-50/50";
+      case "partial": return "border-l-amber-500 bg-amber-50/50";
       case "non-compliant": return "border-l-red-500 bg-red-50/50";
-      default: return "border-l-gray-300 bg-gray-50/50";
+      default: return "border-l-warm-beige-300 bg-warm-beige-50/50";
     }
   };
 
@@ -167,10 +170,14 @@ const Analysis = () => {
     setExpandedSections(newExpanded);
   };
 
+  if (showVersionCompare) {
+    return <VersionCompare onClose={() => setShowVersionCompare(false)} />;
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-warm-gray-50 to-background">
+    <div className="min-h-screen bg-gradient-hero">
       {/* Header */}
-      <header className="border-b border-border bg-white/90 backdrop-blur-xl shadow-premium-sm sticky top-0 z-50">
+      <header className="border-b border-warm-beige-200 glass-beige sticky top-0 z-50 shadow-premium-sm">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -178,7 +185,7 @@ const Analysis = () => {
                 variant="ghost" 
                 size="sm" 
                 onClick={() => navigate("/dashboard")}
-                className="hover:bg-warm-gray-100 transition-premium"
+                className="hover:bg-warm-beige-100 transition-premium"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Dashboard
@@ -188,11 +195,16 @@ const Analysis = () => {
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button variant="outline" size="sm" className="hover:shadow-premium transition-premium">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="hover:shadow-premium transition-premium border-warm-beige-300"
+                onClick={() => setShowVersionCompare(true)}
+              >
                 <GitCompare className="w-4 h-4 mr-2" />
                 Compare Versions
               </Button>
-              <Button variant="outline" size="sm" className="hover:shadow-premium transition-premium">
+              <Button variant="outline" size="sm" className="hover:shadow-premium transition-premium border-warm-beige-300">
                 <Download className="w-4 h-4 mr-2" />
                 Export Report
               </Button>
@@ -206,95 +218,107 @@ const Analysis = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-6">
-        {/* Contract Overview with Metadata */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          <Card className="lg:col-span-2 shadow-premium-lg">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-xl font-medium">{contractData.title}</CardTitle>
-                  <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
-                    <span>{contractData.totalClauses} clauses analyzed</span>
-                    <span>Last analyzed {contractData.lastAnalyzed}</span>
+        {/* Enhanced Contract Overview */}
+        <Card className="mb-6 shadow-premium-xl bg-gradient-card border-warm-beige-200">
+          <CardHeader className="pb-4">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center shadow-premium-md">
+                    <FileText className="w-6 h-6 text-white" />
                   </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl font-semibold text-foreground mb-1">
-                    {contractData.compliance}%
-                  </div>
-                  <Progress value={contractData.compliance} className="w-32 mb-2" />
-                  <div className="text-sm text-muted-foreground">
-                    {contractData.issues} issues found
-                  </div>
-                </div>
-              </div>
-            </CardHeader>
-          </Card>
-
-          {/* Contract Metadata Panel */}
-          <Card className="shadow-premium-lg">
-            <CardHeader>
-              <CardTitle className="text-lg font-medium flex items-center">
-                <Building className="w-5 h-5 mr-2 text-primary" />
-                Contract Details
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <Calendar className="w-4 h-4 text-warm-gray-500" />
                   <div>
-                    <p className="text-sm font-medium text-foreground">Date</p>
-                    <p className="text-sm text-warm-gray-600">{contractData.metadata.contractDate}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-3">
-                  <DollarSign className="w-4 h-4 text-warm-gray-500" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Value</p>
-                    <p className="text-sm text-warm-gray-600">{contractData.metadata.contractValue} {contractData.metadata.currency}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-3">
-                  <Clock className="w-4 h-4 text-warm-gray-500" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Duration</p>
-                    <p className="text-sm text-warm-gray-600">{contractData.metadata.duration}</p>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <Users className="w-4 h-4 text-warm-gray-500" />
-                    <p className="text-sm font-medium text-foreground">Parties</p>
-                  </div>
-                  <div className="pl-6 space-y-1">
-                    <div>
-                      <p className="text-xs font-medium text-warm-gray-500">Provider</p>
-                      <p className="text-sm text-foreground">{contractData.metadata.parties.provider}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium text-warm-gray-500">Beneficiary</p>
-                      <p className="text-sm text-foreground">{contractData.metadata.parties.beneficiary}</p>
+                    <CardTitle className="text-2xl font-serif font-semibold">{contractData.title}</CardTitle>
+                    <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
+                      <span>{contractData.totalClauses} clauses analyzed</span>
+                      <span>Last analyzed {contractData.lastAnalyzed}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-warm-gray-200">
-                  <p className="text-xs font-medium text-warm-gray-500 mb-1">Object</p>
+                {/* Metadata Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                  <div className="flex items-center space-x-3">
+                    <Calendar className="w-5 h-5 text-bronze-600" />
+                    <div>
+                      <p className="text-sm font-medium text-foreground">Date</p>
+                      <p className="text-sm text-warm-beige-600">{contractData.metadata.contractDate}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-3">
+                    <DollarSign className="w-5 h-5 text-bronze-600" />
+                    <div>
+                      <p className="text-sm font-medium text-foreground">Value</p>
+                      <p className="text-sm text-warm-beige-600">{contractData.contractValue} {contractData.currency}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-3">
+                    <Clock className="w-5 h-5 text-bronze-600" />
+                    <div>
+                      <p className="text-sm font-medium text-foreground">Duration</p>
+                      <p className="text-sm text-warm-beige-600">{contractData.metadata.duration}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-3">
+                    <Users className="w-5 h-5 text-bronze-600" />
+                    <div>
+                      <p className="text-sm font-medium text-foreground">Parties</p>
+                      <p className="text-sm text-warm-beige-600">2 entities</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Parties Information */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div className="p-4 bg-bronze-50 rounded-lg border border-bronze-200">
+                    <p className="text-xs font-medium text-bronze-600 mb-1">Provider</p>
+                    <p className="text-sm font-semibold text-foreground">{contractData.parties.provider}</p>
+                  </div>
+                  <div className="p-4 bg-bronze-50 rounded-lg border border-bronze-200">
+                    <p className="text-xs font-medium text-bronze-600 mb-1">Beneficiary</p>
+                    <p className="text-sm font-semibold text-foreground">{contractData.parties.beneficiary}</p>
+                  </div>
+                </div>
+
+                {/* Contract Object */}
+                <div className="p-4 bg-warm-beige-50 rounded-lg border border-warm-beige-200">
+                  <p className="text-xs font-medium text-warm-beige-600 mb-1">Contract Object</p>
                   <p className="text-sm text-foreground">{contractData.metadata.contractObject}</p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+
+              {/* Compliance Score */}
+              <div className="text-right ml-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="text-right">
+                    <div className="text-4xl font-bold text-foreground mb-1">
+                      {contractData.compliance}%
+                    </div>
+                    <Progress value={contractData.compliance} className="w-32 mb-2" />
+                    <div className="text-sm text-muted-foreground">
+                      Overall Compliance
+                    </div>
+                  </div>
+                  <div className="p-4 bg-emerald-100 rounded-xl">
+                    <TrendingUp className="w-8 h-8 text-emerald-600" />
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <AlertTriangle className="w-4 h-4 text-amber-600" />
+                  <span className="text-warm-beige-600">{contractData.issues} issues found</span>
+                </div>
+              </div>
+            </div>
+          </CardHeader>
+        </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Document Panel */}
           <div className="lg:col-span-2">
-            <Card className="shadow-premium-lg">
+            <Card className="shadow-premium-lg bg-gradient-card border-warm-beige-200">
               <CardHeader>
                 <CardTitle className="text-lg font-medium">Document Analysis</CardTitle>
               </CardHeader>
@@ -304,41 +328,38 @@ const Analysis = () => {
                     <div key={section.id}>
                       {/* Section Header */}
                       <div 
-                        className="flex items-center justify-between p-4 bg-muted/30 border-b border-border cursor-pointer hover:bg-muted/50 transition-premium"
+                        className="flex items-center justify-between p-4 bg-warm-beige-50 border-b border-warm-beige-200 cursor-pointer hover:bg-warm-beige-100 transition-premium"
                         onClick={() => toggleSection(section.id)}
                       >
                         <div className="flex items-center space-x-3">
                           <ChevronRight 
-                            className={`w-4 h-4 text-muted-foreground transition-premium ${
+                            className={`w-4 h-4 text-muted-foreground transition-all duration-300 ease-out ${
                               expandedSections.has(section.id) ? 'rotate-90' : ''
                             }`}
                           />
                           <span className="font-medium text-foreground">{section.title}</span>
                         </div>
-                        <Badge variant="secondary">
+                        <Badge variant="secondary" className="bg-warm-beige-200 text-warm-beige-700">
                           {section.clauses.length} clauses
                         </Badge>
                       </div>
 
-                      {/* Section Clauses with smooth animation */}
+                      {/* Section Clauses */}
                       <div 
-                        className={`overflow-hidden transition-premium ${
+                        className={`overflow-hidden transition-all duration-500 ease-out ${
                           expandedSections.has(section.id) 
                             ? 'max-h-96 opacity-100' 
                             : 'max-h-0 opacity-0'
                         }`}
-                        style={{
-                          transition: 'max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out'
-                        }}
                       >
                         <div className="space-y-1">
                           {section.clauses.map((clause) => (
                             <div
                               key={clause.id}
-                              className={`p-4 border-l-4 cursor-pointer transition-premium hover:bg-muted/20 group ${
+                              className={`p-4 border-l-4 cursor-pointer transition-premium hover:bg-warm-beige-50 group ${
                                 getStatusColor(clause.status)
                               } ${
-                                selectedClause === clause.id ? "bg-muted/40 shadow-premium-sm" : ""
+                                selectedClause === clause.id ? "bg-warm-beige-100 shadow-premium-sm" : ""
                               }`}
                               onClick={() => setSelectedClause(clause.id)}
                             >
@@ -379,7 +400,7 @@ const Analysis = () => {
           {/* Enhanced Analysis Panel */}
           <div>
             {selectedClause && clauseMetadata[selectedClause] ? (
-              <Card className="shadow-premium-lg">
+              <Card className="shadow-premium-lg bg-gradient-card border-warm-beige-200">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg font-medium flex items-center">
@@ -476,7 +497,7 @@ const Analysis = () => {
                 </CardContent>
               </Card>
             ) : (
-              <Card className="shadow-premium-lg">
+              <Card className="shadow-premium-lg bg-gradient-card border-warm-beige-200">
                 <CardContent className="p-12 text-center">
                   <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-foreground mb-2">

@@ -7,124 +7,150 @@
 
 @layer base {
   :root {
-    --background: 0 0% 99%;
-    --foreground: 220 15% 12%;
+    --background: 30 25% 97%;
+    --foreground: 25 15% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 15% 12%;
+    --card: 30 20% 99%;
+    --card-foreground: 25 15% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 12%;
+    --popover: 30 20% 99%;
+    --popover-foreground: 25 15% 15%;
 
-    --primary: 215 85% 35%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 35 65% 45%;
+    --primary-foreground: 30 20% 98%;
 
-    --secondary: 215 15% 96%;
-    --secondary-foreground: 220 15% 15%;
+    --secondary: 30 15% 94%;
+    --secondary-foreground: 25 15% 20%;
 
-    --muted: 215 12% 97%;
-    --muted-foreground: 220 8% 50%;
+    --muted: 30 12% 95%;
+    --muted-foreground: 25 8% 55%;
 
-    --accent: 215 20% 95%;
-    --accent-foreground: 220 15% 15%;
+    --accent: 30 20% 92%;
+    --accent-foreground: 25 15% 20%;
 
     --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 215 85% 35%;
+    --border: 30 13% 88%;
+    --input: 30 13% 88%;
+    --ring: 35 65% 45%;
 
     --radius: 0.75rem;
 
-    /* Premium color palette */
-    --warm-gray-50: 20 14% 98%;
-    --warm-gray-100: 20 14% 96%;
-    --warm-gray-200: 20 11% 92%;
-    --warm-gray-300: 20 10% 84%;
-    --warm-gray-400: 20 9% 64%;
-    --warm-gray-500: 20 6% 48%;
-    --warm-gray-600: 20 5% 36%;
-    --warm-gray-700: 20 5% 26%;
-    --warm-gray-800: 20 5% 18%;
-    --warm-gray-900: 20 6% 12%;
+    /* Premium beige color palette */
+    --warm-beige-50: 30 25% 98%;
+    --warm-beige-100: 30 20% 96%;
+    --warm-beige-200: 30 15% 92%;
+    --warm-beige-300: 30 12% 85%;
+    --warm-beige-400: 30 10% 70%;
+    --warm-beige-500: 30 8% 55%;
+    --warm-beige-600: 30 8% 42%;
+    --warm-beige-700: 30 10% 32%;
+    --warm-beige-800: 30 12% 22%;
+    --warm-beige-900: 25 15% 15%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(215 85% 35%) 0%, hsl(220 75% 45%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(215 15% 98%) 100%);
-    --gradient-muted: linear-gradient(135deg, hsl(215 12% 97%) 0%, hsl(220 10% 95%) 100%);
+    /* Bronze/gold accents */
+    --bronze-50: 35 45% 95%;
+    --bronze-100: 35 40% 88%;
+    --bronze-200: 35 35% 78%;
+    --bronze-300: 35 45% 65%;
+    --bronze-400: 35 55% 52%;
+    --bronze-500: 35 65% 45%;
+    --bronze-600: 35 70% 38%;
+    --bronze-700: 35 75% 32%;
+    --bronze-800: 35 80% 26%;
+    --bronze-900: 35 85% 20%;
+
+    /* Terracotta accents */
+    --terracotta-50: 15 65% 95%;
+    --terracotta-100: 15 60% 88%;
+    --terracotta-200: 15 55% 78%;
+    --terracotta-300: 15 60% 68%;
+    --terracotta-400: 15 65% 58%;
+    --terracotta-500: 15 70% 48%;
+    --terracotta-600: 15 75% 42%;
+    --terracotta-700: 15 80% 36%;
+    --terracotta-800: 15 85% 30%;
+    --terracotta-900: 15 90% 24%;
+
+    /* Enhanced gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(35 65% 45%) 0%, hsl(35 55% 52%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(30 25% 99%) 0%, hsl(30 20% 96%) 100%);
+    --gradient-muted: linear-gradient(135deg, hsl(30 12% 95%) 0%, hsl(30 15% 92%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(30 25% 97%) 0%, hsl(30 20% 94%) 50%, hsl(35 25% 96%) 100%);
     
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-    --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+    /* Premium shadows with warm tones */
+    --shadow-sm: 0 1px 2px 0 rgb(139 117 95 / 0.05);
+    --shadow-base: 0 1px 3px 0 rgb(139 117 95 / 0.1), 0 1px 2px -1px rgb(139 117 95 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(139 117 95 / 0.1), 0 2px 4px -2px rgb(139 117 95 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(139 117 95 / 0.1), 0 4px 6px -4px rgb(139 117 95 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(139 117 95 / 0.1), 0 8px 10px -6px rgb(139 117 95 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(139 117 95 / 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgb(139 117 95 / 0.05);
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 30 20% 96%;
+    --sidebar-foreground: 25 15% 20%;
+    --sidebar-primary: 35 65% 45%;
+    --sidebar-primary-foreground: 30 20% 98%;
+    --sidebar-accent: 30 15% 94%;
+    --sidebar-accent-foreground: 25 15% 20%;
+    --sidebar-border: 30 13% 88%;
+    --sidebar-ring: 35 65% 45%;
   }
 
   .dark {
-    --background: 220 15% 4%;
-    --foreground: 215 20% 95%;
+    --background: 25 15% 8%;
+    --foreground: 30 20% 92%;
 
-    --card: 220 15% 6%;
-    --card-foreground: 215 20% 95%;
+    --card: 25 15% 10%;
+    --card-foreground: 30 20% 92%;
 
-    --popover: 220 15% 6%;
-    --popover-foreground: 215 20% 95%;
+    --popover: 25 15% 10%;
+    --popover-foreground: 30 20% 92%;
 
-    --primary: 215 85% 60%;
-    --primary-foreground: 220 15% 8%;
+    --primary: 35 55% 65%;
+    --primary-foreground: 25 15% 12%;
 
-    --secondary: 220 15% 12%;
-    --secondary-foreground: 215 20% 95%;
+    --secondary: 25 15% 15%;
+    --secondary-foreground: 30 20% 92%;
 
-    --muted: 220 15% 10%;
-    --muted-foreground: 220 8% 60%;
+    --muted: 25 15% 12%;
+    --muted-foreground: 30 8% 65%;
 
-    --accent: 220 15% 12%;
-    --accent-foreground: 215 20% 95%;
+    --accent: 25 15% 15%;
+    --accent-foreground: 30 20% 92%;
 
     --destructive: 0 75% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 215 85% 60%;
+    --border: 25 15% 22%;
+    --input: 25 15% 22%;
+    --ring: 35 55% 65%;
 
-    --warm-gray-50: 220 15% 8%;
-    --warm-gray-100: 220 15% 10%;
-    --warm-gray-200: 220 15% 15%;
-    --warm-gray-300: 220 15% 22%;
-    --warm-gray-400: 220 8% 40%;
-    --warm-gray-500: 220 8% 55%;
-    --warm-gray-600: 220 8% 70%;
-    --warm-gray-700: 220 8% 80%;
-    --warm-gray-800: 220 8% 88%;
-    --warm-gray-900: 220 8% 95%;
+    --warm-beige-50: 25 15% 12%;
+    --warm-beige-100: 25 15% 15%;
+    --warm-beige-200: 25 15% 20%;
+    --warm-beige-300: 25 15% 28%;
+    --warm-beige-400: 30 8% 45%;
+    --warm-beige-500: 30 8% 60%;
+    --warm-beige-600: 30 8% 75%;
+    --warm-beige-700: 30 8% 85%;
+    --warm-beige-800: 30 8% 92%;
+    --warm-beige-900: 30 8% 96%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(215 85% 60%) 0%, hsl(220 75% 70%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(220 15% 6%) 0%, hsl(220 15% 8%) 100%);
-    --gradient-muted: linear-gradient(135deg, hsl(220 15% 10%) 0%, hsl(220 15% 12%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(35 55% 65%) 0%, hsl(35 45% 72%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(25 15% 10%) 0%, hsl(25 15% 12%) 100%);
+    --gradient-muted: linear-gradient(135deg, hsl(25 15% 12%) 0%, hsl(25 15% 15%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(25 15% 8%) 0%, hsl(25 15% 10%) 50%, hsl(30 15% 12%) 100%);
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 25 15% 10%;
+    --sidebar-foreground: 30 20% 92%;
+    --sidebar-primary: 35 55% 65%;
+    --sidebar-primary-foreground: 25 15% 12%;
+    --sidebar-accent: 25 15% 15%;
+    --sidebar-accent-foreground: 30 20% 92%;
+    --sidebar-border: 25 15% 22%;
+    --sidebar-ring: 35 55% 65%;
   }
 }
 
@@ -149,30 +175,46 @@
     font-family: 'Inter', sans-serif;
   }
 
-  /* Premium colors */
-  .text-warm-gray-50 { color: hsl(var(--warm-gray-50)); }
-  .text-warm-gray-100 { color: hsl(var(--warm-gray-100)); }
-  .text-warm-gray-200 { color: hsl(var(--warm-gray-200)); }
-  .text-warm-gray-300 { color: hsl(var(--warm-gray-300)); }
-  .text-warm-gray-400 { color: hsl(var(--warm-gray-400)); }
-  .text-warm-gray-500 { color: hsl(var(--warm-gray-500)); }
-  .text-warm-gray-600 { color: hsl(var(--warm-gray-600)); }
-  .text-warm-gray-700 { color: hsl(var(--warm-gray-700)); }
-  .text-warm-gray-800 { color: hsl(var(--warm-gray-800)); }
-  .text-warm-gray-900 { color: hsl(var(--warm-gray-900)); }
+  /* Beige color system */
+  .text-warm-beige-50 { color: hsl(var(--warm-beige-50)); }
+  .text-warm-beige-100 { color: hsl(var(--warm-beige-100)); }
+  .text-warm-beige-200 { color: hsl(var(--warm-beige-200)); }
+  .text-warm-beige-300 { color: hsl(var(--warm-beige-300)); }
+  .text-warm-beige-400 { color: hsl(var(--warm-beige-400)); }
+  .text-warm-beige-500 { color: hsl(var(--warm-beige-500)); }
+  .text-warm-beige-600 { color: hsl(var(--warm-beige-600)); }
+  .text-warm-beige-700 { color: hsl(var(--warm-beige-700)); }
+  .text-warm-beige-800 { color: hsl(var(--warm-beige-800)); }
+  .text-warm-beige-900 { color: hsl(var(--warm-beige-900)); }
 
-  .bg-warm-gray-50 { background-color: hsl(var(--warm-gray-50)); }
-  .bg-warm-gray-100 { background-color: hsl(var(--warm-gray-100)); }
-  .bg-warm-gray-200 { background-color: hsl(var(--warm-gray-200)); }
-  .bg-warm-gray-300 { background-color: hsl(var(--warm-gray-300)); }
-  .bg-warm-gray-400 { background-color: hsl(var(--warm-gray-400)); }
-  .bg-warm-gray-500 { background-color: hsl(var(--warm-gray-500)); }
-  .bg-warm-gray-600 { background-color: hsl(var(--warm-gray-600)); }
-  .bg-warm-gray-700 { background-color: hsl(var(--warm-gray-700)); }
-  .bg-warm-gray-800 { background-color: hsl(var(--warm-gray-800)); }
-  .bg-warm-gray-900 { background-color: hsl(var(--warm-gray-900)); }
+  .bg-warm-beige-50 { background-color: hsl(var(--warm-beige-50)); }
+  .bg-warm-beige-100 { background-color: hsl(var(--warm-beige-100)); }
+  .bg-warm-beige-200 { background-color: hsl(var(--warm-beige-200)); }
+  .bg-warm-beige-300 { background-color: hsl(var(--warm-beige-300)); }
+  .bg-warm-beige-400 { background-color: hsl(var(--warm-beige-400)); }
+  .bg-warm-beige-500 { background-color: hsl(var(--warm-beige-500)); }
+  .bg-warm-beige-600 { background-color: hsl(var(--warm-beige-600)); }
+  .bg-warm-beige-700 { background-color: hsl(var(--warm-beige-700)); }
+  .bg-warm-beige-800 { background-color: hsl(var(--warm-beige-800)); }
+  .bg-warm-beige-900 { background-color: hsl(var(--warm-beige-900)); }
 
-  /* Gradients */
+  /* Bronze/gold colors */
+  .text-bronze-500 { color: hsl(var(--bronze-500)); }
+  .text-bronze-600 { color: hsl(var(--bronze-600)); }
+  .text-bronze-700 { color: hsl(var(--bronze-700)); }
+  .bg-bronze-50 { background-color: hsl(var(--bronze-50)); }
+  .bg-bronze-100 { background-color: hsl(var(--bronze-100)); }
+  .bg-bronze-500 { background-color: hsl(var(--bronze-500)); }
+  .bg-bronze-600 { background-color: hsl(var(--bronze-600)); }
+
+  /* Terracotta colors */
+  .text-terracotta-500 { color: hsl(var(--terracotta-500)); }
+  .text-terracotta-600 { color: hsl(var(--terracotta-600)); }
+  .bg-terracotta-50 { background-color: hsl(var(--terracotta-50)); }
+  .bg-terracotta-100 { background-color: hsl(var(--terracotta-100)); }
+  .bg-terracotta-500 { background-color: hsl(var(--terracotta-500)); }
+
+  /* Enhanced gradients */
   .bg-gradient-primary {
     background: var(--gradient-primary);
   }
@@ -185,6 +227,10 @@
     background: var(--gradient-muted);
   }
 
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+
   /* Premium shadows */
   .shadow-premium-sm { box-shadow: var(--shadow-sm); }
   .shadow-premium { box-shadow: var(--shadow-base); }
@@ -194,26 +240,34 @@
   .shadow-premium-2xl { box-shadow: var(--shadow-2xl); }
   .shadow-premium-inner { box-shadow: var(--shadow-inner); }
 
-  /* Glass morphism */
-  .glass {
+  /* Enhanced glass effects */
+  .glass-beige {
     backdrop-filter: blur(16px);
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(250, 249, 246, 0.85);
+    border: 1px solid rgba(139, 117, 95, 0.2);
   }
 
-  .glass-dark {
+  .glass-beige-dark {
     backdrop-filter: blur(16px);
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(62, 52, 43, 0.4);
+    border: 1px solid rgba(250, 249, 246, 0.1);
   }
 
-  /* Premium animations */
+  /* Enhanced animations */
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
 
-  .animate-glow {
-    animation: glow 2s ease-in-out infinite alternate;
+  .animate-glow-warm {
+    animation: glow-warm 2s ease-in-out infinite alternate;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .transition-premium {
@@ -230,15 +284,14 @@
   }
 
   .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
   }
 
-  .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  .hover-glow-warm:hover {
+    box-shadow: 0 0 30px rgba(184, 134, 11, 0.3);
   }
 
-  /* Premium interaction states */
   .hover-scale {
     transition: transform 0.2s ease-out;
   }
@@ -248,28 +301,24 @@
   }
 
   /* Typography enhancements */
-  .text-gradient {
-    background: var(--gradient-primary);
+  .text-gradient-bronze {
+    background: linear-gradient(135deg, hsl(35 65% 45%) 0%, hsl(35 55% 52%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .letter-spacing-wide {
-    letter-spacing: 0.025em;
+  /* Premium patterns */
+  .pattern-dots {
+    background-image: radial-gradient(circle, rgba(184, 134, 11, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 
-  .letter-spacing-wider {
-    letter-spacing: 0.05em;
-  }
-
-  /* Premium borders */
-  .border-premium {
-    border: 1px solid hsl(var(--warm-gray-200));
-  }
-
-  .border-premium-hover:hover {
-    border-color: hsl(var(--primary) / 0.3);
+  .pattern-grid {
+    background-image: 
+      linear-gradient(rgba(184, 134, 11, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184, 134, 11, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 }
 
@@ -282,29 +331,51 @@
   }
 }
 
-@keyframes glow {
+@keyframes glow-warm {
   from {
-    box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 10px rgba(184, 134, 11, 0.2);
   }
   to {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 20px rgba(184, 134, 11, 0.4);
   }
 }
 
-/* Custom scrollbar */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom scrollbar with warm tones */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+  background: hsl(var(--warm-beige-100));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
+  background: hsl(var(--warm-beige-400));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.5);
+  background: hsl(var(--warm-beige-500));
 }
