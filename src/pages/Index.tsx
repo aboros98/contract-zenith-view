@@ -2,12 +2,12 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Upload, Shield, Zap, CheckCircle } from "lucide-react";
+import { FileText, Upload, Shield, BarChart3, Clock, ArrowRight, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [dragActive, setDragActive] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showUploadZone, setShowUploadZone] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
@@ -18,6 +18,7 @@ const Index = () => {
 
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    // Only hide drag state if leaving the entire viewport
     if (!e.currentTarget.contains(e.relatedTarget as Node)) {
       setDragActive(false);
     }
@@ -43,156 +44,201 @@ const Index = () => {
 
   const handleFile = (file: File) => {
     console.log("File uploaded:", file.name);
-    setIsAnalyzing(true);
-    setTimeout(() => {
-      navigate("/dashboard");
-    }, 2000);
+    navigate("/dashboard");
   };
 
+  const features = [
+    {
+      icon: Shield,
+      title: "Compliance Check",
+      description: "Ensure contracts meet regulatory standards with automated compliance checks.",
+    },
+    {
+      icon: BarChart3,
+      title: "Risk Assessment",
+      description: "Identify potential risks and liabilities before they become problems.",
+    },
+    {
+      icon: Clock,
+      title: "Timeline Analysis",
+      description: "Track key dates and deadlines to manage contract lifecycle effectively.",
+    },
+  ];
+
+  const processSteps = [
+    {
+      step: 1,
+      title: "Upload Contract",
+      description: "Drag and drop your contract document into the platform.",
+      icon: Upload,
+    },
+    {
+      step: 2,
+      title: "AI Analysis",
+      description: "Our AI algorithms analyze the contract for key insights.",
+      icon: FileText,
+    },
+    {
+      step: 3,
+      title: "Receive Report",
+      description: "Get a detailed report with compliance, risks, and timeline analysis.",
+      icon: CheckCircle,
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Drag overlay */}
+    <div className="min-h-screen bg-gradient-to-br from-background via-warm-gray-50 to-background">
+      {/* Full-screen drag overlay */}
       {dragActive && (
         <div 
-          className="fixed inset-0 z-50 glass flex items-center justify-center"
+          className="fixed inset-0 z-50 bg-primary/5 backdrop-blur-sm flex items-center justify-center transition-premium"
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >
           <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-primary/20 flex items-center justify-center">
-              <Upload className="w-8 h-8 text-primary" />
+            <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+              <Upload className="w-12 h-12 text-primary" />
             </div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">
+            <h3 className="text-2xl font-serif font-semibold text-foreground mb-2">
               Drop your contract here
             </h3>
-            <p className="text-muted-foreground">
+            <p className="text-warm-gray-600">
               Release to start analysis
             </p>
           </div>
         </div>
       )}
 
-      {/* Analysis overlay */}
-      {isAnalyzing && (
-        <div className="fixed inset-0 z-50 glass flex items-center justify-center">
-          <div className="text-center">
-            <div className="relative w-12 h-12 mx-auto mb-4">
-              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
-                <Upload className="w-6 h-6 text-primary pulse-soft" />
+      {/* Premium Header */}
+      <header className="border-b border-warm-gray-200 bg-white/90 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-9 h-9 bg-gradient-primary rounded-xl flex items-center justify-center shadow-premium-md">
+                <FileText className="w-5 h-5 text-white" />
               </div>
-              <div className="absolute inset-0 rounded-xl border-2 border-primary/30 border-t-primary animate-spin"></div>
+              <span className="text-xl font-serif font-semibold text-foreground tracking-tight">Dobi</span>
             </div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">
-              Analyzing Contract
-            </h3>
-            <div className="flex items-center justify-center space-x-1 text-muted-foreground mb-2">
-              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" />
-              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-            </div>
-            <p className="text-sm text-muted-foreground">AI is reading your document...</p>
-          </div>
-        </div>
-      )}
-
-      {/* Header */}
-      <header className="glass sticky top-0 z-40 border-b border-border">
-        <div className="max-w-6xl mx-auto px-6 py-3">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                <Zap className="w-4 h-4 text-primary" />
-              </div>
-              <span className="text-lg font-semibold text-foreground">Dobi</span>
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm" className="text-warm-gray-600 hover:text-foreground transition-premium">
+                Features
+              </Button>
+              <Button variant="ghost" size="sm" className="text-warm-gray-600 hover:text-foreground transition-premium">
+                About
+              </Button>
+              <Button size="sm" className="shadow-premium bg-gradient-primary border-0 hover:shadow-premium-md transition-premium">
+                Get Started
+              </Button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main content */}
-      <div 
-        className="flex items-center justify-center min-h-[calc(100vh-80px)] px-6"
+      {/* Hero Section */}
+      <section 
+        className="relative py-24 px-6"
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
-        <div className="w-full max-w-3xl text-center">
+        <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-foreground mb-4 tracking-tight">
-              AI-Powered Contract
-              <span className="bg-gradient-accent bg-clip-text text-transparent"> Analysis</span>
+            <h1 className="text-display-lg font-serif font-bold text-foreground mb-6 tracking-tight leading-tight">
+              Intelligent Contract
+              <span className="block text-gradient">Analysis Platform</span>
             </h1>
-            <p className="text-lg text-muted-foreground mb-6 max-w-xl mx-auto">
-              Upload your legal documents and get instant compliance insights with detailed AI analysis
+            <p className="text-xl text-warm-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
+              Transform your legal documents with AI-powered analysis. Get instant compliance insights, 
+              risk assessments, and detailed clause breakdowns.
             </p>
           </div>
 
-          {/* Upload area */}
-          <Card className="card-premium border-2 border-dashed border-border max-w-md mx-auto mb-8">
-            <CardContent className="p-6">
-              <div
-                className="cursor-pointer rounded-lg p-6 text-center"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-primary/20 flex items-center justify-center">
-                  <Upload className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  Upload Contract
-                </h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  PDF, Word, or text documents up to 10MB
-                </p>
-                <Button className="btn-premium">
-                  Choose File
+          {/* Minimalist Upload Interface */}
+          <div className="max-w-xl mx-auto mb-16">
+            {!showUploadZone ? (
+              <div className="text-center">
+                <Button 
+                  size="lg" 
+                  className="shadow-premium-lg bg-gradient-primary border-0 hover:shadow-premium-xl transition-premium px-12 py-6 text-lg font-medium"
+                  onClick={() => setShowUploadZone(true)}
+                >
+                  <FileText className="w-5 h-5 mr-3" />
+                  Analyze Contract
                 </Button>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".pdf,.doc,.docx,.txt"
-                  className="hidden"
-                  onChange={handleFileSelect}
-                />
+                <p className="text-sm text-warm-gray-500 mt-4">
+                  Or drag and drop your document anywhere on this page
+                </p>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Features */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
-            <div className="text-center p-4 rounded-xl glass-card">
-              <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-primary/20 flex items-center justify-center">
-                <Zap className="w-5 h-5 text-primary" />
-              </div>
-              <h3 className="text-sm font-semibold text-foreground mb-1">Lightning Fast</h3>
-              <p className="text-xs text-muted-foreground">Get results in seconds</p>
-            </div>
-            
-            <div className="text-center p-4 rounded-xl glass-card">
-              <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-primary/20 flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-primary" />
-              </div>
-              <h3 className="text-sm font-semibold text-foreground mb-1">AI Accuracy</h3>
-              <p className="text-xs text-muted-foreground">99%+ accuracy rate</p>
-            </div>
-            
-            <div className="text-center p-4 rounded-xl glass-card">
-              <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-primary/20 flex items-center justify-center">
-                <Shield className="w-5 h-5 text-primary" />
-              </div>
-              <h3 className="text-sm font-semibold text-foreground mb-1">Secure & Private</h3>
-              <p className="text-xs text-muted-foreground">Enterprise security</p>
-            </div>
+            ) : (
+              <Card className="border-2 border-dashed border-primary/30 bg-primary/5 shadow-premium-lg hover:shadow-premium-xl transition-premium">
+                <CardContent className="p-12">
+                  <div
+                    className="cursor-pointer rounded-xl p-8 text-center transition-premium hover:bg-primary/10"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                      <Upload className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                      Choose your file
+                    </h3>
+                    <p className="text-warm-gray-600 mb-6 leading-relaxed">
+                      Upload PDF or Word document for analysis
+                    </p>
+                    <Button size="lg" className="shadow-premium bg-gradient-primary border-0 px-8">
+                      Browse Files
+                    </Button>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      className="hidden"
+                      onChange={handleFileSelect}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
-          <div className="flex items-center justify-center gap-2 mt-6 text-xs text-muted-foreground">
-            <Shield className="w-3 h-3" />
-            <span>Enterprise security • GDPR compliant • SOC 2 certified</span>
+          {/* Feature Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {features.map((feature, index) => (
+              <div key={index} className="text-center group">
+                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-premium shadow-premium group-hover:shadow-premium-md">
+                  <feature.icon className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">{feature.title}</h3>
+                <p className="text-warm-gray-600 leading-relaxed">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Process Overview */}
+          <div>
+            <h2 className="text-3xl font-serif font-bold text-foreground mb-8 tracking-tight">
+              How it Works
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              {processSteps.map((step, index) => (
+                <div key={index} className="text-center group">
+                  <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4 shadow-premium group-hover:shadow-premium-md transition-premium">
+                    <span className="text-lg font-semibold">{step.step}</span>
+                  </div>
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-premium shadow-premium group-hover:shadow-premium-md">
+                    <step.icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">{step.title}</h3>
+                  <p className="text-warm-gray-600 leading-relaxed">{step.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
