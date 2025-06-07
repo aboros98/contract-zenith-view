@@ -17,7 +17,10 @@ import {
   TrendingUp,
   Users,
   Shield,
-  BarChart3
+  BarChart3,
+  Sparkles,
+  ArrowUp,
+  Activity
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -26,10 +29,38 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const stats = [
-    { title: "Total Contracts", value: "247", icon: FileText, trend: "+12%" },
-    { title: "Compliance Rate", value: "94%", icon: Shield, trend: "+3%" },
-    { title: "Active Reviews", value: "18", icon: Clock, trend: "+5%" },
-    { title: "Risk Score", value: "Low", icon: BarChart3, trend: "Improved" }
+    { 
+      title: "Total Contracts", 
+      value: "247", 
+      icon: FileText, 
+      trend: "+12%", 
+      trendUp: true,
+      description: "This month"
+    },
+    { 
+      title: "Compliance Rate", 
+      value: "94%", 
+      icon: Shield, 
+      trend: "+3%", 
+      trendUp: true,
+      description: "Quality score"
+    },
+    { 
+      title: "Active Reviews", 
+      value: "18", 
+      icon: Clock, 
+      trend: "+5%", 
+      trendUp: true,
+      description: "In progress"
+    },
+    { 
+      title: "Risk Score", 
+      value: "Low", 
+      icon: BarChart3, 
+      trend: "Improved", 
+      trendUp: true,
+      description: "Overall rating"
+    }
   ];
 
   const contractFamilies = [
@@ -40,6 +71,7 @@ const Dashboard = () => {
       compliance: 92,
       lastUpdated: "2024-01-15",
       status: "active",
+      riskLevel: "low",
       versions: [
         { version: "v3.2", status: "current", compliance: 92, date: "2024-01-15", issues: 2 },
         { version: "v3.1", status: "archived", compliance: 89, date: "2023-12-10", issues: 3 },
@@ -54,6 +86,7 @@ const Dashboard = () => {
       compliance: 98,
       lastUpdated: "2024-01-20",
       status: "active",
+      riskLevel: "minimal",
       versions: [
         { version: "v4.1", status: "current", compliance: 98, date: "2024-01-20", issues: 1 },
         { version: "v4.0", status: "archived", compliance: 96, date: "2024-01-01", issues: 2 },
@@ -67,6 +100,7 @@ const Dashboard = () => {
       compliance: 87,
       lastUpdated: "2024-01-10",
       status: "review",
+      riskLevel: "medium",
       versions: [
         { version: "v2.3", status: "current", compliance: 87, date: "2024-01-10", issues: 4 },
         { version: "v2.2", status: "archived", compliance: 84, date: "2023-12-01", issues: 5 },
@@ -77,46 +111,56 @@ const Dashboard = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "current": return "bg-green-500";
-      case "archived": return "bg-gray-400";
-      case "review": return "bg-yellow-500";
-      default: return "bg-gray-400";
+      case "current": return "bg-emerald-500";
+      case "archived": return "bg-warm-gray-400";
+      case "review": return "bg-amber-500";
+      default: return "bg-warm-gray-400";
     }
   };
 
   const getComplianceColor = (compliance: number) => {
-    if (compliance >= 95) return "text-green-600";
-    if (compliance >= 85) return "text-yellow-600";
+    if (compliance >= 95) return "text-emerald-600";
+    if (compliance >= 85) return "text-amber-600";
     return "text-red-600";
   };
 
+  const getRiskColor = (risk: string) => {
+    switch (risk) {
+      case "minimal": return "text-emerald-600 bg-emerald-50";
+      case "low": return "text-emerald-600 bg-emerald-50";
+      case "medium": return "text-amber-600 bg-amber-50";
+      case "high": return "text-red-600 bg-red-50";
+      default: return "text-warm-gray-600 bg-warm-gray-50";
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-background via-warm-gray-50 to-background">
+      {/* Premium Header */}
+      <header className="border-b border-warm-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <FileText className="w-5 h-5 text-primary-foreground" />
+              <div className="w-9 h-9 bg-gradient-primary rounded-xl flex items-center justify-center shadow-premium-md hover:shadow-premium-lg transition-premium">
+                <FileText className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-medium text-foreground">ContractIQ</span>
+              <span className="text-xl font-serif font-semibold text-foreground tracking-tight">ContractIQ</span>
             </div>
             <div className="flex items-center space-x-4">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-warm-gray-400" />
                 <Input
                   placeholder="Search contracts..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-80"
+                  className="pl-10 w-80 border-warm-gray-200 focus:border-primary/50 bg-white/80 backdrop-blur-sm"
                 />
               </div>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="hover-lift border-warm-gray-200 hover:border-primary/20">
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
-              <Button size="sm">
+              <Button size="sm" className="shadow-premium hover:shadow-premium-md hover-lift bg-gradient-primary border-0">
                 <FileText className="w-4 h-4 mr-2" />
                 New Contract
               </Button>
@@ -126,20 +170,26 @@ const Dashboard = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        {/* Enhanced Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           {stats.map((stat, index) => (
-            <Card key={index}>
+            <Card key={index} className="hover-lift bg-gradient-card border-warm-gray-200 shadow-premium hover:shadow-premium-lg transition-premium">
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">{stat.title}</p>
-                    <p className="text-2xl font-semibold text-foreground">{stat.value}</p>
-                    <p className="text-xs text-green-600 mt-1">{stat.trend}</p>
-                  </div>
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
                     <stat.icon className="w-6 h-6 text-primary" />
                   </div>
+                  <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                    stat.trendUp ? 'text-emerald-600 bg-emerald-50' : 'text-red-600 bg-red-50'
+                  }`}>
+                    <ArrowUp className={`w-3 h-3 ${stat.trendUp ? '' : 'rotate-180'}`} />
+                    {stat.trend}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-warm-gray-600 mb-1">{stat.title}</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{stat.value}</p>
+                  <p className="text-xs text-warm-gray-500">{stat.description}</p>
                 </div>
               </CardContent>
             </Card>
@@ -147,40 +197,64 @@ const Dashboard = () => {
         </div>
 
         {/* Contract Families */}
-        <div className="space-y-6">
+        <div className="space-y-8">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-light text-foreground">Contract Families</h2>
-            <Button variant="outline" size="sm">
+            <div>
+              <h2 className="text-3xl font-serif font-bold text-foreground mb-2 tracking-tight">Contract Families</h2>
+              <p className="text-warm-gray-600">Manage and analyze your contract templates</p>
+            </div>
+            <Button variant="outline" size="sm" className="hover-lift border-warm-gray-200 hover:border-primary/20">
               <Download className="w-4 h-4 mr-2" />
               Export Report
             </Button>
           </div>
 
           {contractFamilies.map((family) => (
-            <Card key={family.id} className="overflow-hidden">
-              <CardHeader className="bg-muted/30 border-b border-border">
+            <Card key={family.id} className="overflow-hidden hover-lift bg-gradient-card border-warm-gray-200 shadow-premium hover:shadow-premium-lg transition-premium">
+              <CardHeader className="bg-gradient-to-r from-warm-gray-50 to-white border-b border-warm-gray-200">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-lg font-medium">{family.name}</CardTitle>
-                    <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
-                      <span>{family.totalVersions} versions</span>
-                      <span>Updated {family.lastUpdated}</span>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <CardTitle className="text-xl font-serif font-semibold">{family.name}</CardTitle>
                       <Badge 
                         variant={family.status === "active" ? "default" : "secondary"}
-                        className="capitalize"
+                        className={`capitalize px-3 py-1 ${family.status === "active" ? "bg-emerald-100 text-emerald-700 border-emerald-200" : ""}`}
                       >
                         {family.status}
                       </Badge>
+                      <Badge 
+                        variant="outline"
+                        className={`capitalize px-3 py-1 border ${getRiskColor(family.riskLevel)}`}
+                      >
+                        {family.riskLevel} risk
+                      </Badge>
+                    </div>
+                    <div className="flex items-center space-x-6 text-sm text-warm-gray-600">
+                      <div className="flex items-center gap-2">
+                        <Activity className="w-4 h-4" />
+                        <span>{family.totalVersions} versions</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4" />
+                        <span>Updated {family.lastUpdated}</span>
+                      </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <span className="text-sm text-muted-foreground">Compliance</span>
-                      <span className={`text-lg font-semibold ${getComplianceColor(family.compliance)}`}>
-                        {family.compliance}%
-                      </span>
+                    <div className="flex items-center space-x-3 mb-3">
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-warm-gray-600">Compliance</p>
+                        <p className={`text-2xl font-bold ${getComplianceColor(family.compliance)}`}>
+                          {family.compliance}%
+                        </p>
+                      </div>
+                      <div className="w-16">
+                        <Progress 
+                          value={family.compliance} 
+                          className="h-2"
+                        />
+                      </div>
                     </div>
-                    <Progress value={family.compliance} className="w-24" />
                   </div>
                 </div>
               </CardHeader>
@@ -189,33 +263,39 @@ const Dashboard = () => {
                   {family.versions.map((version, index) => (
                     <div 
                       key={index}
-                      className="flex items-center justify-between p-4 hover:bg-muted/20 transition-colors cursor-pointer"
+                      className="flex items-center justify-between p-6 hover:bg-warm-gray-50/50 transition-premium cursor-pointer group border-l-4 border-transparent hover:border-primary/20"
                       onClick={() => navigate("/analysis")}
                     >
                       <div className="flex items-center space-x-4">
-                        <div className={`w-2 h-2 rounded-full ${getStatusColor(version.status)}`} />
+                        <div className={`w-3 h-3 rounded-full ${getStatusColor(version.status)}`} />
                         <div>
-                          <span className="font-medium text-foreground">{version.version}</span>
-                          <div className="flex items-center space-x-4 mt-1 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-3">
+                            <span className="font-semibold text-foreground">{version.version}</span>
+                            <Badge 
+                              variant="outline" 
+                              className="text-xs px-2 py-0.5 capitalize border-warm-gray-300"
+                            >
+                              {version.status}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center space-x-4 mt-1 text-sm text-warm-gray-600">
                             <span>{version.date}</span>
-                            <span className="capitalize">{version.status}</span>
+                            <span>{version.issues} {version.issues === 1 ? 'issue' : 'issues'} found</span>
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center space-x-6">
                         <div className="text-right">
-                          <div className={`text-sm font-medium ${getComplianceColor(version.compliance)}`}>
-                            {version.compliance}% compliant
+                          <div className={`text-lg font-bold ${getComplianceColor(version.compliance)}`}>
+                            {version.compliance}%
                           </div>
-                          <div className="text-xs text-muted-foreground">
-                            {version.issues} issues found
+                          <div className="text-sm text-warm-gray-500">
+                            compliant
                           </div>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <Button variant="ghost" size="sm">
-                            <Eye className="w-4 h-4" />
-                          </Button>
-                        </div>
+                        <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-premium hover-lift">
+                          <Eye className="w-4 h-4" />
+                        </Button>
                       </div>
                     </div>
                   ))}
