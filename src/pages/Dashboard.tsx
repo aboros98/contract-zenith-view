@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -150,40 +151,40 @@ const Dashboard = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "current": return "bg-green-600";
+      case "current": return "bg-emerald-500";
       case "archived": return "bg-gray-400";
-      case "review": return "bg-amber-600";
+      case "review": return "bg-amber-500";
       default: return "bg-gray-400";
     }
   };
 
   const getComplianceColor = (compliance: number) => {
-    if (compliance >= 95) return "text-green-700";
-    if (compliance >= 85) return "text-amber-700";
-    return "text-red-700";
+    if (compliance >= 95) return "text-emerald-600";
+    if (compliance >= 85) return "text-amber-600";
+    return "text-red-600";
   };
 
   const getRiskColor = (risk: string) => {
     switch (risk) {
-      case "minimal": return "status-success";
-      case "low": return "status-success";
-      case "medium": return "status-warning";
-      case "high": return "status-danger";
-      default: return "text-gray-600 bg-gray-50";
+      case "minimal": return "bg-emerald-100 text-emerald-800 border-emerald-200";
+      case "low": return "bg-emerald-100 text-emerald-800 border-emerald-200";
+      case "medium": return "bg-amber-100 text-amber-800 border-amber-200";
+      case "high": return "bg-red-100 text-red-800 border-red-200";
+      default: return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Professional Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-subtle">
+              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-sm">
                 <FileText className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-serif font-bold text-charcoal">Dobi</span>
+              <span className="text-2xl font-semibold text-charcoal">Dobi</span>
             </div>
             <div className="flex items-center space-x-4">
               <div className="relative">
@@ -192,14 +193,14 @@ const Dashboard = () => {
                   placeholder="Search contracts..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-80 border-gray-200 focus:border-primary bg-white"
+                  className="pl-10 w-80 border-gray-200 focus:border-primary bg-white rounded-xl"
                 />
               </div>
-              <Button variant="outline" size="sm" className="border-gray-200">
+              <Button variant="outline" size="sm" className="border-gray-200 rounded-xl">
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
-              <Button size="sm" className="bg-primary text-primary-foreground">
+              <Button size="sm" className="bg-primary text-primary-foreground rounded-xl shadow-sm">
                 <FileText className="w-4 h-4 mr-2" />
                 New Contract
               </Button>
@@ -209,17 +210,17 @@ const Dashboard = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Professional Stats Grid */}
+        {/* Apple-Style Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
-            <Card key={index} className="card-professional">
+            <Card key={index} className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
                     <stat.icon className="w-6 h-6 text-primary" />
                   </div>
-                  <div className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium ${
-                    stat.trendUp ? 'status-success' : 'status-danger'
+                  <div className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${
+                    stat.trendUp ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
                   }`}>
                     <TrendingUp className={`w-3 h-3 ${stat.trendUp ? '' : 'rotate-180'}`} />
                     {stat.trend}
@@ -235,15 +236,15 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* Processing Section */}
+        {/* Processing Section with Apple Glass Effect */}
         {processingFile && (
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-charcoal mb-4">Currently Processing</h2>
-            <Card className="card-professional border-blue-200 bg-blue-50">
+            <Card className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                    <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
                       <Zap className="w-6 h-6 text-primary animate-pulse" />
                     </div>
                     <div>
@@ -258,7 +259,7 @@ const Dashboard = () => {
                     <div className="text-xl font-bold text-primary mb-1">
                       {processingProgress}%
                     </div>
-                    <Badge className="status-info">
+                    <Badge className="bg-blue-100 text-blue-800 border-blue-200 rounded-full">
                       {processingProgress === 100 ? 'Complete' : 'Processing'}
                     </Badge>
                   </div>
@@ -270,7 +271,7 @@ const Dashboard = () => {
                       {processingProgress === 100 ? 'Complete' : `${Math.floor(processingProgress / 20) + 1}/5 steps`}
                     </span>
                   </div>
-                  <Progress value={processingProgress} className="h-2" />
+                  <Progress value={processingProgress} className="h-2 rounded-full" />
                   <p className="text-sm text-gray-600">
                     {processingProgress < 20 ? 'Analyzing document structure...' :
                      processingProgress < 40 ? 'Extracting clauses and terms...' :
@@ -284,13 +285,13 @@ const Dashboard = () => {
                   <div className="mt-4 flex space-x-3">
                     <Button 
                       size="sm" 
-                      className="bg-primary text-primary-foreground"
+                      className="bg-primary text-primary-foreground rounded-xl"
                       onClick={() => navigate('/analysis')}
                     >
                       <Eye className="w-4 h-4 mr-2" />
                       View Analysis
                     </Button>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" className="rounded-xl">
                       <Archive className="w-4 h-4 mr-2" />
                       Save to Library
                     </Button>
@@ -301,23 +302,23 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* Contract Families */}
+        {/* Contract Families with Apple Design */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-semibold text-charcoal mb-2">Contract Families</h2>
               <p className="text-gray-600">Manage and analyze your contract templates</p>
             </div>
-            <Button variant="outline" size="sm" className="border-gray-200">
+            <Button variant="outline" size="sm" className="border-gray-200 rounded-xl">
               <Download className="w-4 h-4 mr-2" />
               Export Report
             </Button>
           </div>
 
           {contractFamilies.map((family) => (
-            <Card key={family.id} className="card-professional overflow-hidden">
+            <Card key={family.id} className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
               <CardHeader 
-                className="bg-gray-50 cursor-pointer transition-all duration-200 hover:bg-gray-100"
+                className="bg-gray-50/50 cursor-pointer transition-all duration-200 hover:bg-gray-100/50"
                 onClick={() => toggleFamily(family.id)}
               >
                 <div className="flex items-center justify-between">
@@ -330,14 +331,15 @@ const Dashboard = () => {
                       />
                       <CardTitle className="text-lg font-semibold text-charcoal">{family.name}</CardTitle>
                       <Badge 
-                        variant={family.status === "active" ? "default" : "secondary"}
-                        className={`capitalize ${family.status === "active" ? "status-success" : ""}`}
+                        className={`capitalize rounded-full ${
+                          family.status === "active" ? "bg-emerald-100 text-emerald-800 border-emerald-200" : 
+                          "bg-gray-100 text-gray-800 border-gray-200"
+                        }`}
                       >
                         {family.status}
                       </Badge>
                       <Badge 
-                        variant="outline"
-                        className={`capitalize ${getRiskColor(family.riskLevel)}`}
+                        className={`capitalize rounded-full ${getRiskColor(family.riskLevel)}`}
                       >
                         {family.riskLevel} risk
                       </Badge>
@@ -362,7 +364,7 @@ const Dashboard = () => {
                         </p>
                       </div>
                       <div className="w-20">
-                        <Progress value={family.compliance} className="h-2" />
+                        <Progress value={family.compliance} className="h-2 rounded-full" />
                       </div>
                     </div>
                   </div>
@@ -381,7 +383,7 @@ const Dashboard = () => {
                     {family.versions.map((version, index) => (
                       <div 
                         key={index}
-                        className="flex items-center justify-between p-4 hover:bg-gray-50 cursor-pointer border-l-4 border-transparent hover:border-gray-300 transition-all duration-200"
+                        className="flex items-center justify-between p-4 hover:bg-gray-50/80 cursor-pointer border-l-4 border-transparent hover:border-gray-300 transition-all duration-200"
                         onClick={() => navigate("/analysis")}
                       >
                         <div className="flex items-center space-x-4">
@@ -390,8 +392,7 @@ const Dashboard = () => {
                             <div className="flex items-center gap-3">
                               <span className="font-semibold text-charcoal">{version.version}</span>
                               <Badge 
-                                variant="outline" 
-                                className="text-xs px-2 py-0.5 capitalize border-gray-300"
+                                className="text-xs px-2 py-0.5 capitalize border-gray-300 rounded-full bg-gray-100 text-gray-800"
                               >
                                 {version.status}
                               </Badge>

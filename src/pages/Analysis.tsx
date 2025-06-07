@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,10 +16,8 @@ import {
   ExternalLink,
   Building,
   Scale,
-  Search,
-  Filter,
   X,
-  ChevronRight
+  Eye
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -87,9 +86,7 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
       compliance: 100,
       section: "4. CONTRACT VALUE",
       issues: 0,
-      riskLevel: "low",
-      startPos: 845,
-      endPos: 895
+      riskLevel: "low"
     },
     {
       id: 2,
@@ -100,9 +97,7 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
       compliance: 75,
       section: "3. PAYMENT TERMS",
       issues: 1,
-      riskLevel: "medium",
-      startPos: 680,
-      endPos: 780
+      riskLevel: "medium"
     },
     {
       id: 3,
@@ -113,9 +108,7 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
       compliance: 40,
       section: "5. TERMINATION",
       issues: 2,
-      riskLevel: "high",
-      startPos: 920,
-      endPos: 990
+      riskLevel: "high"
     },
     {
       id: 4,
@@ -126,18 +119,25 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
       compliance: 95,
       section: "2. SCOPE OF SERVICES",
       issues: 0,
-      riskLevel: "low",
-      startPos: 480,
-      endPos: 620
+      riskLevel: "low"
     }
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "compliant": return "text-emerald-500";
-      case "partial": return "text-amber-500";
-      case "non-compliant": return "text-red-500";
-      default: return "text-muted-foreground";
+      case "compliant": return "border-emerald-500 bg-emerald-50";
+      case "partial": return "border-amber-500 bg-amber-50";
+      case "non-compliant": return "border-red-500 bg-red-50";
+      default: return "border-gray-300 bg-gray-50";
+    }
+  };
+
+  const getStatusBadgeColor = (status: string) => {
+    switch (status) {
+      case "compliant": return "bg-emerald-100 text-emerald-800";
+      case "partial": return "bg-amber-100 text-amber-800";
+      case "non-compliant": return "bg-red-100 text-red-800";
+      default: return "bg-gray-100 text-gray-800";
     }
   };
 
@@ -152,34 +152,6 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
 
   const handleClauseClick = (clauseId: number) => {
     setSelectedClause(selectedClause === clauseId ? null : clauseId);
-  };
-
-  const renderContractWithIndicators = () => {
-    let result = fullContractText;
-    let offset = 0;
-
-    const sortedClauses = [...clauses].sort((a, b) => a.startPos - b.startPos);
-
-    sortedClauses.forEach(clause => {
-      const beforeText = result.substring(0, clause.startPos + offset);
-      const clauseText = clause.text;
-      const afterText = result.substring(clause.startPos + offset + clauseText.length);
-
-      const StatusIcon = getStatusIcon(clause.status);
-      const wrappedClause = `<span class="clause-container" data-clause-id="${clause.id}">
-        <span class="clause-indicator ${getStatusColor(clause.status)}" data-clause-id="${clause.id}">
-          <svg class="w-2 h-2" viewBox="0 0 24 24" fill="currentColor">
-            <circle cx="12" cy="12" r="3"/>
-          </svg>
-        </span>
-        <span class="clause-text ${selectedClause === clause.id ? 'selected' : ''}" data-clause-id="${clause.id}">${clauseText}</span>
-      </span>`;
-
-      result = beforeText + wrappedClause + afterText;
-      offset += wrappedClause.length - clauseText.length;
-    });
-
-    return result;
   };
 
   const selectedClauseData = clauses.find(c => c.id === selectedClause);
@@ -251,39 +223,72 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
                 </div>
               </div>
             </div>
-
-            {/* Status Legend */}
-            <div className="flex items-center space-x-8 text-xs font-mono">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="text-muted-foreground">compliant</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-                <span className="text-muted-foreground">partial</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                <span className="text-muted-foreground">non-compliant</span>
-              </div>
-            </div>
           </div>
 
-          {/* Contract Document */}
-          <div className="flex-1 overflow-hidden">
-            <div className="h-full overflow-y-auto bg-card">
-              <div className="max-w-4xl mx-auto px-16 py-12">
-                <div 
-                  className="font-mono text-sm leading-7 text-foreground whitespace-pre-wrap tracking-wide"
-                  dangerouslySetInnerHTML={{ __html: renderContractWithIndicators() }}
-                  onClick={(e) => {
-                    const target = e.target as HTMLElement;
-                    const clauseId = target.getAttribute('data-clause-id');
-                    if (clauseId) {
-                      handleClauseClick(Number(clauseId));
-                    }
-                  }}
-                />
+          {/* Two-column Layout: Contract + Clause Cards */}
+          <div className="flex-1 flex overflow-hidden">
+            {/* Contract Document */}
+            <div className="flex-[2] overflow-y-auto bg-card border-r border-border">
+              <div className="max-w-3xl mx-auto px-12 py-12">
+                <div className="font-mono text-sm leading-7 text-foreground whitespace-pre-wrap tracking-wide">
+                  {fullContractText}
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Clause Cards */}
+            <div className="flex-1 bg-gray-50/50 p-6 overflow-y-auto">
+              <div className="sticky top-0 bg-gray-50/50 pb-4 mb-4 border-b border-gray-200">
+                <h3 className="text-lg font-semibold text-foreground mb-2">Key Clauses</h3>
+                <p className="text-sm text-muted-foreground">Click to analyze</p>
+              </div>
+              
+              <div className="space-y-4">
+                {clauses.map((clause) => {
+                  const StatusIcon = getStatusIcon(clause.status);
+                  return (
+                    <Card 
+                      key={clause.id}
+                      className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-l-4 ${getStatusColor(clause.status)}`}
+                      onClick={() => handleClauseClick(clause.id)}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex items-center space-x-3">
+                            <Badge variant="outline" className="text-xs font-mono">
+                              {clause.number}
+                            </Badge>
+                            <StatusIcon className={`w-4 h-4 ${
+                              clause.status === 'compliant' ? 'text-emerald-500' :
+                              clause.status === 'partial' ? 'text-amber-500' : 'text-red-500'
+                            }`} />
+                          </div>
+                          <div className="text-right">
+                            <div className={`text-lg font-bold ${
+                              clause.compliance >= 95 ? 'text-emerald-600' :
+                              clause.compliance >= 75 ? 'text-amber-600' : 'text-red-600'
+                            }`}>
+                              {clause.compliance}%
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <h4 className="font-semibold text-foreground mb-2">{clause.title}</h4>
+                        <p className="text-sm text-muted-foreground line-clamp-2">{clause.text}</p>
+                        
+                        <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
+                          <Badge className={`text-xs ${getStatusBadgeColor(clause.status)}`}>
+                            {clause.status.replace('-', ' ')}
+                          </Badge>
+                          <div className="flex items-center text-xs text-muted-foreground">
+                            <Eye className="w-3 h-3 mr-1" />
+                            View Details
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -300,9 +305,12 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
                     <Badge variant="outline" className="text-xs font-mono border-border">
                       {selectedClauseData.number}
                     </Badge>
-                    <div className={`w-2 h-2 rounded-full ${getStatusColor(selectedClauseData.status).replace('text-', 'bg-')}`}></div>
+                    <div className={`w-3 h-3 rounded-full ${
+                      selectedClauseData.status === 'compliant' ? 'bg-emerald-500' :
+                      selectedClauseData.status === 'partial' ? 'bg-amber-500' : 'bg-red-500'
+                    }`}></div>
                   </div>
-                  <h3 className="font-medium text-foreground text-lg tracking-tight">
+                  <h3 className="font-semibold text-foreground text-lg tracking-tight">
                     {selectedClauseData.title}
                   </h3>
                 </div>
@@ -414,46 +422,6 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
       </div>
 
       <style>{`
-        .clause-container {
-          position: relative;
-          display: inline;
-        }
-        
-        .clause-indicator {
-          position: absolute;
-          left: -20px;
-          top: 2px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0.6;
-          transition: opacity 0.2s ease;
-        }
-        
-        .clause-text {
-          cursor: pointer;
-          transition: all 0.2s ease;
-          padding: 1px 2px;
-          border-radius: 3px;
-          position: relative;
-        }
-        
-        .clause-text:hover {
-          background-color: rgba(59, 130, 246, 0.08);
-        }
-        
-        .clause-text:hover + .clause-indicator,
-        .clause-container:hover .clause-indicator {
-          opacity: 1;
-        }
-        
-        .clause-text.selected {
-          background-color: rgba(59, 130, 246, 0.12);
-          border-left: 2px solid rgb(59, 130, 246);
-          padding-left: 6px;
-          margin-left: 2px;
-        }
-        
         .animate-slide-in-right {
           animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -467,6 +435,13 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
             transform: translateX(0);
             opacity: 1;
           }
+        }
+
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </div>
