@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -148,41 +149,6 @@ const Dashboard = () => {
     }
   };
 
-  const stats = [
-    { 
-      title: "Total Contracts", 
-      value: "247", 
-      icon: FileText, 
-      trend: "+12%", 
-      trendUp: true,
-      description: "This month"
-    },
-    { 
-      title: "Compliance Rate", 
-      value: "94%", 
-      icon: Shield, 
-      trend: "+3%", 
-      trendUp: true,
-      description: "Quality score"
-    },
-    { 
-      title: "Active Reviews", 
-      value: "18", 
-      icon: Clock, 
-      trend: "+5%", 
-      trendUp: true,
-      description: "In progress"
-    },
-    { 
-      title: "Risk Score", 
-      value: "Low", 
-      icon: BarChart3, 
-      trend: "Improved", 
-      trendUp: true,
-      description: "Overall rating"
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-warm-gray-50 to-background">
       {/* Premium Header */}
@@ -269,7 +235,7 @@ const Dashboard = () => {
                     <div className="flex items-center gap-3 mb-3">
                       <div className="flex items-center gap-2">
                         <ChevronRight 
-                          className={`w-5 h-5 text-warm-gray-500 transition-premium ${
+                          className={`w-5 h-5 text-warm-gray-500 transition-all duration-300 ease-out ${
                             expandedFamilies.has(family.id) ? 'rotate-90' : ''
                           }`}
                         />
@@ -320,14 +286,11 @@ const Dashboard = () => {
               
               {/* Animated Versions Panel */}
               <div 
-                className={`overflow-hidden transition-premium ${
+                className={`overflow-hidden transition-all duration-500 ease-out ${
                   expandedFamilies.has(family.id) 
                     ? 'max-h-96 opacity-100' 
                     : 'max-h-0 opacity-0'
                 }`}
-                style={{
-                  transition: 'max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out'
-                }}
               >
                 <CardContent className="p-0">
                   <div className="space-y-1">
