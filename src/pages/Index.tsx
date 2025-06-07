@@ -65,17 +65,17 @@ const Index = () => {
     {
       icon: Shield,
       title: "Compliance Check",
-      description: "Ensure contracts meet regulatory standards with automated compliance checks."
+      description: "Automated compliance verification against regulatory standards with detailed reporting."
     },
     {
       icon: BarChart3,
       title: "Risk Assessment",
-      description: "Identify potential risks and liabilities before they become problems."
+      description: "AI-powered risk analysis to identify potential liabilities and legal exposures."
     },
     {
       icon: Clock,
-      title: "Timeline Analysis",
-      description: "Track key dates and deadlines to manage contract lifecycle effectively."
+      title: "Fast Analysis",
+      description: "Get comprehensive contract insights in minutes, not hours or days."
     },
   ];
 
@@ -83,26 +83,26 @@ const Index = () => {
     {
       step: 1,
       title: "Upload Contract",
-      description: "Drag and drop your contract document into the platform.",
+      description: "Drag and drop your contract document into our secure platform.",
       icon: Upload
     },
     {
       step: 2,
       title: "AI Analysis",
-      description: "Our AI algorithms analyze the contract for key insights.",
+      description: "Advanced algorithms analyze compliance, risks, and key provisions.",
       icon: Sparkles
     },
     {
       step: 3,
-      title: "Receive Report",
-      description: "Get a detailed report with compliance, risks, and timeline analysis.",
+      title: "Review Results",
+      description: "Access detailed analysis with actionable insights and recommendations.",
       icon: CheckCircle
     },
   ];
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Full-screen drag overlay with Apple blur effect */}
+      {/* Full-screen drag overlay */}
       {dragActive && (
         <div 
           className="fixed inset-0 z-50 bg-primary/5 backdrop-blur-md flex items-center justify-center"
@@ -112,7 +112,7 @@ const Index = () => {
           onDrop={handleDrop}
         >
           <div className="text-center">
-            <div className="w-24 h-24 bg-primary/20 rounded-3xl flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
+            <div className="w-24 h-24 bg-primary/20 rounded-3xl flex items-center justify-center mx-auto mb-6">
               <Upload className="w-12 h-12 text-primary" />
             </div>
             <h3 className="text-2xl font-semibold text-charcoal mb-2">
@@ -125,8 +125,8 @@ const Index = () => {
         </div>
       )}
 
-      {/* Apple-Style Header */}
-      <header className="border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-40">
+      {/* Professional Header */}
+      <header className="border-b border-gray-200 bg-white sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -136,13 +136,13 @@ const Index = () => {
               <span className="text-2xl font-semibold text-charcoal">Dobi</span>
             </div>
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-charcoal rounded-xl">
+              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-charcoal">
                 Features
               </Button>
-              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-charcoal rounded-xl">
+              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-charcoal">
                 About
               </Button>
-              <Button size="sm" className="bg-primary text-primary-foreground rounded-xl shadow-sm">
+              <Button size="sm" className="bg-primary text-primary-foreground shadow-sm">
                 Get Started
               </Button>
             </div>
@@ -150,7 +150,7 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Section with Apple Spacing */}
+      {/* Hero Section */}
       <section 
         className="relative py-20 px-6"
         onDragEnter={handleDragEnter}
@@ -160,23 +160,23 @@ const Index = () => {
       >
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-12">
-            <h1 className="text-5xl md:text-6xl font-semibold text-charcoal mb-6 leading-tight tracking-tight">
+            <h1 className="text-5xl md:text-6xl font-light text-charcoal mb-6 leading-tight tracking-tight">
               Professional Contract
-              <span className="block text-primary">Analysis Platform</span>
+              <span className="block text-primary font-medium">Analysis Platform</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Transform your legal documents with AI-powered analysis. Get instant compliance insights, 
-              risk assessments, and detailed clause breakdowns.
+              Transform legal document review with AI-powered analysis. Get instant compliance insights, 
+              risk assessments, and detailed clause breakdowns for faster decision-making.
             </p>
           </div>
 
-          {/* Apple-Style Upload Interface */}
+          {/* Upload Interface */}
           <div className="max-w-md mx-auto mb-16">
             {!showUploadZone ? (
               <div className="text-center">
                 <Button 
                   size="lg" 
-                  className="bg-primary text-primary-foreground px-8 py-4 text-lg font-medium shadow-sm rounded-2xl hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+                  className="bg-primary text-primary-foreground px-8 py-4 text-lg font-medium shadow-sm transition-all duration-200"
                   onClick={() => setShowUploadZone(true)}
                   disabled={isUploading}
                 >
@@ -197,10 +197,10 @@ const Index = () => {
                 </p>
               </div>
             ) : (
-              <Card className="bg-white border-2 border-dashed border-primary/30 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300">
+              <Card className="bg-white border-2 border-dashed border-primary/30 shadow-sm">
                 <CardContent className="p-8">
                   <div
-                    className="cursor-pointer rounded-2xl p-6 text-center transition-all duration-200 hover:bg-primary/5"
+                    className="cursor-pointer p-6 text-center transition-all duration-200"
                     onClick={() => fileInputRef.current?.click()}
                   >
                     <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -212,7 +212,7 @@ const Index = () => {
                     <p className="text-gray-600 mb-4">
                       Upload PDF or Word document for analysis
                     </p>
-                    <Button size="lg" className="bg-primary text-primary-foreground px-6 rounded-xl" disabled={isUploading}>
+                    <Button size="lg" className="bg-primary text-primary-foreground px-6" disabled={isUploading}>
                       {isUploading ? "Processing..." : "Browse Files"}
                     </Button>
                     <input
@@ -229,7 +229,7 @@ const Index = () => {
             )}
           </div>
 
-          {/* Apple-Style Feature Grid */}
+          {/* Feature Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {features.map((feature, index) => (
               <div key={index} className="text-center">
@@ -242,9 +242,9 @@ const Index = () => {
             ))}
           </div>
 
-          {/* Apple-Style Process Overview */}
+          {/* Process Overview */}
           <div>
-            <h2 className="text-3xl font-semibold text-charcoal mb-12">
+            <h2 className="text-3xl font-light text-charcoal mb-12">
               How it Works
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
