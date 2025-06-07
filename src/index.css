@@ -3,154 +3,152 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+/* Premium Design System - Navy & Gold Theme */
 
 @layer base {
   :root {
-    --background: 30 25% 97%;
-    --foreground: 25 15% 15%;
+    --background: 30 15% 97%;
+    --foreground: 210 40% 12%;
 
-    --card: 30 20% 99%;
-    --card-foreground: 25 15% 15%;
+    --card: 30 20% 98%;
+    --card-foreground: 210 40% 12%;
 
-    --popover: 30 20% 99%;
-    --popover-foreground: 25 15% 15%;
+    --popover: 30 20% 98%;
+    --popover-foreground: 210 40% 12%;
 
-    --primary: 35 65% 45%;
-    --primary-foreground: 30 20% 98%;
+    --primary: 45 100% 42%;
+    --primary-foreground: 30 15% 98%;
 
-    --secondary: 30 15% 94%;
-    --secondary-foreground: 25 15% 20%;
+    --secondary: 30 10% 92%;
+    --secondary-foreground: 210 40% 15%;
 
-    --muted: 30 12% 95%;
-    --muted-foreground: 25 8% 55%;
+    --muted: 30 8% 94%;
+    --muted-foreground: 210 20% 45%;
 
-    --accent: 30 20% 92%;
-    --accent-foreground: 25 15% 20%;
+    --accent: 30 15% 90%;
+    --accent-foreground: 210 40% 15%;
 
     --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 30 13% 88%;
-    --input: 30 13% 88%;
-    --ring: 35 65% 45%;
+    --border: 30 12% 88%;
+    --input: 30 12% 88%;
+    --ring: 45 100% 42%;
 
     --radius: 0.75rem;
 
-    /* Premium beige color palette */
-    --warm-beige-50: 30 25% 98%;
-    --warm-beige-100: 30 20% 96%;
-    --warm-beige-200: 30 15% 92%;
-    --warm-beige-300: 30 12% 85%;
-    --warm-beige-400: 30 10% 70%;
-    --warm-beige-500: 30 8% 55%;
-    --warm-beige-600: 30 8% 42%;
-    --warm-beige-700: 30 10% 32%;
-    --warm-beige-800: 30 12% 22%;
-    --warm-beige-900: 25 15% 15%;
+    /* Premium Navy & Gold Color Palette */
+    --navy-50: 210 20% 98%;
+    --navy-100: 210 25% 95%;
+    --navy-200: 210 30% 90%;
+    --navy-300: 210 35% 80%;
+    --navy-400: 210 40% 65%;
+    --navy-500: 210 50% 45%;
+    --navy-600: 210 60% 35%;
+    --navy-700: 210 70% 25%;
+    --navy-800: 210 80% 18%;
+    --navy-900: 210 90% 12%;
 
-    /* Bronze/gold accents */
-    --bronze-50: 35 45% 95%;
-    --bronze-100: 35 40% 88%;
-    --bronze-200: 35 35% 78%;
-    --bronze-300: 35 45% 65%;
-    --bronze-400: 35 55% 52%;
-    --bronze-500: 35 65% 45%;
-    --bronze-600: 35 70% 38%;
-    --bronze-700: 35 75% 32%;
-    --bronze-800: 35 80% 26%;
-    --bronze-900: 35 85% 20%;
+    /* Champagne Gold accents */
+    --gold-50: 45 60% 95%;
+    --gold-100: 45 55% 88%;
+    --gold-200: 45 50% 78%;
+    --gold-300: 45 55% 68%;
+    --gold-400: 45 70% 58%;
+    --gold-500: 45 100% 42%;
+    --gold-600: 45 100% 38%;
+    --gold-700: 45 100% 32%;
+    --gold-800: 45 100% 26%;
+    --gold-900: 45 100% 20%;
 
-    /* Terracotta accents */
-    --terracotta-50: 15 65% 95%;
-    --terracotta-100: 15 60% 88%;
-    --terracotta-200: 15 55% 78%;
-    --terracotta-300: 15 60% 68%;
-    --terracotta-400: 15 65% 58%;
-    --terracotta-500: 15 70% 48%;
-    --terracotta-600: 15 75% 42%;
-    --terracotta-700: 15 80% 36%;
-    --terracotta-800: 15 85% 30%;
-    --terracotta-900: 15 90% 24%;
+    /* Warm Beige backgrounds */
+    --beige-50: 30 25% 98%;
+    --beige-100: 30 20% 96%;
+    --beige-200: 30 15% 92%;
+    --beige-300: 30 12% 85%;
+    --beige-400: 30 10% 70%;
+    --beige-500: 30 8% 55%;
+    --beige-600: 30 8% 42%;
+    --beige-700: 30 10% 32%;
+    --beige-800: 30 12% 22%;
+    --beige-900: 25 15% 15%;
 
-    /* Enhanced gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(35 65% 45%) 0%, hsl(35 55% 52%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(30 25% 99%) 0%, hsl(30 20% 96%) 100%);
-    --gradient-muted: linear-gradient(135deg, hsl(30 12% 95%) 0%, hsl(30 15% 92%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(30 25% 97%) 0%, hsl(30 20% 94%) 50%, hsl(35 25% 96%) 100%);
+    /* Premium gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(45 100% 42%) 0%, hsl(45 70% 58%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(30 25% 98%) 0%, hsl(30 20% 96%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(30 15% 97%) 0%, hsl(30 20% 94%) 50%, hsl(45 25% 96%) 100%);
     
-    /* Premium shadows with warm tones */
-    --shadow-sm: 0 1px 2px 0 rgb(139 117 95 / 0.05);
-    --shadow-base: 0 1px 3px 0 rgb(139 117 95 / 0.1), 0 1px 2px -1px rgb(139 117 95 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(139 117 95 / 0.1), 0 2px 4px -2px rgb(139 117 95 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(139 117 95 / 0.1), 0 4px 6px -4px rgb(139 117 95 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(139 117 95 / 0.1), 0 8px 10px -6px rgb(139 117 95 / 0.1);
-    --shadow-2xl: 0 25px 50px -12px rgb(139 117 95 / 0.25);
-    --shadow-inner: inset 0 2px 4px 0 rgb(139 117 95 / 0.05);
+    /* Premium shadows with navy tones */
+    --shadow-sm: 0 1px 2px 0 rgb(30 41 59 / 0.08);
+    --shadow-base: 0 1px 3px 0 rgb(30 41 59 / 0.12), 0 1px 2px -1px rgb(30 41 59 / 0.12);
+    --shadow-md: 0 4px 6px -1px rgb(30 41 59 / 0.12), 0 2px 4px -2px rgb(30 41 59 / 0.12);
+    --shadow-lg: 0 10px 15px -3px rgb(30 41 59 / 0.12), 0 4px 6px -4px rgb(30 41 59 / 0.12);
+    --shadow-xl: 0 20px 25px -5px rgb(30 41 59 / 0.12), 0 8px 10px -6px rgb(30 41 59 / 0.12);
+    --shadow-2xl: 0 25px 50px -12px rgb(30 41 59 / 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgb(30 41 59 / 0.08);
 
     --sidebar-background: 30 20% 96%;
-    --sidebar-foreground: 25 15% 20%;
-    --sidebar-primary: 35 65% 45%;
-    --sidebar-primary-foreground: 30 20% 98%;
-    --sidebar-accent: 30 15% 94%;
-    --sidebar-accent-foreground: 25 15% 20%;
-    --sidebar-border: 30 13% 88%;
-    --sidebar-ring: 35 65% 45%;
+    --sidebar-foreground: 210 40% 15%;
+    --sidebar-primary: 45 100% 42%;
+    --sidebar-primary-foreground: 30 15% 98%;
+    --sidebar-accent: 30 15% 90%;
+    --sidebar-accent-foreground: 210 40% 15%;
+    --sidebar-border: 30 12% 88%;
+    --sidebar-ring: 45 100% 42%;
   }
 
   .dark {
-    --background: 25 15% 8%;
+    --background: 210 90% 8%;
     --foreground: 30 20% 92%;
 
-    --card: 25 15% 10%;
+    --card: 210 90% 10%;
     --card-foreground: 30 20% 92%;
 
-    --popover: 25 15% 10%;
+    --popover: 210 90% 10%;
     --popover-foreground: 30 20% 92%;
 
-    --primary: 35 55% 65%;
-    --primary-foreground: 25 15% 12%;
+    --primary: 45 80% 65%;
+    --primary-foreground: 210 90% 12%;
 
-    --secondary: 25 15% 15%;
+    --secondary: 210 80% 15%;
     --secondary-foreground: 30 20% 92%;
 
-    --muted: 25 15% 12%;
+    --muted: 210 80% 12%;
     --muted-foreground: 30 8% 65%;
 
-    --accent: 25 15% 15%;
+    --accent: 210 80% 15%;
     --accent-foreground: 30 20% 92%;
 
     --destructive: 0 75% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 25 15% 22%;
-    --input: 25 15% 22%;
-    --ring: 35 55% 65%;
+    --border: 210 80% 22%;
+    --input: 210 80% 22%;
+    --ring: 45 80% 65%;
 
-    --warm-beige-50: 25 15% 12%;
-    --warm-beige-100: 25 15% 15%;
-    --warm-beige-200: 25 15% 20%;
-    --warm-beige-300: 25 15% 28%;
-    --warm-beige-400: 30 8% 45%;
-    --warm-beige-500: 30 8% 60%;
-    --warm-beige-600: 30 8% 75%;
-    --warm-beige-700: 30 8% 85%;
-    --warm-beige-800: 30 8% 92%;
-    --warm-beige-900: 30 8% 96%;
+    --navy-50: 210 80% 12%;
+    --navy-100: 210 80% 15%;
+    --navy-200: 210 80% 20%;
+    --navy-300: 210 80% 28%;
+    --navy-400: 30 8% 45%;
+    --navy-500: 30 8% 60%;
+    --navy-600: 30 8% 75%;
+    --navy-700: 30 8% 85%;
+    --navy-800: 30 8% 92%;
+    --navy-900: 30 8% 96%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(35 55% 65%) 0%, hsl(35 45% 72%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(25 15% 10%) 0%, hsl(25 15% 12%) 100%);
-    --gradient-muted: linear-gradient(135deg, hsl(25 15% 12%) 0%, hsl(25 15% 15%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(25 15% 8%) 0%, hsl(25 15% 10%) 50%, hsl(30 15% 12%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(45 80% 65%) 0%, hsl(45 60% 72%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(210 90% 10%) 0%, hsl(210 90% 12%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(210 90% 8%) 0%, hsl(210 90% 10%) 50%, hsl(30 15% 12%) 100%);
 
-    --sidebar-background: 25 15% 10%;
+    --sidebar-background: 210 90% 10%;
     --sidebar-foreground: 30 20% 92%;
-    --sidebar-primary: 35 55% 65%;
-    --sidebar-primary-foreground: 25 15% 12%;
-    --sidebar-accent: 25 15% 15%;
+    --sidebar-primary: 45 80% 65%;
+    --sidebar-primary-foreground: 210 90% 12%;
+    --sidebar-accent: 210 80% 15%;
     --sidebar-accent-foreground: 30 20% 92%;
-    --sidebar-border: 25 15% 22%;
-    --sidebar-ring: 35 55% 65%;
+    --sidebar-border: 210 80% 22%;
+    --sidebar-ring: 45 80% 65%;
   }
 }
 
@@ -175,44 +173,44 @@
     font-family: 'Inter', sans-serif;
   }
 
-  /* Beige color system */
-  .text-warm-beige-50 { color: hsl(var(--warm-beige-50)); }
-  .text-warm-beige-100 { color: hsl(var(--warm-beige-100)); }
-  .text-warm-beige-200 { color: hsl(var(--warm-beige-200)); }
-  .text-warm-beige-300 { color: hsl(var(--warm-beige-300)); }
-  .text-warm-beige-400 { color: hsl(var(--warm-beige-400)); }
-  .text-warm-beige-500 { color: hsl(var(--warm-beige-500)); }
-  .text-warm-beige-600 { color: hsl(var(--warm-beige-600)); }
-  .text-warm-beige-700 { color: hsl(var(--warm-beige-700)); }
-  .text-warm-beige-800 { color: hsl(var(--warm-beige-800)); }
-  .text-warm-beige-900 { color: hsl(var(--warm-beige-900)); }
+  /* Navy color system */
+  .text-navy-50 { color: hsl(var(--navy-50)); }
+  .text-navy-100 { color: hsl(var(--navy-100)); }
+  .text-navy-200 { color: hsl(var(--navy-200)); }
+  .text-navy-300 { color: hsl(var(--navy-300)); }
+  .text-navy-400 { color: hsl(var(--navy-400)); }
+  .text-navy-500 { color: hsl(var(--navy-500)); }
+  .text-navy-600 { color: hsl(var(--navy-600)); }
+  .text-navy-700 { color: hsl(var(--navy-700)); }
+  .text-navy-800 { color: hsl(var(--navy-800)); }
+  .text-navy-900 { color: hsl(var(--navy-900)); }
 
-  .bg-warm-beige-50 { background-color: hsl(var(--warm-beige-50)); }
-  .bg-warm-beige-100 { background-color: hsl(var(--warm-beige-100)); }
-  .bg-warm-beige-200 { background-color: hsl(var(--warm-beige-200)); }
-  .bg-warm-beige-300 { background-color: hsl(var(--warm-beige-300)); }
-  .bg-warm-beige-400 { background-color: hsl(var(--warm-beige-400)); }
-  .bg-warm-beige-500 { background-color: hsl(var(--warm-beige-500)); }
-  .bg-warm-beige-600 { background-color: hsl(var(--warm-beige-600)); }
-  .bg-warm-beige-700 { background-color: hsl(var(--warm-beige-700)); }
-  .bg-warm-beige-800 { background-color: hsl(var(--warm-beige-800)); }
-  .bg-warm-beige-900 { background-color: hsl(var(--warm-beige-900)); }
+  .bg-navy-50 { background-color: hsl(var(--navy-50)); }
+  .bg-navy-100 { background-color: hsl(var(--navy-100)); }
+  .bg-navy-200 { background-color: hsl(var(--navy-200)); }
+  .bg-navy-300 { background-color: hsl(var(--navy-300)); }
+  .bg-navy-400 { background-color: hsl(var(--navy-400)); }
+  .bg-navy-500 { background-color: hsl(var(--navy-500)); }
+  .bg-navy-600 { background-color: hsl(var(--navy-600)); }
+  .bg-navy-700 { background-color: hsl(var(--navy-700)); }
+  .bg-navy-800 { background-color: hsl(var(--navy-800)); }
+  .bg-navy-900 { background-color: hsl(var(--navy-900)); }
 
-  /* Bronze/gold colors */
-  .text-bronze-500 { color: hsl(var(--bronze-500)); }
-  .text-bronze-600 { color: hsl(var(--bronze-600)); }
-  .text-bronze-700 { color: hsl(var(--bronze-700)); }
-  .bg-bronze-50 { background-color: hsl(var(--bronze-50)); }
-  .bg-bronze-100 { background-color: hsl(var(--bronze-100)); }
-  .bg-bronze-500 { background-color: hsl(var(--bronze-500)); }
-  .bg-bronze-600 { background-color: hsl(var(--bronze-600)); }
+  /* Gold colors */
+  .text-gold-500 { color: hsl(var(--gold-500)); }
+  .text-gold-600 { color: hsl(var(--gold-600)); }
+  .text-gold-700 { color: hsl(var(--gold-700)); }
+  .bg-gold-50 { background-color: hsl(var(--gold-50)); }
+  .bg-gold-100 { background-color: hsl(var(--gold-100)); }
+  .bg-gold-500 { background-color: hsl(var(--gold-500)); }
+  .bg-gold-600 { background-color: hsl(var(--gold-600)); }
 
-  /* Terracotta colors */
-  .text-terracotta-500 { color: hsl(var(--terracotta-500)); }
-  .text-terracotta-600 { color: hsl(var(--terracotta-600)); }
-  .bg-terracotta-50 { background-color: hsl(var(--terracotta-50)); }
-  .bg-terracotta-100 { background-color: hsl(var(--terracotta-100)); }
-  .bg-terracotta-500 { background-color: hsl(var(--terracotta-500)); }
+  /* Beige colors */
+  .text-beige-500 { color: hsl(var(--beige-500)); }
+  .text-beige-600 { color: hsl(var(--beige-600)); }
+  .bg-beige-50 { background-color: hsl(var(--beige-50)); }
+  .bg-beige-100 { background-color: hsl(var(--beige-100)); }
+  .bg-beige-500 { background-color: hsl(var(--beige-500)); }
 
   /* Enhanced gradients */
   .bg-gradient-primary {
@@ -221,10 +219,6 @@
   
   .bg-gradient-card {
     background: var(--gradient-card);
-  }
-  
-  .bg-gradient-muted {
-    background: var(--gradient-muted);
   }
 
   .bg-gradient-hero {
@@ -243,14 +237,14 @@
   /* Enhanced glass effects */
   .glass-beige {
     backdrop-filter: blur(16px);
-    background: rgba(250, 249, 246, 0.85);
-    border: 1px solid rgba(139, 117, 95, 0.2);
+    background: rgba(250, 248, 244, 0.90);
+    border: 1px solid rgba(30, 41, 59, 0.1);
   }
 
   .glass-beige-dark {
     backdrop-filter: blur(16px);
-    background: rgba(62, 52, 43, 0.4);
-    border: 1px solid rgba(250, 249, 246, 0.1);
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(250, 248, 244, 0.1);
   }
 
   /* Enhanced animations */
@@ -258,8 +252,8 @@
     animation: float 6s ease-in-out infinite;
   }
 
-  .animate-glow-warm {
-    animation: glow-warm 2s ease-in-out infinite alternate;
+  .animate-glow-gold {
+    animation: glow-gold 2s ease-in-out infinite alternate;
   }
 
   .animate-slide-up {
@@ -288,8 +282,8 @@
     box-shadow: var(--shadow-xl);
   }
 
-  .hover-glow-warm:hover {
-    box-shadow: 0 0 30px rgba(184, 134, 11, 0.3);
+  .hover-glow-gold:hover {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
   }
 
   .hover-scale {
@@ -301,24 +295,11 @@
   }
 
   /* Typography enhancements */
-  .text-gradient-bronze {
-    background: linear-gradient(135deg, hsl(35 65% 45%) 0%, hsl(35 55% 52%) 100%);
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(45 100% 42%) 0%, hsl(45 70% 58%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  /* Premium patterns */
-  .pattern-dots {
-    background-image: radial-gradient(circle, rgba(184, 134, 11, 0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-
-  .pattern-grid {
-    background-image: 
-      linear-gradient(rgba(184, 134, 11, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(184, 134, 11, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
   }
 }
 
@@ -331,12 +312,12 @@
   }
 }
 
-@keyframes glow-warm {
+@keyframes glow-gold {
   from {
-    box-shadow: 0 0 10px rgba(184, 134, 11, 0.2);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
   }
   to {
-    box-shadow: 0 0 20px rgba(184, 134, 11, 0.4);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
   }
 }
 
@@ -362,20 +343,20 @@
   }
 }
 
-/* Custom scrollbar with warm tones */
+/* Custom scrollbar with navy tones */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--warm-beige-100));
+  background: hsl(var(--beige-100));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--warm-beige-400));
+  background: hsl(var(--navy-400));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--warm-beige-500));
+  background: hsl(var(--navy-500));
 }

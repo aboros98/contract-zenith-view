@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { 
-  FileText, 
+  Scale, 
   Search, 
   Filter, 
   Download, 
@@ -15,14 +15,15 @@ import {
   AlertTriangle, 
   Clock,
   TrendingUp,
-  Users,
+  Building2,
   Shield,
   BarChart3,
-  Sparkles,
   ArrowUp,
   Activity,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  FileText,
+  Loader2
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -47,7 +48,7 @@ const Dashboard = () => {
     { 
       title: "Total Contracts", 
       value: "247", 
-      icon: FileText, 
+      icon: Building2, 
       trend: "+12%", 
       trendUp: true,
       description: "This month"
@@ -75,6 +76,25 @@ const Dashboard = () => {
       trend: "Improved", 
       trendUp: true,
       description: "Overall rating"
+    }
+  ];
+
+  const processingContracts = [
+    {
+      id: 1,
+      name: "Service Agreement Template v3.3",
+      uploadedAt: "2024-01-20 14:30",
+      estimatedCompletion: "6 minutes",
+      progress: 45,
+      status: "analyzing"
+    },
+    {
+      id: 2,
+      name: "Employment Contract Amendment",
+      uploadedAt: "2024-01-20 14:15",
+      estimatedCompletion: "2 minutes", 
+      progress: 85,
+      status: "finalizing"
     }
   ];
 
@@ -110,7 +130,7 @@ const Dashboard = () => {
     },
     {
       id: 3,
-      name: "Vendor Agreement",
+      name: "Vendor Agreement", 
       totalVersions: 6,
       compliance: 87,
       lastUpdated: "2024-01-10",
@@ -150,28 +170,28 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-warm-gray-50 to-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-beige-50 to-background">
       {/* Premium Header */}
-      <header className="border-b border-warm-gray-200 bg-white/90 backdrop-blur-xl sticky top-0 z-50 shadow-premium-sm">
+      <header className="border-b border-beige-200 bg-white/90 backdrop-blur-xl sticky top-0 z-50 shadow-premium-sm">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-9 h-9 bg-gradient-primary rounded-xl flex items-center justify-center shadow-premium-md">
-                <FileText className="w-5 h-5 text-white" />
+                <Scale className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-serif font-semibold text-foreground tracking-tight">Dobi</span>
             </div>
             <div className="flex items-center space-x-4">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-warm-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-beige-400" />
                 <Input
                   placeholder="Search contracts..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-80 border-warm-gray-200 focus:border-primary/50 bg-white/90 backdrop-blur-sm transition-premium"
+                  className="pl-10 w-80 border-beige-200 focus:border-primary/50 bg-white/90 backdrop-blur-sm transition-premium"
                 />
               </div>
-              <Button variant="outline" size="sm" className="border-warm-gray-200 hover:border-primary/30 transition-premium hover:shadow-premium">
+              <Button variant="outline" size="sm" className="border-beige-200 hover:border-primary/30 transition-premium hover:shadow-premium">
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
@@ -188,7 +208,7 @@ const Dashboard = () => {
         {/* Enhanced Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           {stats.map((stat, index) => (
-            <Card key={index} className="bg-gradient-card border-warm-gray-200 shadow-premium-lg hover:shadow-premium-xl transition-premium hover-lift">
+            <Card key={index} className="bg-gradient-card border-beige-200 shadow-premium-lg hover:shadow-premium-xl transition-premium hover-lift">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
@@ -202,32 +222,68 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-warm-gray-600 mb-1">{stat.title}</p>
+                  <p className="text-sm font-medium text-beige-600 mb-1">{stat.title}</p>
                   <p className="text-3xl font-bold text-foreground mb-1">{stat.value}</p>
-                  <p className="text-xs text-warm-gray-500">{stat.description}</p>
+                  <p className="text-xs text-beige-500">{stat.description}</p>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
+        {/* Processing Contracts Section */}
+        {processingContracts.length > 0 && (
+          <Card className="mb-8 shadow-premium-lg bg-gradient-card border-beige-200">
+            <CardHeader>
+              <CardTitle className="text-lg font-medium flex items-center">
+                <Loader2 className="w-5 h-5 mr-2 text-primary animate-spin" />
+                Processing Contracts
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {processingContracts.map((contract) => (
+                <div key={contract.id} className="flex items-center justify-between p-4 bg-primary/5 rounded-lg border border-primary/20">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h4 className="font-medium text-foreground">{contract.name}</h4>
+                      <Badge variant="outline" className="bg-gold-50 text-gold-700 border-gold-200 capitalize">
+                        {contract.status}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-beige-600">
+                      <span>Uploaded {contract.uploadedAt}</span>
+                      <span>ETA: {contract.estimatedCompletion}</span>
+                    </div>
+                  </div>
+                  <div className="text-right min-w-32">
+                    <div className="text-sm font-medium text-foreground mb-2">
+                      {contract.progress}% complete
+                    </div>
+                    <Progress value={contract.progress} className="w-24" />
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        )}
+
         {/* Contract Families */}
         <div className="space-y-8">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-3xl font-serif font-bold text-foreground mb-2 tracking-tight">Contract Families</h2>
-              <p className="text-warm-gray-600">Manage and analyze your contract templates</p>
+              <p className="text-beige-600">Manage and analyze your contract templates</p>
             </div>
-            <Button variant="outline" size="sm" className="border-warm-gray-200 hover:border-primary/30 transition-premium hover:shadow-premium">
+            <Button variant="outline" size="sm" className="border-beige-200 hover:border-primary/30 transition-premium hover:shadow-premium">
               <Download className="w-4 h-4 mr-2" />
               Export Report
             </Button>
           </div>
 
           {contractFamilies.map((family) => (
-            <Card key={family.id} className="overflow-hidden bg-gradient-card border-warm-gray-200 shadow-premium-lg hover:shadow-premium-xl transition-premium">
+            <Card key={family.id} className="overflow-hidden bg-gradient-card border-beige-200 shadow-premium-lg hover:shadow-premium-xl transition-premium">
               <CardHeader 
-                className="bg-gradient-to-r from-warm-gray-50/80 to-white/90 border-b border-warm-gray-200 cursor-pointer transition-premium hover:bg-gradient-to-r hover:from-warm-gray-100/80 hover:to-warm-gray-50/90"
+                className="bg-gradient-to-r from-beige-50/80 to-white/90 border-b border-beige-200 cursor-pointer transition-premium hover:bg-gradient-to-r hover:from-beige-100/80 hover:to-beige-50/90"
                 onClick={() => toggleFamily(family.id)}
               >
                 <div className="flex items-center justify-between">
@@ -297,7 +353,7 @@ const Dashboard = () => {
                     {family.versions.map((version, index) => (
                       <div 
                         key={index}
-                        className="flex items-center justify-between p-6 hover:bg-warm-gray-50/50 cursor-pointer border-l-4 border-transparent hover:border-primary/20 transition-premium group"
+                        className="flex items-center justify-between p-6 hover:bg-beige-50/50 cursor-pointer border-l-4 border-transparent hover:border-primary/20 transition-premium group"
                         onClick={() => navigate("/analysis")}
                       >
                         <div className="flex items-center space-x-4">

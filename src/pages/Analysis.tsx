@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { 
-  FileText, 
+  Scale, 
   ArrowLeft, 
   Download, 
   MessageSquare, 
@@ -16,12 +15,12 @@ import {
   ChevronRight,
   GitCompare,
   ExternalLink,
-  Building,
+  Building2,
   Calendar,
   DollarSign,
   Users,
-  Scale,
-  TrendingUp
+  TrendingUp,
+  Activity
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import VersionCompare from "@/components/VersionCompare";
@@ -177,7 +176,7 @@ const Analysis = () => {
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Header */}
-      <header className="border-b border-warm-beige-200 glass-beige sticky top-0 z-50 shadow-premium-sm">
+      <header className="border-b border-beige-200 glass-beige sticky top-0 z-50 shadow-premium-sm">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -185,7 +184,7 @@ const Analysis = () => {
                 variant="ghost" 
                 size="sm" 
                 onClick={() => navigate("/dashboard")}
-                className="hover:bg-warm-beige-100 transition-premium"
+                className="hover:bg-beige-100 transition-premium"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Dashboard
@@ -198,13 +197,13 @@ const Analysis = () => {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="hover:shadow-premium transition-premium border-warm-beige-300"
+                className="hover:shadow-premium transition-premium border-beige-300"
                 onClick={() => setShowVersionCompare(true)}
               >
                 <GitCompare className="w-4 h-4 mr-2" />
                 Compare Versions
               </Button>
-              <Button variant="outline" size="sm" className="hover:shadow-premium transition-premium border-warm-beige-300">
+              <Button variant="outline" size="sm" className="hover:shadow-premium transition-premium border-beige-300">
                 <Download className="w-4 h-4 mr-2" />
                 Export Report
               </Button>
@@ -218,20 +217,40 @@ const Analysis = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-6">
-        {/* Enhanced Contract Overview */}
-        <Card className="mb-6 shadow-premium-xl bg-gradient-card border-warm-beige-200">
-          <CardHeader className="pb-4">
+        {/* Enhanced Contract Overview - Merged Card */}
+        <Card className="mb-6 shadow-premium-xl bg-gradient-card border-beige-200">
+          <CardHeader className="pb-6">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center shadow-premium-md">
-                    <FileText className="w-6 h-6 text-white" />
+                    <Scale className="w-6 h-6 text-white" />
                   </div>
-                  <div>
-                    <CardTitle className="text-2xl font-serif font-semibold">{contractData.title}</CardTitle>
-                    <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
+                  <div className="flex-1">
+                    <CardTitle className="text-2xl font-serif font-semibold mb-2">{contractData.title}</CardTitle>
+                    <div className="flex items-center space-x-6 text-sm text-muted-foreground">
                       <span>{contractData.totalClauses} clauses analyzed</span>
                       <span>Last analyzed {contractData.lastAnalyzed}</span>
+                      <div className="flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4 text-amber-600" />
+                        <span>{contractData.issues} issues found</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <div className="text-4xl font-bold text-foreground mb-1">
+                          {contractData.compliance}%
+                        </div>
+                        <Progress value={contractData.compliance} className="w-32 mb-2" />
+                        <div className="text-sm text-muted-foreground">
+                          Overall Compliance
+                        </div>
+                      </div>
+                      <div className="p-4 bg-emerald-100 rounded-xl">
+                        <TrendingUp className="w-8 h-8 text-emerald-600" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -239,76 +258,54 @@ const Analysis = () => {
                 {/* Metadata Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
                   <div className="flex items-center space-x-3">
-                    <Calendar className="w-5 h-5 text-bronze-600" />
+                    <Calendar className="w-5 h-5 text-gold-600" />
                     <div>
                       <p className="text-sm font-medium text-foreground">Date</p>
-                      <p className="text-sm text-warm-beige-600">{contractData.metadata.contractDate}</p>
+                      <p className="text-sm text-beige-600">{contractData.metadata.contractDate}</p>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-3">
-                    <DollarSign className="w-5 h-5 text-bronze-600" />
+                    <DollarSign className="w-5 h-5 text-gold-600" />
                     <div>
                       <p className="text-sm font-medium text-foreground">Value</p>
-                      <p className="text-sm text-warm-beige-600">{contractData.contractValue} {contractData.currency}</p>
+                      <p className="text-sm text-beige-600">{contractData.contractValue} {contractData.currency}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center space-x-3">
-                    <Clock className="w-5 h-5 text-bronze-600" />
+                    <Clock className="w-5 h-5 text-gold-600" />
                     <div>
                       <p className="text-sm font-medium text-foreground">Duration</p>
-                      <p className="text-sm text-warm-beige-600">{contractData.metadata.duration}</p>
+                      <p className="text-sm text-beige-600">{contractData.metadata.duration}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center space-x-3">
-                    <Users className="w-5 h-5 text-bronze-600" />
+                    <Users className="w-5 h-5 text-gold-600" />
                     <div>
                       <p className="text-sm font-medium text-foreground">Parties</p>
-                      <p className="text-sm text-warm-beige-600">2 entities</p>
+                      <p className="text-sm text-beige-600">2 entities</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Parties Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  <div className="p-4 bg-bronze-50 rounded-lg border border-bronze-200">
-                    <p className="text-xs font-medium text-bronze-600 mb-1">Provider</p>
+                  <div className="p-4 bg-gold-50 rounded-lg border border-gold-200">
+                    <p className="text-xs font-medium text-gold-600 mb-1">Provider</p>
                     <p className="text-sm font-semibold text-foreground">{contractData.parties.provider}</p>
                   </div>
-                  <div className="p-4 bg-bronze-50 rounded-lg border border-bronze-200">
-                    <p className="text-xs font-medium text-bronze-600 mb-1">Beneficiary</p>
+                  <div className="p-4 bg-gold-50 rounded-lg border border-gold-200">
+                    <p className="text-xs font-medium text-gold-600 mb-1">Beneficiary</p>
                     <p className="text-sm font-semibold text-foreground">{contractData.parties.beneficiary}</p>
                   </div>
                 </div>
 
                 {/* Contract Object */}
-                <div className="p-4 bg-warm-beige-50 rounded-lg border border-warm-beige-200">
-                  <p className="text-xs font-medium text-warm-beige-600 mb-1">Contract Object</p>
+                <div className="p-4 bg-beige-50 rounded-lg border border-beige-200">
+                  <p className="text-xs font-medium text-beige-600 mb-1">Contract Object</p>
                   <p className="text-sm text-foreground">{contractData.metadata.contractObject}</p>
-                </div>
-              </div>
-
-              {/* Compliance Score */}
-              <div className="text-right ml-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="text-right">
-                    <div className="text-4xl font-bold text-foreground mb-1">
-                      {contractData.compliance}%
-                    </div>
-                    <Progress value={contractData.compliance} className="w-32 mb-2" />
-                    <div className="text-sm text-muted-foreground">
-                      Overall Compliance
-                    </div>
-                  </div>
-                  <div className="p-4 bg-emerald-100 rounded-xl">
-                    <TrendingUp className="w-8 h-8 text-emerald-600" />
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <AlertTriangle className="w-4 h-4 text-amber-600" />
-                  <span className="text-warm-beige-600">{contractData.issues} issues found</span>
                 </div>
               </div>
             </div>
@@ -318,7 +315,7 @@ const Analysis = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Document Panel */}
           <div className="lg:col-span-2">
-            <Card className="shadow-premium-lg bg-gradient-card border-warm-beige-200">
+            <Card className="shadow-premium-lg bg-gradient-card border-beige-200">
               <CardHeader>
                 <CardTitle className="text-lg font-medium">Document Analysis</CardTitle>
               </CardHeader>
@@ -399,8 +396,8 @@ const Analysis = () => {
 
           {/* Enhanced Analysis Panel */}
           <div>
-            {selectedClause && clauseMetadata[selectedClause] ? (
-              <Card className="shadow-premium-lg bg-gradient-card border-warm-beige-200">
+            {selectedClause ? (
+              <Card className="shadow-premium-lg bg-gradient-card border-beige-200">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg font-medium flex items-center">
@@ -497,9 +494,9 @@ const Analysis = () => {
                 </CardContent>
               </Card>
             ) : (
-              <Card className="shadow-premium-lg bg-gradient-card border-warm-beige-200">
+              <Card className="shadow-premium-lg bg-gradient-card border-beige-200">
                 <CardContent className="p-12 text-center">
-                  <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                  <Scale className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-foreground mb-2">
                     Select a Clause
                   </h3>
