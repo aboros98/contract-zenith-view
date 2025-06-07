@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -123,10 +124,10 @@ const Analysis = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "compliant": return <CheckCircle className="w-5 h-5 text-emerald-600" />;
-      case "partial": return <AlertTriangle className="w-5 h-5 text-amber-600" />;
-      case "non-compliant": return <AlertTriangle className="w-5 h-5 text-red-600" />;
-      default: return <Clock className="w-5 h-5 text-slate-400" />;
+      case "compliant": return <CheckCircle className="w-4 h-4 text-emerald-600" />;
+      case "partial": return <AlertTriangle className="w-4 h-4 text-amber-600" />;
+      case "non-compliant": return <AlertTriangle className="w-4 h-4 text-red-600" />;
+      default: return <Clock className="w-4 h-4 text-muted-foreground" />;
     }
   };
 
@@ -135,7 +136,7 @@ const Analysis = () => {
       case "compliant": return "border-l-emerald-500 bg-emerald-50/30";
       case "partial": return "border-l-amber-500 bg-amber-50/30";
       case "non-compliant": return "border-l-red-500 bg-red-50/30";
-      default: return "border-l-slate-200 bg-slate-50/30";
+      default: return "border-l-border bg-muted/30";
     }
   };
 
@@ -154,37 +155,37 @@ const Analysis = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="glass sticky top-0 z-50 border-b border-slate-200/40">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      <header className="glass sticky top-0 z-50 border-b border-border">
+        <div className="max-w-7xl mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={() => navigate("/dashboard")}
-                className="btn-glass h-10 px-4"
+                className="btn-glass h-9 px-3"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Dashboard
               </Button>
-              <div className="flex items-center text-sm text-slate-600 bg-white/60 px-3 py-1.5 rounded-lg">
-                <FileText className="w-4 h-4 mr-2" />
+              <div className="flex items-center text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded-md">
+                <FileText className="w-3 h-3 mr-1" />
                 Service Agreement Template &gt; v3.2 &gt; Analysis
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="btn-glass h-10 px-4"
+                className="btn-glass h-9 px-3"
                 onClick={() => setShowVersionCompare(true)}
               >
                 <GitCompare className="w-4 h-4 mr-2" />
                 Compare Versions
               </Button>
-              <Button variant="outline" size="sm" className="btn-glass h-10 px-4">
+              <Button variant="outline" size="sm" className="btn-glass h-9 px-3">
                 <Download className="w-4 h-4 mr-2" />
                 Export Report
               </Button>
@@ -193,108 +194,104 @@ const Analysis = () => {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-6 py-6">
         {/* Contract Overview */}
-        <Card className="mb-8 card-premium">
-          <CardHeader className="pb-6">
+        <Card className="mb-6 glass-card">
+          <CardHeader className="pb-4">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="icon-container">
-                    <FileText className="w-6 h-6 text-primary" />
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <CardTitle className="text-2xl mb-3 text-slate-900">{contractData.title}</CardTitle>
-                    <div className="flex items-center space-x-6 text-slate-600">
-                      <span className="flex items-center gap-2">
-                        <Eye className="w-4 h-4" />
+                    <CardTitle className="text-xl mb-2 text-foreground">{contractData.title}</CardTitle>
+                    <div className="flex items-center space-x-4 text-muted-foreground text-sm">
+                      <span className="flex items-center gap-1">
+                        <Eye className="w-3 h-3" />
                         {contractData.totalClauses} clauses analyzed
                       </span>
                       <span>Last analyzed {contractData.lastAnalyzed}</span>
-                      <div className="flex items-center gap-2">
-                        <AlertTriangle className="w-4 h-4 text-amber-600" />
+                      <div className="flex items-center gap-1">
+                        <AlertTriangle className="w-3 h-3 text-amber-600" />
                         <span>{contractData.issues} issues found</span>
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="flex items-center gap-6">
-                      <div className="text-right">
-                        <div className="text-4xl font-bold text-slate-900 mb-2">
-                          {contractData.compliance}%
-                        </div>
-                        <Progress value={contractData.compliance} className="w-32 h-3 mb-3" />
-                        <div className="text-base font-medium text-slate-600">
-                          Overall Compliance
-                        </div>
-                      </div>
+                    <div className="text-3xl font-bold text-foreground mb-1">
+                      {contractData.compliance}%
+                    </div>
+                    <Progress value={contractData.compliance} className="w-24 h-2 mb-2" />
+                    <div className="text-sm font-medium text-muted-foreground">
+                      Overall Compliance
                     </div>
                   </div>
                 </div>
 
                 {/* Metadata Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                  <div className="flex items-center space-x-3 p-4 bg-white/60 rounded-lg">
-                    <Calendar className="w-5 h-5 text-primary" />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                  <div className="flex items-center space-x-2 p-3 bg-muted/50 rounded-lg">
+                    <Calendar className="w-4 h-4 text-primary" />
                     <div>
-                      <p className="font-semibold text-slate-900 text-sm">Date</p>
-                      <p className="text-slate-600 text-sm">{contractData.metadata.contractDate}</p>
+                      <p className="font-semibold text-foreground text-xs">Date</p>
+                      <p className="text-muted-foreground text-xs">{contractData.metadata.contractDate}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center space-x-3 p-4 bg-white/60 rounded-lg">
-                    <CreditCard className="w-5 h-5 text-primary" />
+                  <div className="flex items-center space-x-2 p-3 bg-muted/50 rounded-lg">
+                    <CreditCard className="w-4 h-4 text-primary" />
                     <div>
-                      <p className="font-semibold text-slate-900 text-sm">Value</p>
-                      <p className="text-slate-600 text-sm">{contractData.contractValue} {contractData.currency}</p>
+                      <p className="font-semibold text-foreground text-xs">Value</p>
+                      <p className="text-muted-foreground text-xs">{contractData.contractValue} {contractData.currency}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3 p-4 bg-white/60 rounded-lg">
-                    <Clock className="w-5 h-5 text-primary" />
+                  <div className="flex items-center space-x-2 p-3 bg-muted/50 rounded-lg">
+                    <Clock className="w-4 h-4 text-primary" />
                     <div>
-                      <p className="font-semibold text-slate-900 text-sm">Duration</p>
-                      <p className="text-slate-600 text-sm">{contractData.metadata.duration}</p>
+                      <p className="font-semibold text-foreground text-xs">Duration</p>
+                      <p className="text-muted-foreground text-xs">Training programs</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3 p-4 bg-white/60 rounded-lg">
-                    <Users className="w-5 h-5 text-primary" />
+                  <div className="flex items-center space-x-2 p-3 bg-muted/50 rounded-lg">
+                    <Users className="w-4 h-4 text-primary" />
                     <div>
-                      <p className="font-semibold text-slate-900 text-sm">Parties</p>
-                      <p className="text-slate-600 text-sm">2 entities</p>
+                      <p className="font-semibold text-foreground text-xs">Parties</p>
+                      <p className="text-muted-foreground text-xs">2 entities</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Parties Information */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
-                    <p className="text-sm font-semibold text-primary mb-2">Provider</p>
-                    <p className="font-semibold text-slate-900 text-sm">{contractData.parties.provider}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                  <div className="p-3 bg-primary/5 rounded-lg border border-primary/20">
+                    <p className="text-xs font-semibold text-primary mb-1">Provider</p>
+                    <p className="font-semibold text-foreground text-xs">{contractData.parties.provider}</p>
                   </div>
-                  <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
-                    <p className="text-sm font-semibold text-primary mb-2">Beneficiary</p>
-                    <p className="font-semibold text-slate-900 text-sm">{contractData.parties.beneficiary}</p>
+                  <div className="p-3 bg-primary/5 rounded-lg border border-primary/20">
+                    <p className="text-xs font-semibold text-primary mb-1">Beneficiary</p>
+                    <p className="font-semibold text-foreground text-xs">{contractData.parties.beneficiary}</p>
                   </div>
                 </div>
 
                 {/* Contract Object */}
-                <div className="p-4 bg-white/60 rounded-lg border border-slate-200/60">
-                  <p className="text-sm font-semibold text-slate-600 mb-2">Contract Object</p>
-                  <p className="text-slate-900 text-sm">{contractData.metadata.contractObject}</p>
+                <div className="p-3 bg-muted/50 rounded-lg border border-border">
+                  <p className="text-xs font-semibold text-muted-foreground mb-1">Contract Object</p>
+                  <p className="text-foreground text-xs">{contractData.metadata.contractObject}</p>
                 </div>
               </div>
             </div>
           </CardHeader>
         </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Document Panel */}
           <div className="lg:col-span-2">
-            <Card className="card-premium">
+            <Card className="glass-card">
               <CardHeader>
-                <CardTitle className="text-xl text-slate-900">Document Analysis</CardTitle>
+                <CardTitle className="text-lg text-foreground">Document Analysis</CardTitle>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="space-y-1">
@@ -302,18 +299,18 @@ const Analysis = () => {
                     <div key={section.id}>
                       {/* Section Header */}
                       <div 
-                        className="flex items-center justify-between p-6 bg-white/60 border-b border-slate-200/60 cursor-pointer transition-colors duration-200 hover:bg-white/80"
+                        className="flex items-center justify-between p-4 bg-muted/30 border-b border-border cursor-pointer hover:bg-muted/50"
                         onClick={() => toggleSection(section.id)}
                       >
-                        <div className="flex items-center space-x-3">
+                        <div className="flex items-center space-x-2">
                           <ChevronRight 
-                            className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
+                            className={`w-3 h-3 text-muted-foreground transition-transform duration-200 ${
                               expandedSections.has(section.id) ? 'rotate-90' : ''
                             }`}
                           />
-                          <span className="font-semibold text-slate-900">{section.title}</span>
+                          <span className="font-semibold text-foreground text-sm">{section.title}</span>
                         </div>
-                        <Badge variant="secondary" className="bg-slate-100 text-slate-600 px-2 py-1 text-xs">
+                        <Badge variant="secondary" className="bg-muted text-muted-foreground px-2 py-0.5 text-xs">
                           {section.clauses.length} clauses
                         </Badge>
                       </div>
@@ -322,7 +319,7 @@ const Analysis = () => {
                       <div 
                         className={`overflow-hidden transition-all duration-300 ${
                           expandedSections.has(section.id) 
-                            ? 'max-h-80 opacity-100' 
+                            ? 'max-h-64 opacity-100' 
                             : 'max-h-0 opacity-0'
                         }`}
                       >
@@ -330,30 +327,30 @@ const Analysis = () => {
                           {section.clauses.map((clause) => (
                             <div
                               key={clause.id}
-                              className={`p-6 border-l-4 cursor-pointer transition-colors duration-200 hover:bg-white/60 ${
+                              className={`p-4 border-l-4 cursor-pointer hover:bg-muted/30 ${
                                 getStatusColor(clause.status)
                               } ${
-                                selectedClause === clause.id ? "bg-white/80" : ""
+                                selectedClause === clause.id ? "bg-muted/50" : ""
                               }`}
                               onClick={() => setSelectedClause(clause.id)}
                             >
                               <div className="flex items-start justify-between">
-                                <div className="flex-1 pr-4">
-                                  <div className="flex items-center space-x-3 mb-3">
+                                <div className="flex-1 pr-3">
+                                  <div className="flex items-center space-x-2 mb-2">
                                     {getStatusIcon(clause.status)}
-                                    <span className="font-semibold text-slate-900">
+                                    <span className="font-semibold text-foreground text-sm">
                                       Clause {clause.id}
                                     </span>
-                                    <span className="text-slate-600 text-sm">
+                                    <span className="text-muted-foreground text-xs">
                                       {clause.compliance}% compliant
                                     </span>
                                   </div>
-                                  <p className="text-slate-700 leading-relaxed text-sm">
+                                  <p className="text-foreground text-xs leading-relaxed">
                                     {clause.text}
                                   </p>
                                   {clause.issues.length > 0 && (
-                                    <div className="mt-3">
-                                      <span className="text-sm text-red-600 font-medium">
+                                    <div className="mt-2">
+                                      <span className="text-xs text-red-600 font-medium">
                                         {clause.issues.length} issue(s) found
                                       </span>
                                     </div>
@@ -374,26 +371,26 @@ const Analysis = () => {
           {/* Analysis Panel */}
           <div>
             {selectedClause ? (
-              <Card className="card-premium">
+              <Card className="glass-card">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg flex items-center text-slate-900">
-                      <div className="icon-container-sm mr-3">
-                        <FileText className="w-4 h-4 text-primary" />
+                    <CardTitle className="text-base flex items-center text-foreground">
+                      <div className="w-7 h-7 rounded-lg bg-primary/20 flex items-center justify-center mr-2">
+                        <FileText className="w-3 h-3 text-primary" />
                       </div>
                       Clause {selectedClause} Analysis
                     </CardTitle>
-                    <Button variant="ghost" size="sm" onClick={() => setSelectedClause(null)} className="btn-glass">
+                    <Button variant="ghost" size="sm" onClick={() => setSelectedClause(null)} className="btn-glass h-7 w-7 p-0">
                       ×
                     </Button>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-4">
                   {/* Clause Text */}
                   <div>
-                    <h4 className="font-semibold text-slate-900 mb-3 text-sm">Clause Text</h4>
-                    <div className="p-4 bg-white/60 rounded-lg">
-                      <p className="text-slate-700 italic text-sm">
+                    <h4 className="font-semibold text-foreground mb-2 text-xs">Clause Text</h4>
+                    <div className="p-3 bg-muted/50 rounded-lg">
+                      <p className="text-foreground italic text-xs">
                         "{clauseMetadata[selectedClause]?.clause}"
                       </p>
                     </div>
@@ -401,28 +398,28 @@ const Analysis = () => {
 
                   {/* Compliance Status */}
                   <div>
-                    <h4 className="font-semibold text-slate-900 mb-3 text-sm">Compliance Status</h4>
-                    <div className="flex items-center space-x-3 mb-3">
+                    <h4 className="font-semibold text-foreground mb-2 text-xs">Compliance Status</h4>
+                    <div className="flex items-center space-x-2 mb-2">
                       {getStatusIcon(sections.find(s => s.clauses.some(c => c.id === selectedClause))?.clauses.find(c => c.id === selectedClause)?.status || "")}
-                      <span className="font-medium capitalize text-slate-900 text-sm">
+                      <span className="font-medium capitalize text-foreground text-xs">
                         {sections.find(s => s.clauses.some(c => c.id === selectedClause))?.clauses.find(c => c.id === selectedClause)?.status?.replace("-", " ")}
                       </span>
                     </div>
                     <Progress 
                       value={sections.find(s => s.clauses.some(c => c.id === selectedClause))?.clauses.find(c => c.id === selectedClause)?.compliance || 0} 
-                      className="w-full h-2"
+                      className="w-full h-1.5"
                     />
                   </div>
 
                   {/* Legal Articles Analysis */}
                   <div>
-                    <h4 className="font-semibold text-slate-900 mb-4 text-sm">Legal Articles Analysis</h4>
-                    <div className="space-y-4">
+                    <h4 className="font-semibold text-foreground mb-3 text-xs">Legal Articles Analysis</h4>
+                    <div className="space-y-3">
                       {clauseMetadata[selectedClause]?.articles?.map((article, index) => (
-                        <div key={index} className="glass-card p-6">
-                          <div className="flex items-start justify-between mb-4">
-                            <div className="flex items-center space-x-3">
-                              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 px-2 py-1 text-xs">
+                        <div key={index} className="glass-card p-4">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex items-center space-x-2">
+                              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 px-1.5 py-0.5 text-xs">
                                 Article {article.articleNumber}
                               </Badge>
                               <Badge 
@@ -432,23 +429,23 @@ const Analysis = () => {
                                 {article.rule.isViolated ? "Violation" : "Compliant"}
                               </Badge>
                             </div>
-                            <ExternalLink className="w-4 h-4 text-primary cursor-pointer" />
+                            <ExternalLink className="w-3 h-3 text-primary cursor-pointer" />
                           </div>
                           
-                          <div className="space-y-4">
+                          <div className="space-y-3">
                             <div>
-                              <p className="text-xs font-semibold text-slate-600 mb-2">Article Text</p>
-                              <p className="text-slate-900 text-sm">{article.articleText}</p>
+                              <p className="text-xs font-semibold text-muted-foreground mb-1">Article Text</p>
+                              <p className="text-foreground text-xs">{article.articleText}</p>
                             </div>
                             
                             <div>
-                              <p className="text-xs font-semibold text-slate-600 mb-2">Rule</p>
-                              <p className="text-slate-900 text-sm">{article.rule.ruleNaturalLanguage}</p>
+                              <p className="text-xs font-semibold text-muted-foreground mb-1">Rule</p>
+                              <p className="text-foreground text-xs">{article.rule.ruleNaturalLanguage}</p>
                             </div>
                             
                             <div>
-                              <p className="text-xs font-semibold text-slate-600 mb-2">Analysis</p>
-                              <p className="text-slate-900 text-sm">{article.rule.justification}</p>
+                              <p className="text-xs font-semibold text-muted-foreground mb-1">Analysis</p>
+                              <p className="text-foreground text-xs">{article.rule.justification}</p>
                             </div>
                           </div>
                         </div>
@@ -458,15 +455,15 @@ const Analysis = () => {
                 </CardContent>
               </Card>
             ) : (
-              <Card className="card-premium">
-                <CardContent className="p-12 text-center">
-                  <div className="icon-container w-12 h-12 mx-auto mb-6">
-                    <FileText className="w-6 h-6 text-primary" />
+              <Card className="glass-card">
+                <CardContent className="p-8 text-center">
+                  <div className="w-10 h-10 mx-auto mb-4 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-3">
+                  <h3 className="text-base font-semibold text-foreground mb-2">
                     Select a Clause
                   </h3>
-                  <p className="text-slate-600 text-sm">
+                  <p className="text-muted-foreground text-xs">
                     Click on any clause in the document to view detailed analysis, legal compliance, and recommendations.
                   </p>
                 </CardContent>

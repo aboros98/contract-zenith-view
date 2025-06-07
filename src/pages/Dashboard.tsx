@@ -99,32 +99,32 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="glass sticky top-0 z-50 border-b border-slate-200/40">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      <header className="glass sticky top-0 z-50 border-b border-border">
+        <div className="max-w-7xl mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="icon-container-sm">
-                <Zap className="w-5 h-5 text-primary" />
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                <Zap className="w-4 h-4 text-primary" />
               </div>
-              <span className="text-xl font-semibold text-slate-900">Dobi</span>
+              <span className="text-lg font-semibold text-foreground">Dobi</span>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
                   placeholder="Search contracts..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-72 h-10 border-slate-200 focus-premium bg-white/90 rounded-lg"
+                  className="pl-9 w-64 h-9 focus-premium"
                 />
               </div>
-              <Button variant="outline" size="sm" className="btn-glass h-10 px-4">
+              <Button variant="outline" size="sm" className="btn-glass h-9 px-3">
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
-              <Button size="sm" className="btn-premium h-10 px-4">
+              <Button size="sm" className="btn-premium h-9 px-3">
                 <Plus className="w-4 h-4 mr-2" />
                 New Contract
               </Button>
@@ -133,23 +133,23 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-6 py-6">
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           {stats.map((stat, index) => (
-            <Card key={index} className="card-premium">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="icon-container">
-                    <stat.icon className="w-6 h-6 text-primary" />
+            <Card key={index} className="glass-card">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <stat.icon className="w-5 h-5 text-primary" />
                   </div>
-                  <div className="text-sm font-medium text-emerald-700 bg-emerald-100 px-2 py-1 rounded-md">
+                  <div className="text-xs font-medium text-emerald-700 bg-emerald-100 px-2 py-1 rounded-md">
                     {stat.trend}
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-600 mb-1">{stat.title}</p>
-                  <p className="text-2xl font-bold text-slate-900">{stat.value}</p>
+                  <p className="text-xs font-medium text-muted-foreground mb-1">{stat.title}</p>
+                  <p className="text-xl font-bold text-foreground">{stat.value}</p>
                 </div>
               </CardContent>
             </Card>
@@ -158,38 +158,38 @@ const Dashboard = () => {
 
         {/* Processing Contracts */}
         {processingContracts.length > 0 && (
-          <Card className="mb-12 card-premium">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-xl flex items-center text-slate-900">
-                <div className="icon-container-sm mr-3">
-                  <Loader2 className="w-5 h-5 text-primary animate-spin" />
+          <Card className="mb-8 glass-card">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center text-foreground">
+                <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center mr-3">
+                  <Loader2 className="w-4 h-4 text-primary animate-spin" />
                 </div>
                 Processing Contracts
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-3">
               {processingContracts.map((contract) => (
-                <div key={contract.id} className="flex items-center justify-between p-6 bg-white/80 rounded-xl border border-slate-200/60">
+                <div key={contract.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border">
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <h4 className="font-semibold text-slate-900">{contract.name}</h4>
-                      <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 capitalize">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h4 className="font-semibold text-foreground text-sm">{contract.name}</h4>
+                      <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 capitalize text-xs">
                         {contract.status}
                       </Badge>
                     </div>
-                    <div className="flex items-center gap-6 text-slate-600 text-sm">
+                    <div className="flex items-center gap-4 text-muted-foreground text-xs">
                       <span>Uploaded {contract.uploadedAt}</span>
                       <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
+                        <Clock className="w-3 h-3" />
                         ETA: {contract.estimatedCompletion}
                       </span>
                     </div>
                   </div>
-                  <div className="text-right min-w-32">
-                    <div className="text-lg font-semibold text-slate-900 mb-2">
-                      {contract.progress}% complete
+                  <div className="text-right min-w-24">
+                    <div className="text-sm font-semibold text-foreground mb-1">
+                      {contract.progress}%
                     </div>
-                    <Progress value={contract.progress} className="w-28 h-2" />
+                    <Progress value={contract.progress} className="w-20 h-1.5" />
                   </div>
                 </div>
               ))}
@@ -198,63 +198,63 @@ const Dashboard = () => {
         )}
 
         {/* Contract Families */}
-        <div className="space-y-8">
+        <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-2">Contract Families</h2>
-              <p className="text-lg text-slate-600">Manage and analyze your contract templates</p>
+              <h2 className="text-2xl font-bold text-foreground mb-1">Contract Families</h2>
+              <p className="text-muted-foreground">Manage and analyze your contract templates</p>
             </div>
-            <Button variant="outline" size="sm" className="btn-glass h-10 px-4">
+            <Button variant="outline" size="sm" className="btn-glass h-9 px-3">
               <Download className="w-4 h-4 mr-2" />
               Export Report
             </Button>
           </div>
 
           {contractFamilies.map((family) => (
-            <Card key={family.id} className="card-premium overflow-hidden">
+            <Card key={family.id} className="glass-card overflow-hidden">
               <CardHeader 
-                className="bg-white/60 border-b border-slate-200/60 cursor-pointer p-6"
+                className="bg-card/60 border-b border-border cursor-pointer p-4"
                 onClick={() => toggleFamily(family.id)}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1 text-left">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="flex items-center gap-2">
                         <ChevronRight 
-                          className={`w-5 h-5 text-slate-400 transition-transform duration-200 ${
+                          className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
                             expandedFamilies.has(family.id) ? 'rotate-90' : ''
                           }`}
                         />
-                        <CardTitle className="text-xl text-slate-900">{family.name}</CardTitle>
+                        <CardTitle className="text-lg text-foreground">{family.name}</CardTitle>
                       </div>
                       <Badge 
                         variant={family.status === "active" ? "default" : "secondary"}
-                        className={`capitalize px-3 py-1 font-medium ${family.status === "active" ? "bg-emerald-100 text-emerald-700 border-emerald-200" : ""}`}
+                        className={`capitalize px-2 py-1 text-xs ${family.status === "active" ? "bg-emerald-100 text-emerald-700 border-emerald-200" : ""}`}
                       >
                         {family.status}
                       </Badge>
                     </div>
-                    <div className="flex items-center space-x-8 text-slate-600">
-                      <div className="flex items-center gap-2">
-                        <Activity className="w-4 h-4" />
-                        <span className="font-medium">{family.totalVersions} versions</span>
+                    <div className="flex items-center space-x-6 text-muted-foreground text-sm">
+                      <div className="flex items-center gap-1">
+                        <Activity className="w-3 h-3" />
+                        <span>{family.totalVersions} versions</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
                         <span>Updated {family.lastUpdated}</span>
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="flex items-center space-x-4 mb-3">
+                    <div className="flex items-center space-x-3 mb-2">
                       <div className="text-right">
-                        <p className="text-sm font-medium text-slate-600 mb-1">Compliance</p>
-                        <p className="text-2xl font-bold text-slate-900">
+                        <p className="text-xs font-medium text-muted-foreground mb-1">Compliance</p>
+                        <p className="text-xl font-bold text-foreground">
                           {family.compliance}%
                         </p>
                       </div>
-                      <div className="w-16">
-                        <Progress value={family.compliance} className="h-2" />
+                      <div className="w-12">
+                        <Progress value={family.compliance} className="h-1.5" />
                       </div>
                     </div>
                   </div>
@@ -265,7 +265,7 @@ const Dashboard = () => {
               <div 
                 className={`overflow-hidden transition-all duration-300 ${
                   expandedFamilies.has(family.id) 
-                    ? 'max-h-80 opacity-100' 
+                    ? 'max-h-64 opacity-100' 
                     : 'max-h-0 opacity-0'
                 }`}
               >
@@ -274,38 +274,38 @@ const Dashboard = () => {
                     {family.versions.map((version, index) => (
                       <div 
                         key={index}
-                        className="flex items-center justify-between p-6 transition-colors duration-200 hover:bg-white/80 cursor-pointer border-l-4 border-transparent hover:border-primary/40"
+                        className="flex items-center justify-between p-4 cursor-pointer border-l-4 border-transparent hover:border-primary/40 hover:bg-card/40"
                         onClick={() => navigate("/analysis")}
                       >
-                        <div className="flex items-center space-x-4">
-                          <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 rounded-full bg-emerald-500" />
                           <div>
-                            <div className="flex items-center gap-3 mb-1">
-                              <span className="font-semibold text-slate-900">{version.version}</span>
-                              <Badge variant="outline" className="text-xs px-2 py-0.5 capitalize border-slate-200">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-semibold text-foreground text-sm">{version.version}</span>
+                              <Badge variant="outline" className="text-xs px-1.5 py-0.5 capitalize border-border">
                                 {version.status}
                               </Badge>
                             </div>
-                            <div className="flex items-center space-x-4 text-slate-600 text-sm">
+                            <div className="flex items-center space-x-3 text-muted-foreground text-xs">
                               <span>{version.date}</span>
                               <span className="flex items-center gap-1">
-                                <AlertTriangle className="w-4 h-4" />
-                                {version.issues} {version.issues === 1 ? 'issue' : 'issues'} found
+                                <AlertTriangle className="w-3 h-3" />
+                                {version.issues} {version.issues === 1 ? 'issue' : 'issues'}
                               </span>
                             </div>
                           </div>
                         </div>
-                        <div className="flex items-center space-x-6">
+                        <div className="flex items-center space-x-4">
                           <div className="text-right">
-                            <div className="text-xl font-bold text-slate-900">
+                            <div className="text-lg font-bold text-foreground">
                               {version.compliance}%
                             </div>
-                            <div className="text-sm text-slate-600">
+                            <div className="text-xs text-muted-foreground">
                               compliant
                             </div>
                           </div>
-                          <Button variant="ghost" size="sm" className="btn-glass">
-                            <Eye className="w-4 h-4" />
+                          <Button variant="ghost" size="sm" className="btn-glass h-8 w-8 p-0">
+                            <Eye className="w-3 h-3" />
                           </Button>
                         </div>
                       </div>

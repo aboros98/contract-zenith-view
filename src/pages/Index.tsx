@@ -50,7 +50,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/20">
+    <div className="min-h-screen bg-background">
       {/* Drag overlay */}
       {dragActive && (
         <div 
@@ -61,13 +61,13 @@ const Index = () => {
           onDrop={handleDrop}
         >
           <div className="text-center">
-            <div className="icon-container w-20 h-20 mx-auto mb-6">
-              <Upload className="w-10 h-10 text-primary" />
+            <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-primary/20 flex items-center justify-center">
+              <Upload className="w-8 h-8 text-primary" />
             </div>
-            <h3 className="text-2xl font-semibold text-slate-900 mb-3">
+            <h3 className="text-xl font-semibold text-foreground mb-2">
               Drop your contract here
             </h3>
-            <p className="text-lg text-slate-600">
+            <p className="text-muted-foreground">
               Release to start analysis
             </p>
           </div>
@@ -78,34 +78,34 @@ const Index = () => {
       {isAnalyzing && (
         <div className="fixed inset-0 z-50 glass flex items-center justify-center">
           <div className="text-center">
-            <div className="relative w-16 h-16 mx-auto mb-6">
-              <div className="icon-container w-16 h-16">
-                <Upload className="w-8 h-8 text-primary pulse-soft" />
+            <div className="relative w-12 h-12 mx-auto mb-4">
+              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                <Upload className="w-6 h-6 text-primary pulse-soft" />
               </div>
-              <div className="absolute inset-0 rounded-full border-3 border-primary/20 border-t-primary animate-spin"></div>
+              <div className="absolute inset-0 rounded-xl border-2 border-primary/30 border-t-primary animate-spin"></div>
             </div>
-            <h3 className="text-2xl font-semibold text-slate-900 mb-4">
+            <h3 className="text-xl font-semibold text-foreground mb-2">
               Analyzing Contract
             </h3>
-            <div className="flex items-center justify-center space-x-2 text-slate-600 mb-3">
-              <div className="w-2 h-2 bg-primary rounded-full animate-bounce" />
-              <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-              <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+            <div className="flex items-center justify-center space-x-1 text-muted-foreground mb-2">
+              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" />
+              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
             </div>
-            <p className="text-slate-600">AI is reading your document...</p>
+            <p className="text-sm text-muted-foreground">AI is reading your document...</p>
           </div>
         </div>
       )}
 
       {/* Header */}
-      <header className="glass sticky top-0 z-40 border-b border-slate-200/40">
-        <div className="max-w-6xl mx-auto px-6 py-4">
+      <header className="glass sticky top-0 z-40 border-b border-border">
+        <div className="max-w-6xl mx-auto px-6 py-3">
           <div className="flex items-center justify-center">
-            <div className="flex items-center space-x-3">
-              <div className="icon-container-sm">
-                <Zap className="w-5 h-5 text-primary" />
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                <Zap className="w-4 h-4 text-primary" />
               </div>
-              <span className="text-xl font-semibold text-slate-900">Dobi</span>
+              <span className="text-lg font-semibold text-foreground">Dobi</span>
             </div>
           </div>
         </div>
@@ -113,40 +113,40 @@ const Index = () => {
 
       {/* Main content */}
       <div 
-        className="flex items-center justify-center min-h-[calc(100vh-100px)] px-6"
+        className="flex items-center justify-center min-h-[calc(100vh-80px)] px-6"
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
-        <div className="w-full max-w-4xl text-center">
-          <div className="mb-12">
-            <h1 className="text-5xl font-bold text-slate-900 mb-6 tracking-tight">
+        <div className="w-full max-w-3xl text-center">
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-foreground mb-4 tracking-tight">
               AI-Powered Contract
               <span className="bg-gradient-accent bg-clip-text text-transparent"> Analysis</span>
             </h1>
-            <p className="text-xl text-slate-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground mb-6 max-w-xl mx-auto">
               Upload your legal documents and get instant compliance insights with detailed AI analysis
             </p>
           </div>
 
           {/* Upload area */}
-          <Card className="card-premium border-2 border-dashed border-slate-300 bg-white/80 max-w-xl mx-auto">
-            <CardContent className="p-8">
+          <Card className="card-premium border-2 border-dashed border-border max-w-md mx-auto mb-8">
+            <CardContent className="p-6">
               <div
-                className="cursor-pointer rounded-xl p-8 text-center transition-colors duration-200 hover:bg-white/90"
+                className="cursor-pointer rounded-lg p-6 text-center"
                 onClick={() => fileInputRef.current?.click()}
               >
-                <div className="icon-container w-16 h-16 mx-auto mb-6">
-                  <Upload className="w-8 h-8 text-primary" />
+                <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-primary/20 flex items-center justify-center">
+                  <Upload className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">
+                <h3 className="text-lg font-semibold text-foreground mb-2">
                   Upload Contract
                 </h3>
-                <p className="text-slate-600 mb-6">
+                <p className="text-sm text-muted-foreground mb-4">
                   PDF, Word, or text documents up to 10MB
                 </p>
-                <Button className="btn-premium px-8 py-3">
+                <Button className="btn-premium">
                   Choose File
                 </Button>
                 <input
@@ -161,34 +161,34 @@ const Index = () => {
           </Card>
 
           {/* Features */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-3xl mx-auto">
-            <div className="text-center p-6 rounded-xl bg-white/60 border border-slate-200/60">
-              <div className="icon-container mx-auto mb-4">
-                <Zap className="w-6 h-6 text-primary" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
+            <div className="text-center p-4 rounded-xl glass-card">
+              <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-primary/20 flex items-center justify-center">
+                <Zap className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Lightning Fast</h3>
-              <p className="text-slate-600">Get results in seconds, not hours</p>
+              <h3 className="text-sm font-semibold text-foreground mb-1">Lightning Fast</h3>
+              <p className="text-xs text-muted-foreground">Get results in seconds</p>
             </div>
             
-            <div className="text-center p-6 rounded-xl bg-white/60 border border-slate-200/60">
-              <div className="icon-container mx-auto mb-4">
-                <CheckCircle className="w-6 h-6 text-primary" />
+            <div className="text-center p-4 rounded-xl glass-card">
+              <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-primary/20 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">AI Accuracy</h3>
-              <p className="text-slate-600">Advanced AI with 99%+ accuracy rate</p>
+              <h3 className="text-sm font-semibold text-foreground mb-1">AI Accuracy</h3>
+              <p className="text-xs text-muted-foreground">99%+ accuracy rate</p>
             </div>
             
-            <div className="text-center p-6 rounded-xl bg-white/60 border border-slate-200/60">
-              <div className="icon-container mx-auto mb-4">
-                <Shield className="w-6 h-6 text-primary" />
+            <div className="text-center p-4 rounded-xl glass-card">
+              <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-primary/20 flex items-center justify-center">
+                <Shield className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Secure & Private</h3>
-              <p className="text-slate-600">Enterprise-grade security standards</p>
+              <h3 className="text-sm font-semibold text-foreground mb-1">Secure & Private</h3>
+              <p className="text-xs text-muted-foreground">Enterprise security</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-center gap-3 mt-8 text-sm text-slate-500">
-            <Shield className="w-4 h-4" />
+          <div className="flex items-center justify-center gap-2 mt-6 text-xs text-muted-foreground">
+            <Shield className="w-3 h-3" />
             <span>Enterprise security • GDPR compliant • SOC 2 certified</span>
           </div>
         </div>
