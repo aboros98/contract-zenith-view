@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,7 +24,6 @@ import { useNavigate } from "react-router-dom";
 
 const Analysis = () => {
   const [selectedClause, setSelectedClause] = useState<number | null>(null);
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
   const navigate = useNavigate();
 
   const contractData = {
@@ -136,29 +134,30 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "compliant": return "bg-emerald-500";
-      case "partial": return "bg-amber-500";
-      case "non-compliant": return "bg-red-500";
-      default: return "bg-gray-400";
+      case "compliant": return "text-emerald-500";
+      case "partial": return "text-amber-500";
+      case "non-compliant": return "text-red-500";
+      default: return "text-muted-foreground";
     }
   };
 
-  const getComplianceColor = (compliance: number) => {
-    if (compliance >= 95) return "text-emerald-700";
-    if (compliance >= 75) return "text-amber-700";
-    return "text-red-700";
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "compliant": return CheckCircle;
+      case "partial": return AlertTriangle;
+      case "non-compliant": return X;
+      default: return Clock;
+    }
   };
 
   const handleClauseClick = (clauseId: number) => {
-    setSelectedClause(clauseId);
-    setIsPanelOpen(true);
+    setSelectedClause(selectedClause === clauseId ? null : clauseId);
   };
 
   const renderContractWithIndicators = () => {
     let result = fullContractText;
     let offset = 0;
 
-    // Sort clauses by start position to avoid conflicts
     const sortedClauses = [...clauses].sort((a, b) => a.startPos - b.startPos);
 
     sortedClauses.forEach(clause => {
@@ -166,11 +165,18 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
       const clauseText = clause.text;
       const afterText = result.substring(clause.startPos + offset + clauseText.length);
 
-      const indicator = `<span class="clause-indicator ${getStatusColor(clause.status)}" data-clause-id="${clause.id}"></span>`;
-      const wrappedClause = `<span class="clause-text ${selectedClause === clause.id ? 'selected' : ''}" data-clause-id="${clause.id}">${clauseText}</span>`;
+      const StatusIcon = getStatusIcon(clause.status);
+      const wrappedClause = `<span class="clause-container" data-clause-id="${clause.id}">
+        <span class="clause-indicator ${getStatusColor(clause.status)}" data-clause-id="${clause.id}">
+          <svg class="w-2 h-2" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </span>
+        <span class="clause-text ${selectedClause === clause.id ? 'selected' : ''}" data-clause-id="${clause.id}">${clauseText}</span>
+      </span>`;
 
-      result = beforeText + indicator + wrappedClause + afterText;
-      offset += indicator.length + wrappedClause.length - clauseText.length;
+      result = beforeText + wrappedClause + afterText;
+      offset += wrappedClause.length - clauseText.length;
     });
 
     return result;
@@ -179,94 +185,96 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
   const selectedClauseData = clauses.find(c => c.id === selectedClause);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Professional Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-full px-6 py-4">
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="bg-card border-b border-border sticky top-0 z-50 backdrop-blur-sm bg-card/95">
+        <div className="max-w-full px-8 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-6">
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={() => navigate("/dashboard")}
-                className="text-gray-600 hover:text-gray-900"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Dashboard
+                Dashboard
               </Button>
-              <div className="text-sm text-gray-500">
-                Service Agreement Template › v3.2 › Analysis
+              <div className="text-sm text-muted-foreground font-mono">
+                contracts › agreements › analysis
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="border-border">
                 <GitCompare className="w-4 h-4 mr-2" />
-                Compare Versions
+                Compare
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="border-border">
                 <Download className="w-4 h-4 mr-2" />
-                Export Report
+                Export
               </Button>
               <Button size="sm" className="bg-primary text-primary-foreground">
                 <MessageSquare className="w-4 h-4 mr-2" />
-                Ask AI
+                AI Assistant
               </Button>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="flex h-[calc(100vh-80px)]">
-        {/* Main Contract View */}
+      <div className="flex h-[calc(100vh-100px)]">
+        {/* Main Document View */}
         <div className="flex-1 flex flex-col">
-          {/* Document Header */}
-          <div className="bg-white border-b border-gray-200 px-8 py-6">
-            <div className="flex items-center justify-between mb-4">
+          {/* Document Metadata */}
+          <div className="bg-card border-b border-border px-12 py-8">
+            <div className="flex items-start justify-between mb-6">
               <div>
-                <h1 className="text-2xl font-semibold text-charcoal mb-2">{contractData.title}</h1>
-                <div className="flex items-center space-x-6 text-sm text-gray-600">
+                <h1 className="text-3xl font-light text-foreground mb-3 tracking-tight">
+                  {contractData.title}
+                </h1>
+                <div className="flex items-center space-x-8 text-sm text-muted-foreground font-mono">
                   <span className="flex items-center">
                     <Building className="w-4 h-4 mr-2" />
                     {contractData.metadata.contractValue} {contractData.metadata.currency}
                   </span>
-                  <span>{contractData.totalClauses} clauses analyzed</span>
-                  <span>Last analyzed {contractData.lastAnalyzed}</span>
+                  <span>{contractData.totalClauses} sections</span>
+                  <span>analyzed {contractData.lastAnalyzed}</span>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-3xl font-bold text-emerald-700 mb-2">
+                <div className="text-4xl font-light text-foreground mb-3">
                   {contractData.compliance}%
                 </div>
                 <Progress value={contractData.compliance} className="w-32 mb-2" />
-                <div className="text-sm text-gray-600">
-                  {contractData.issues} issues found
+                <div className="text-sm text-muted-foreground font-mono">
+                  compliance score
                 </div>
               </div>
             </div>
 
-            {/* Legend */}
-            <div className="flex items-center space-x-6 text-xs">
+            {/* Status Legend */}
+            <div className="flex items-center space-x-8 text-xs font-mono">
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="text-gray-600">Compliant</span>
+                <span className="text-muted-foreground">compliant</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-                <span className="text-gray-600">Partial Compliance</span>
+                <span className="text-muted-foreground">partial</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                <span className="text-gray-600">Non-compliant</span>
+                <span className="text-muted-foreground">non-compliant</span>
               </div>
             </div>
           </div>
 
           {/* Contract Document */}
           <div className="flex-1 overflow-hidden">
-            <div className="h-full overflow-y-auto bg-white">
-              <div className="max-w-4xl mx-auto px-12 py-8">
+            <div className="h-full overflow-y-auto bg-card">
+              <div className="max-w-4xl mx-auto px-16 py-12">
                 <div 
-                  className="font-mono text-sm leading-relaxed text-charcoal whitespace-pre-wrap relative"
+                  className="font-mono text-sm leading-7 text-foreground whitespace-pre-wrap tracking-wide"
                   dangerouslySetInnerHTML={{ __html: renderContractWithIndicators() }}
                   onClick={(e) => {
                     const target = e.target as HTMLElement;
@@ -282,92 +290,106 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
         </div>
 
         {/* Analysis Panel */}
-        {isPanelOpen && selectedClauseData && (
-          <div className="w-96 bg-white border-l border-gray-200 flex flex-col animate-slide-in-right">
+        {selectedClauseData && (
+          <div className="w-96 bg-card border-l border-border flex flex-col animate-slide-in-right">
             {/* Panel Header */}
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex items-center justify-between">
+            <div className="px-8 py-6 border-b border-border">
+              <div className="flex items-center justify-between mb-4">
                 <div>
                   <div className="flex items-center space-x-3 mb-2">
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs font-mono border-border">
                       {selectedClauseData.number}
                     </Badge>
-                    <div className={`w-2 h-2 rounded-full ${getStatusColor(selectedClauseData.status)}`}></div>
-                    <span className={`text-sm font-semibold ${getComplianceColor(selectedClauseData.compliance)}`}>
-                      {selectedClauseData.compliance}%
-                    </span>
+                    <div className={`w-2 h-2 rounded-full ${getStatusColor(selectedClauseData.status).replace('text-', 'bg-')}`}></div>
                   </div>
-                  <h3 className="font-semibold text-charcoal">{selectedClauseData.title}</h3>
+                  <h3 className="font-medium text-foreground text-lg tracking-tight">
+                    {selectedClauseData.title}
+                  </h3>
                 </div>
                 <Button 
                   variant="ghost" 
                   size="sm"
-                  onClick={() => setIsPanelOpen(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  onClick={() => setSelectedClause(null)}
+                  className="text-muted-foreground hover:text-foreground"
                 >
                   <X className="w-4 h-4" />
                 </Button>
               </div>
+              <div className="text-2xl font-light text-foreground">
+                {selectedClauseData.compliance}%
+              </div>
             </div>
 
             {/* Panel Content */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            <div className="flex-1 overflow-y-auto p-8 space-y-8">
               {/* Clause Text */}
               <div>
-                <p className="text-xs font-medium text-gray-500 mb-2">Clause Text</p>
-                <p className="text-sm text-charcoal italic bg-gray-50 p-3 rounded-lg">
+                <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wider">
+                  Clause Text
+                </p>
+                <p className="text-sm text-foreground leading-relaxed bg-muted/30 p-4 rounded-lg border border-border">
                   "{selectedClauseData.text}"
                 </p>
               </div>
 
-              {/* Status Overview */}
+              {/* Analysis Summary */}
               <div>
-                <p className="text-xs font-medium text-gray-500 mb-3">Status Overview</p>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Compliance Score</span>
-                    <span className={`text-sm font-semibold ${getComplianceColor(selectedClauseData.compliance)}`}>
+                <p className="text-xs font-medium text-muted-foreground mb-4 uppercase tracking-wider">
+                  Analysis
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between py-2">
+                    <span className="text-sm text-muted-foreground">Compliance</span>
+                    <span className="text-sm font-medium text-foreground">
                       {selectedClauseData.compliance}%
                     </span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Risk Level</span>
-                    <span className="text-sm font-medium capitalize text-charcoal">
+                  <div className="flex items-center justify-between py-2">
+                    <span className="text-sm text-muted-foreground">Risk Level</span>
+                    <span className="text-sm font-medium text-foreground capitalize">
                       {selectedClauseData.riskLevel}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Issues Found</span>
-                    <span className="text-sm font-medium text-charcoal">
+                  <div className="flex items-center justify-between py-2">
+                    <span className="text-sm text-muted-foreground">Issues</span>
+                    <span className="text-sm font-medium text-foreground">
                       {selectedClauseData.issues}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Legal Analysis */}
+              {/* Detailed Analysis */}
               <div>
-                <p className="text-xs font-medium text-gray-500 mb-3">Legal Analysis</p>
-                <div className="space-y-4">
+                <p className="text-xs font-medium text-muted-foreground mb-4 uppercase tracking-wider">
+                  Legal Assessment
+                </p>
+                <div className="space-y-6">
                   <div>
-                    <p className="text-xs font-medium text-gray-600 mb-1">Compliance Assessment</p>
-                    <p className="text-sm text-charcoal">
+                    <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">
+                      Compliance
+                    </p>
+                    <p className="text-sm text-foreground leading-relaxed">
                       This clause meets Romanian Civil Code requirements for price determination under Art. 1660. 
                       The pricing structure is clearly defined and legally enforceable.
                     </p>
                   </div>
                   
                   <div>
-                    <p className="text-xs font-medium text-gray-600 mb-1">Risk Factors</p>
-                    <p className="text-sm text-charcoal">
+                    <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">
+                      Risk Assessment
+                    </p>
+                    <p className="text-sm text-foreground leading-relaxed">
                       Low risk profile. No significant legal vulnerabilities identified. 
                       Standard commercial terms apply.
                     </p>
                   </div>
                   
                   <div>
-                    <p className="text-xs font-medium text-gray-600 mb-1">Recommendations</p>
-                    <p className="text-sm text-charcoal">
+                    <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">
+                      Recommendations
+                    </p>
+                    <p className="text-sm text-foreground leading-relaxed">
                       No immediate changes required. Consider adding inflation adjustment clause 
                       for contracts exceeding 12 months duration.
                     </p>
@@ -376,14 +398,14 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
               </div>
 
               {/* Actions */}
-              <div className="pt-4 border-t border-gray-200">
-                <Button variant="outline" size="sm" className="w-full mb-3">
+              <div className="pt-6 border-t border-border space-y-3">
+                <Button variant="outline" size="sm" className="w-full border-border justify-start">
                   <ExternalLink className="w-4 h-4 mr-2" />
-                  View Legal References
+                  Legal References
                 </Button>
-                <Button variant="outline" size="sm" className="w-full">
+                <Button variant="outline" size="sm" className="w-full border-border justify-start">
                   <Scale className="w-4 h-4 mr-2" />
-                  Compare with Standards
+                  Compare Standards
                 </Button>
               </div>
             </div>
@@ -391,37 +413,49 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
         )}
       </div>
 
-      <style jsx>{`
-        .clause-indicator {
-          display: inline-block;
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          margin-right: 8px;
-          margin-left: -14px;
+      <style>{`
+        .clause-container {
           position: relative;
-          top: -2px;
+          display: inline;
+        }
+        
+        .clause-indicator {
+          position: absolute;
+          left: -20px;
+          top: 2px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.6;
+          transition: opacity 0.2s ease;
         }
         
         .clause-text {
           cursor: pointer;
-          transition: background-color 0.2s ease;
-          padding: 2px 4px;
-          border-radius: 4px;
+          transition: all 0.2s ease;
+          padding: 1px 2px;
+          border-radius: 3px;
+          position: relative;
         }
         
         .clause-text:hover {
-          background-color: rgba(59, 130, 246, 0.1);
+          background-color: rgba(59, 130, 246, 0.08);
+        }
+        
+        .clause-text:hover + .clause-indicator,
+        .clause-container:hover .clause-indicator {
+          opacity: 1;
         }
         
         .clause-text.selected {
-          background-color: rgba(59, 130, 246, 0.15);
-          border-left: 3px solid rgb(59, 130, 246);
-          padding-left: 8px;
+          background-color: rgba(59, 130, 246, 0.12);
+          border-left: 2px solid rgb(59, 130, 246);
+          padding-left: 6px;
+          margin-left: 2px;
         }
         
         .animate-slide-in-right {
-          animation: slideInRight 0.3s ease-out;
+          animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         @keyframes slideInRight {
