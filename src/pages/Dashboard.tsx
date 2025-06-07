@@ -14,12 +14,9 @@ import {
   TrendingUp,
   Shield,
   BarChart3,
-  ArrowUp,
   ChevronRight,
   FileText,
   Loader2,
-  CreditCard,
-  Users,
   Activity
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -42,38 +39,10 @@ const Dashboard = () => {
   };
 
   const stats = [
-    { 
-      title: "Total Contracts", 
-      value: "247", 
-      icon: FileText, 
-      trend: "+12%", 
-      trendUp: true,
-      description: "This month"
-    },
-    { 
-      title: "Compliance Rate", 
-      value: "94%", 
-      icon: Shield, 
-      trend: "+3%", 
-      trendUp: true,
-      description: "Quality score"
-    },
-    { 
-      title: "Active Reviews", 
-      value: "18", 
-      icon: Clock, 
-      trend: "+5%", 
-      trendUp: true,
-      description: "In progress"
-    },
-    { 
-      title: "Risk Score", 
-      value: "Low", 
-      icon: BarChart3, 
-      trend: "Improved", 
-      trendUp: true,
-      description: "Overall rating"
-    }
+    { title: "Total Contracts", value: "247", icon: FileText, trend: "+12%" },
+    { title: "Compliance Rate", value: "94%", icon: Shield, trend: "+3%" },
+    { title: "Active Reviews", value: "18", icon: Clock, trend: "+5%" },
+    { title: "Risk Score", value: "Low", icon: BarChart3, trend: "Improved" }
   ];
 
   const processingContracts = [
@@ -126,27 +95,27 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-gray-200 bg-white/90 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-soft bg-white/90 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-8 py-6">
           <div className="flex items-center justify-between">
-            <span className="text-xl font-serif font-semibold text-gradient-gold tracking-tight">Dobi</span>
+            <span className="text-xl font-medium text-charcoal tracking-tight">Dobi</span>
             <div className="flex items-center space-x-4">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-warm-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate" />
                 <Input
                   placeholder="Search contracts..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-80 border-gray-200 focus:border-primary/50 bg-white"
+                  className="pl-10 w-80 border-soft focus-ring bg-white"
                 />
               </div>
-              <Button variant="outline" size="sm" className="border-gray-200">
+              <Button variant="outline" size="sm" className="border-soft btn-ghost">
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
-              <Button size="sm" className="bg-primary text-white">
+              <Button size="sm" className="btn-primary">
                 <FileText className="w-4 h-4 mr-2" />
                 New Contract
               </Button>
@@ -157,57 +126,53 @@ const Dashboard = () => {
 
       <div className="max-w-7xl mx-auto px-8 py-12">
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
           {stats.map((stat, index) => (
-            <Card key={index} className="bg-white border-gray-200 shadow-premium">
-              <CardContent className="p-8">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <stat.icon className="w-6 h-6 text-primary" />
+            <Card key={index} className="card-premium">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <stat.icon className="w-5 h-5 text-primary" />
                   </div>
-                  <div className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${
-                    stat.trendUp ? 'text-emerald-600 bg-emerald-50' : 'text-red-600 bg-red-50'
-                  }`}>
-                    <ArrowUp className={`w-3 h-3 ${stat.trendUp ? '' : 'rotate-180'}`} />
+                  <div className="text-xs text-primary bg-primary/10 px-2 py-1 rounded-full">
                     {stat.trend}
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-warm-600 mb-2">{stat.title}</p>
-                  <p className="text-3xl font-bold text-navy-800 mb-2">{stat.value}</p>
-                  <p className="text-xs text-warm-500">{stat.description}</p>
+                  <p className="text-sm text-slate mb-1">{stat.title}</p>
+                  <p className="text-2xl font-medium text-charcoal">{stat.value}</p>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* Processing Contracts Section */}
+        {/* Processing Contracts */}
         {processingContracts.length > 0 && (
-          <Card className="mb-12 shadow-premium bg-white border-gray-200">
+          <Card className="mb-12 card-premium">
             <CardHeader>
-              <CardTitle className="text-lg font-medium flex items-center text-navy-800">
+              <CardTitle className="text-lg font-medium flex items-center text-charcoal">
                 <Loader2 className="w-5 h-5 mr-3 text-primary animate-spin" />
                 Processing Contracts
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4">
               {processingContracts.map((contract) => (
-                <div key={contract.id} className="flex items-center justify-between p-6 bg-warm-50 rounded-lg border border-warm-200">
+                <div key={contract.id} className="flex items-center justify-between p-6 bg-soft rounded-lg border border-softer">
                   <div className="flex-1">
-                    <div className="flex items-center gap-4 mb-3">
-                      <h4 className="font-medium text-navy-800">{contract.name}</h4>
-                      <Badge variant="outline" className="bg-gold-100 text-gold-700 border-gold-300 capitalize">
+                    <div className="flex items-center gap-4 mb-2">
+                      <h4 className="font-medium text-charcoal">{contract.name}</h4>
+                      <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 capitalize">
                         {contract.status}
                       </Badge>
                     </div>
-                    <div className="flex items-center gap-6 text-sm text-warm-600">
+                    <div className="flex items-center gap-6 text-sm text-slate">
                       <span>Uploaded {contract.uploadedAt}</span>
                       <span>ETA: {contract.estimatedCompletion}</span>
                     </div>
                   </div>
                   <div className="text-right min-w-32">
-                    <div className="text-sm font-medium text-navy-800 mb-3">
+                    <div className="text-sm font-medium text-charcoal mb-2">
                       {contract.progress}% complete
                     </div>
                     <Progress value={contract.progress} className="w-24" />
@@ -219,22 +184,22 @@ const Dashboard = () => {
         )}
 
         {/* Contract Families */}
-        <div className="space-y-12">
+        <div className="space-y-8">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-3xl font-serif font-bold text-navy-800 mb-3 tracking-tight">Contract Families</h2>
-              <p className="text-warm-600">Manage and analyze your contract templates</p>
+              <h2 className="text-3xl font-medium text-charcoal mb-2 tracking-tight">Contract Families</h2>
+              <p className="text-slate">Manage and analyze your contract templates</p>
             </div>
-            <Button variant="outline" size="sm" className="border-gray-200">
+            <Button variant="outline" size="sm" className="border-soft btn-ghost">
               <Download className="w-4 h-4 mr-2" />
               Export Report
             </Button>
           </div>
 
           {contractFamilies.map((family) => (
-            <Card key={family.id} className="overflow-hidden bg-white border-gray-200 shadow-premium">
+            <Card key={family.id} className="card-premium overflow-hidden">
               <CardHeader 
-                className="bg-warm-50 border-b border-warm-200 cursor-pointer"
+                className="bg-soft border-b border-softer cursor-pointer"
                 onClick={() => toggleFamily(family.id)}
               >
                 <div className="flex items-center justify-between">
@@ -242,11 +207,11 @@ const Dashboard = () => {
                     <div className="flex items-center gap-4 mb-4">
                       <div className="flex items-center gap-3">
                         <ChevronRight 
-                          className={`w-5 h-5 text-warm-500 transition-all duration-300 ${
+                          className={`w-4 h-4 text-slate transition-all duration-300 ${
                             expandedFamilies.has(family.id) ? 'rotate-90' : ''
                           }`}
                         />
-                        <CardTitle className="text-xl font-serif font-semibold text-navy-800">{family.name}</CardTitle>
+                        <CardTitle className="text-xl font-medium text-charcoal">{family.name}</CardTitle>
                       </div>
                       <Badge 
                         variant={family.status === "active" ? "default" : "secondary"}
@@ -255,7 +220,7 @@ const Dashboard = () => {
                         {family.status}
                       </Badge>
                     </div>
-                    <div className="flex items-center space-x-8 text-sm text-warm-600">
+                    <div className="flex items-center space-x-8 text-sm text-slate">
                       <div className="flex items-center gap-2">
                         <Activity className="w-4 h-4" />
                         <span>{family.totalVersions} versions</span>
@@ -269,8 +234,8 @@ const Dashboard = () => {
                   <div className="text-right">
                     <div className="flex items-center space-x-4 mb-4">
                       <div className="text-right">
-                        <p className="text-sm font-medium text-warm-600">Compliance</p>
-                        <p className="text-2xl font-bold text-navy-800">
+                        <p className="text-sm text-slate">Compliance</p>
+                        <p className="text-2xl font-medium text-charcoal">
                           {family.compliance}%
                         </p>
                       </div>
@@ -295,19 +260,19 @@ const Dashboard = () => {
                     {family.versions.map((version, index) => (
                       <div 
                         key={index}
-                        className="flex items-center justify-between p-6 hover:bg-warm-50 cursor-pointer border-l-4 border-transparent hover:border-primary/20 group"
+                        className="flex items-center justify-between p-6 transition-colors duration-200 hover:bg-soft cursor-pointer border-l-4 border-transparent hover:border-primary/20 group"
                         onClick={() => navigate("/analysis")}
                       >
                         <div className="flex items-center space-x-4">
-                          <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                          <div className="w-2 h-2 rounded-full bg-emerald-500" />
                           <div>
                             <div className="flex items-center gap-3">
-                              <span className="font-semibold text-navy-800 group-hover:text-primary">{version.version}</span>
-                              <Badge variant="outline" className="text-xs px-2 py-0.5 capitalize border-warm-300">
+                              <span className="font-medium text-charcoal group-hover:text-primary transition-colors duration-200">{version.version}</span>
+                              <Badge variant="outline" className="text-xs px-2 py-0.5 capitalize border-soft">
                                 {version.status}
                               </Badge>
                             </div>
-                            <div className="flex items-center space-x-4 mt-1 text-sm text-warm-600">
+                            <div className="flex items-center space-x-4 mt-1 text-sm text-slate">
                               <span>{version.date}</span>
                               <span>{version.issues} {version.issues === 1 ? 'issue' : 'issues'} found</span>
                             </div>
@@ -315,14 +280,14 @@ const Dashboard = () => {
                         </div>
                         <div className="flex items-center space-x-6">
                           <div className="text-right">
-                            <div className="text-lg font-bold text-navy-800">
+                            <div className="text-lg font-medium text-charcoal">
                               {version.compliance}%
                             </div>
-                            <div className="text-sm text-warm-500">
+                            <div className="text-sm text-slate">
                               compliant
                             </div>
                           </div>
-                          <Button variant="ghost" size="sm" className="opacity-60 group-hover:opacity-100">
+                          <Button variant="ghost" size="sm" className="opacity-60 group-hover:opacity-100 btn-ghost">
                             <Eye className="w-4 h-4" />
                           </Button>
                         </div>

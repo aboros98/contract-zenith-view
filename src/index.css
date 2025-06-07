@@ -3,100 +3,67 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Premium Minimalist Design System - Navy & Gold Theme */
+/* Premium Minimalist Design System */
 
 @layer base {
   :root {
-    --background: 39 39 42;
-    --foreground: 250 250 249;
+    /* Core color system */
+    --background: 255 255 255;
+    --foreground: 45 55 72;
 
     --card: 255 255 255;
-    --card-foreground: 31 41 55;
+    --card-foreground: 45 55 72;
 
     --popover: 255 255 255;
-    --popover-foreground: 31 41 55;
+    --popover-foreground: 45 55 72;
 
-    --primary: 212 175 55;
-    --primary-foreground: 31 41 55;
+    --primary: 13 148 136;
+    --primary-foreground: 255 255 255;
 
-    --secondary: 245 245 244;
-    --secondary-foreground: 31 41 55;
+    --secondary: 248 249 250;
+    --secondary-foreground: 45 55 72;
 
-    --muted: 245 245 244;
-    --muted-foreground: 107 114 128;
+    --muted: 248 249 250;
+    --muted-foreground: 100 116 139;
 
-    --accent: 254 243 199;
-    --accent-foreground: 31 41 55;
+    --accent: 248 249 250;
+    --accent-foreground: 45 55 72;
 
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
 
-    --border: 229 231 235;
-    --input: 229 231 235;
-    --ring: 212 175 55;
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 13 148 136;
 
-    --radius: 0.5rem;
-
-    /* Premium color palette */
-    --navy-50: 248 250 252;
-    --navy-100: 241 245 249;
-    --navy-200: 226 232 240;
-    --navy-300: 203 213 225;
-    --navy-400: 148 163 184;
-    --navy-500: 100 116 139;
-    --navy-600: 71 85 105;
-    --navy-700: 51 65 85;
-    --navy-800: 30 41 59;
-    --navy-900: 15 23 42;
-
-    --gold-50: 255 251 235;
-    --gold-100: 254 243 199;
-    --gold-200: 253 230 138;
-    --gold-300: 252 211 77;
-    --gold-400: 251 191 36;
-    --gold-500: 245 158 11;
-    --gold-600: 217 119 6;
-    --gold-700: 180 83 9;
-    --gold-800: 146 64 14;
-    --gold-900: 120 53 15;
-
-    --warm-50: 250 248 244;
-    --warm-100: 245 242 235;
-    --warm-200: 235 229 215;
-    --warm-300: 220 211 190;
-    --warm-400: 196 181 153;
-    --warm-500: 168 148 122;
-    --warm-600: 138 115 94;
-    --warm-700: 115 89 72;
-    --warm-800: 92 66 54;
-    --warm-900: 78 52 46;
+    --radius: 6px;
 
     /* Premium shadows */
-    --shadow-premium: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.08);
-    --shadow-premium-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
-    --shadow-premium-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12), 0 8px 10px -6px rgb(0 0 0 / 0.12);
+    --shadow-minimal: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-subtle: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
 
   .dark {
-    --background: 15 23 42;
-    --foreground: 248 250 252;
-    --card: 30 41 59;
-    --card-foreground: 248 250 252;
-    --popover: 30 41 59;
-    --popover-foreground: 248 250 252;
-    --primary: 252 211 77;
-    --primary-foreground: 15 23 42;
-    --secondary: 51 65 85;
-    --secondary-foreground: 248 250 252;
-    --muted: 51 65 85;
+    --background: 45 55 72;
+    --foreground: 248 249 250;
+    --card: 51 65 85;
+    --card-foreground: 248 249 250;
+    --popover: 51 65 85;
+    --popover-foreground: 248 249 250;
+    --primary: 20 184 166;
+    --primary-foreground: 45 55 72;
+    --secondary: 71 85 105;
+    --secondary-foreground: 248 249 250;
+    --muted: 71 85 105;
     --muted-foreground: 148 163 184;
     --accent: 71 85 105;
-    --accent-foreground: 248 250 252;
+    --accent-foreground: 248 249 250;
     --destructive: 239 68 68;
-    --destructive-foreground: 248 250 252;
+    --destructive-foreground: 248 249 250;
     --border: 71 85 105;
     --input: 71 85 105;
-    --ring: 252 211 77;
+    --ring: 20 184 166;
   }
 }
 
@@ -108,40 +75,53 @@
   body {
     @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background: linear-gradient(135deg, rgb(var(--warm-50)) 0%, rgb(var(--warm-100)) 100%);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer utilities {
-  /* Premium color utilities */
-  .text-navy-600 { color: rgb(var(--navy-600)); }
-  .text-navy-700 { color: rgb(var(--navy-700)); }
-  .text-navy-800 { color: rgb(var(--navy-800)); }
-  .text-navy-900 { color: rgb(var(--navy-900)); }
-
-  .bg-navy-800 { background-color: rgb(var(--navy-800)); }
-  .bg-navy-900 { background-color: rgb(var(--navy-900)); }
-
-  .text-gold-600 { color: rgb(var(--gold-600)); }
-  .text-gold-700 { color: rgb(var(--gold-700)); }
-  .bg-gold-100 { background-color: rgb(var(--gold-100)); }
-  .bg-gold-500 { background-color: rgb(var(--gold-500)); }
-
-  .text-warm-600 { color: rgb(var(--warm-600)); }
-  .text-warm-700 { color: rgb(var(--warm-700)); }
-  .bg-warm-50 { background-color: rgb(var(--warm-50)); }
-  .bg-warm-100 { background-color: rgb(var(--warm-100)); }
-
   /* Premium shadows */
-  .shadow-premium { box-shadow: var(--shadow-premium); }
-  .shadow-premium-lg { box-shadow: var(--shadow-premium-lg); }
-  .shadow-premium-xl { box-shadow: var(--shadow-premium-xl); }
+  .shadow-minimal { box-shadow: var(--shadow-minimal); }
+  .shadow-subtle { box-shadow: var(--shadow-subtle); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
 
-  /* Typography */
-  .text-gradient-gold {
-    background: linear-gradient(135deg, rgb(var(--gold-600)) 0%, rgb(var(--gold-500)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* Text utilities */
+  .text-charcoal { color: rgb(45 55 72); }
+  .text-slate { color: rgb(100 116 139); }
+  .text-light-slate { color: rgb(148 163 184); }
+
+  /* Background utilities */
+  .bg-soft { background-color: rgb(248 249 250); }
+  .bg-softer { background-color: rgb(241 245 249); }
+
+  /* Border utilities */
+  .border-soft { border-color: rgb(226 232 240); }
+  .border-softer { border-color: rgb(241 245 249); }
+}
+
+/* Premium focus states */
+@layer components {
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 focus-ring;
+    @apply transition-colors duration-200;
+  }
+
+  .btn-ghost {
+    @apply hover:bg-soft focus-ring;
+    @apply transition-colors duration-200;
+  }
+
+  .card-premium {
+    @apply bg-card border border-soft shadow-subtle;
   }
 }

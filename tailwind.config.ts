@@ -20,14 +20,24 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				serif: ['Playfair Display', 'serif'],
-				sans: ['Inter', 'sans-serif'],
+				sans: ['Inter', 'system-ui', 'sans-serif'],
 			},
 			fontSize: {
-				'display-xl': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-				'display-lg': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-				'display-md': ['3rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
-				'display-sm': ['2.25rem', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
+				'xs': ['0.75rem', { lineHeight: '1.4' }],
+				'sm': ['0.875rem', { lineHeight: '1.4' }],
+				'base': ['1rem', { lineHeight: '1.6' }],
+				'lg': ['1.125rem', { lineHeight: '1.4' }],
+				'xl': ['1.25rem', { lineHeight: '1.4' }],
+				'2xl': ['1.5rem', { lineHeight: '1.2' }],
+				'3xl': ['1.875rem', { lineHeight: '1.2' }],
+				'4xl': ['2.25rem', { lineHeight: '1.2' }],
+				'5xl': ['3rem', { lineHeight: '1.1' }],
+				'6xl': ['3.75rem', { lineHeight: '1.1' }],
+			},
+			spacing: {
+				'18': '4.5rem',
+				'88': '22rem',
+				'128': '32rem',
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -63,42 +73,6 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				'navy': {
-					50: 'rgb(var(--navy-50))',
-					100: 'rgb(var(--navy-100))',
-					200: 'rgb(var(--navy-200))',
-					300: 'rgb(var(--navy-300))',
-					400: 'rgb(var(--navy-400))',
-					500: 'rgb(var(--navy-500))',
-					600: 'rgb(var(--navy-600))',
-					700: 'rgb(var(--navy-700))',
-					800: 'rgb(var(--navy-800))',
-					900: 'rgb(var(--navy-900))',
-				},
-				'gold': {
-					50: 'rgb(var(--gold-50))',
-					100: 'rgb(var(--gold-100))',
-					200: 'rgb(var(--gold-200))',
-					300: 'rgb(var(--gold-300))',
-					400: 'rgb(var(--gold-400))',
-					500: 'rgb(var(--gold-500))',
-					600: 'rgb(var(--gold-600))',
-					700: 'rgb(var(--gold-700))',
-					800: 'rgb(var(--gold-800))',
-					900: 'rgb(var(--gold-900))',
-				},
-				'warm': {
-					50: 'rgb(var(--warm-50))',
-					100: 'rgb(var(--warm-100))',
-					200: 'rgb(var(--warm-200))',
-					300: 'rgb(var(--warm-300))',
-					400: 'rgb(var(--warm-400))',
-					500: 'rgb(var(--warm-500))',
-					600: 'rgb(var(--warm-600))',
-					700: 'rgb(var(--warm-700))',
-					800: 'rgb(var(--warm-800))',
-					900: 'rgb(var(--warm-900))',
-				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -106,9 +80,9 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			boxShadow: {
-				'premium': 'var(--shadow-premium)',
-				'premium-lg': 'var(--shadow-premium-lg)',
-				'premium-xl': 'var(--shadow-premium-xl)',
+				'minimal': 'var(--shadow-minimal)',
+				'subtle': 'var(--shadow-subtle)',
+				'soft': 'var(--shadow-soft)',
 			}
 		}
 	},
