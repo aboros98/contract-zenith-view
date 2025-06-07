@@ -2,7 +2,7 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Upload, Shield } from "lucide-react";
+import { Upload, Shield, Zap, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -50,24 +50,24 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       {/* Drag overlay */}
       {dragActive && (
         <div 
-          className="fixed inset-0 z-50 bg-primary/5 backdrop-blur-sm flex items-center justify-center"
+          className="fixed inset-0 z-50 glass flex items-center justify-center"
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >
-          <div className="text-center">
-            <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="text-center animate-scale-in">
+            <div className="icon-container w-24 h-24 mx-auto mb-8">
               <Upload className="w-12 h-12 text-primary" />
             </div>
-            <h3 className="text-2xl font-medium text-charcoal mb-3">
+            <h3 className="text-heading text-slate-900 mb-4">
               Drop your contract here
             </h3>
-            <p className="text-lg text-slate">
+            <p className="text-lg text-slate-600">
               Release to start analysis
             </p>
           </div>
@@ -76,66 +76,77 @@ const Index = () => {
 
       {/* Analysis overlay */}
       {isAnalyzing && (
-        <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-              <Upload className="w-10 h-10 text-white animate-pulse" />
+        <div className="fixed inset-0 z-50 glass flex items-center justify-center">
+          <div className="text-center animate-fade-in">
+            <div className="relative w-20 h-20 mx-auto mb-8">
+              <div className="icon-container w-20 h-20">
+                <Upload className="w-10 h-10 text-primary pulse-soft" />
+              </div>
+              <div className="absolute inset-0 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
             </div>
-            <h3 className="text-xl font-medium text-charcoal mb-4">
-              Uploading Contract
+            <h3 className="text-heading text-slate-900 mb-6">
+              Analyzing Contract
             </h3>
-            <div className="flex items-center justify-center space-x-1 text-slate mb-4">
-              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" />
-              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+            <div className="flex items-center justify-center space-x-2 text-slate-600 mb-4">
+              <div className="w-2 h-2 bg-primary rounded-full animate-bounce" />
+              <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+              <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
             </div>
-            <p className="text-slate">Preparing your document...</p>
+            <p className="text-slate-600">AI is reading your document...</p>
           </div>
         </div>
       )}
 
       {/* Header */}
-      <header className="border-b border-soft bg-white/90 backdrop-blur-sm sticky top-0 z-40">
-        <div className="max-w-4xl mx-auto px-8 py-6">
+      <header className="glass sticky top-0 z-40 border-b border-white/20">
+        <div className="max-w-6xl mx-auto px-8 py-6">
           <div className="flex items-center justify-center">
-            <span className="text-2xl font-medium text-charcoal tracking-tight">Dobi</span>
+            <div className="flex items-center space-x-3">
+              <div className="icon-container-sm">
+                <Zap className="w-5 h-5 text-primary" />
+              </div>
+              <span className="text-2xl font-bold text-slate-900 tracking-tight">Dobi</span>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main content */}
       <div 
-        className="flex items-center justify-center min-h-[calc(100vh-88px)] px-8"
+        className="flex items-center justify-center min-h-[calc(100vh-100px)] px-8"
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
-        <div className="w-full max-w-2xl text-center">
-          <h1 className="text-5xl font-medium text-charcoal mb-6 tracking-tight">
-            AI Contract Analysis
-          </h1>
-          <p className="text-xl text-slate mb-16 leading-relaxed max-w-xl mx-auto">
-            Upload your contract and get instant compliance insights with detailed legal analysis.
-          </p>
+        <div className="w-full max-w-4xl text-center">
+          <div className="mb-16 animate-fade-in">
+            <h1 className="text-display text-slate-900 mb-8 tracking-tight">
+              AI-Powered Contract
+              <span className="bg-gradient-accent bg-clip-text text-transparent"> Analysis</span>
+            </h1>
+            <p className="text-xl text-slate-600 mb-12 leading-relaxed max-w-2xl mx-auto">
+              Upload your legal documents and get instant compliance insights with detailed AI analysis
+            </p>
+          </div>
 
           {/* Upload area */}
-          <Card className="card-premium border-2 border-dashed border-soft bg-softer">
+          <Card className="card-premium border-2 border-dashed border-slate-200/60 bg-white/50 backdrop-blur-sm max-w-2xl mx-auto">
             <CardContent className="p-16">
               <div
-                className="cursor-pointer rounded-lg p-12 text-center transition-colors duration-200 hover:bg-soft"
+                className="cursor-pointer rounded-2xl p-12 text-center transition-all duration-300 hover:bg-white/70 group"
                 onClick={() => fileInputRef.current?.click()}
               >
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Upload className="w-8 h-8 text-primary" />
+                <div className="icon-container w-20 h-20 mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+                  <Upload className="w-10 h-10 text-primary" />
                 </div>
-                <h3 className="text-lg font-medium text-charcoal mb-3">
+                <h3 className="text-heading text-slate-900 mb-4">
                   Upload Contract
                 </h3>
-                <p className="text-slate mb-8">
+                <p className="text-slate-600 mb-10 text-lg">
                   PDF, Word, or text documents up to 10MB
                 </p>
-                <Button className="btn-primary px-8 py-3">
+                <Button className="btn-premium text-lg px-10 py-4">
                   Choose File
                 </Button>
                 <input
@@ -149,10 +160,37 @@ const Index = () => {
             </CardContent>
           </Card>
 
-          <p className="text-sm text-light-slate flex items-center justify-center gap-2 mt-8">
-            <Shield className="w-4 h-4" />
-            Enterprise security • GDPR compliant
-          </p>
+          {/* Features */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-4xl mx-auto">
+            <div className="text-center p-8 rounded-2xl bg-white/30 backdrop-blur-sm border border-white/40">
+              <div className="icon-container mx-auto mb-6">
+                <Zap className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-subheading text-slate-900 mb-3">Lightning Fast</h3>
+              <p className="text-slate-600">Get results in seconds, not hours</p>
+            </div>
+            
+            <div className="text-center p-8 rounded-2xl bg-white/30 backdrop-blur-sm border border-white/40">
+              <div className="icon-container mx-auto mb-6">
+                <CheckCircle className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-subheading text-slate-900 mb-3">AI Accuracy</h3>
+              <p className="text-slate-600">Advanced AI with 99%+ accuracy rate</p>
+            </div>
+            
+            <div className="text-center p-8 rounded-2xl bg-white/30 backdrop-blur-sm border border-white/40">
+              <div className="icon-container mx-auto mb-6">
+                <Shield className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-subheading text-slate-900 mb-3">Secure & Private</h3>
+              <p className="text-slate-600">Enterprise-grade security standards</p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 mt-12 text-sm text-slate-500">
+            <Shield className="w-5 h-5" />
+            <span>Enterprise security • GDPR compliant • SOC 2 certified</span>
+          </div>
         </div>
       </div>
     </div>

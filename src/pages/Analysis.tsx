@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,7 +16,10 @@ import {
   Calendar,
   CreditCard,
   Users,
-  FileText
+  FileText,
+  Zap,
+  Shield,
+  Eye
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import VersionCompare from "@/components/VersionCompare";
@@ -121,19 +123,19 @@ const Analysis = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "compliant": return <CheckCircle className="w-4 h-4 text-emerald-600" />;
-      case "partial": return <AlertTriangle className="w-4 h-4 text-amber-600" />;
-      case "non-compliant": return <AlertTriangle className="w-4 h-4 text-red-600" />;
-      default: return <Clock className="w-4 h-4 text-slate" />;
+      case "compliant": return <CheckCircle className="w-5 h-5 text-emerald-600" />;
+      case "partial": return <AlertTriangle className="w-5 h-5 text-amber-600" />;
+      case "non-compliant": return <AlertTriangle className="w-5 h-5 text-red-600" />;
+      default: return <Clock className="w-5 h-5 text-slate-400" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "compliant": return "border-l-emerald-500 bg-emerald-50/50";
-      case "partial": return "border-l-amber-500 bg-amber-50/50";
-      case "non-compliant": return "border-l-red-500 bg-red-50/50";
-      default: return "border-l-soft bg-soft/50";
+      case "compliant": return "border-l-emerald-500 bg-emerald-50/30";
+      case "partial": return "border-l-amber-500 bg-amber-50/30";
+      case "non-compliant": return "border-l-red-500 bg-red-50/30";
+      default: return "border-l-slate-200 bg-slate-50/30";
     }
   };
 
@@ -152,9 +154,9 @@ const Analysis = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       {/* Header */}
-      <header className="border-b border-soft bg-white/90 backdrop-blur-sm sticky top-0 z-50">
+      <header className="glass sticky top-0 z-50 border-b border-white/20">
         <div className="max-w-7xl mx-auto px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -162,12 +164,13 @@ const Analysis = () => {
                 variant="ghost" 
                 size="sm" 
                 onClick={() => navigate("/dashboard")}
-                className="btn-ghost"
+                className="btn-glass h-12 px-6"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <ArrowLeft className="w-5 h-5 mr-2" />
                 Back to Dashboard
               </Button>
-              <div className="text-sm text-slate">
+              <div className="flex items-center text-sm text-slate-600 bg-white/40 px-4 py-2 rounded-lg">
+                <FileText className="w-4 h-4 mr-2" />
                 Service Agreement Template &gt; v3.2 &gt; Analysis
               </div>
             </div>
@@ -175,14 +178,14 @@ const Analysis = () => {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="border-soft btn-ghost"
+                className="btn-glass h-12 px-6"
                 onClick={() => setShowVersionCompare(true)}
               >
-                <GitCompare className="w-4 h-4 mr-2" />
+                <GitCompare className="w-5 h-5 mr-2" />
                 Compare Versions
               </Button>
-              <Button variant="outline" size="sm" className="border-soft btn-ghost">
-                <Download className="w-4 h-4 mr-2" />
+              <Button variant="outline" size="sm" className="btn-glass h-12 px-6">
+                <Download className="w-5 h-5 mr-2" />
                 Export Report
               </Button>
             </div>
@@ -192,18 +195,21 @@ const Analysis = () => {
 
       <div className="max-w-7xl mx-auto px-8 py-12">
         {/* Contract Overview */}
-        <Card className="mb-12 card-premium">
+        <Card className="mb-16 card-premium">
           <CardHeader className="pb-8">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <FileText className="w-6 h-6 text-primary" />
+                <div className="flex items-center gap-6 mb-8">
+                  <div className="icon-container">
+                    <FileText className="w-8 h-8 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <CardTitle className="text-2xl font-medium mb-3 text-charcoal">{contractData.title}</CardTitle>
-                    <div className="flex items-center space-x-8 text-sm text-slate">
-                      <span>{contractData.totalClauses} clauses analyzed</span>
+                    <CardTitle className="text-heading mb-4 text-slate-900">{contractData.title}</CardTitle>
+                    <div className="flex items-center space-x-8 text-slate-600">
+                      <span className="flex items-center gap-2">
+                        <Eye className="w-4 h-4" />
+                        {contractData.totalClauses} clauses analyzed
+                      </span>
                       <span>Last analyzed {contractData.lastAnalyzed}</span>
                       <div className="flex items-center gap-2">
                         <AlertTriangle className="w-4 h-4 text-amber-600" />
@@ -212,13 +218,13 @@ const Analysis = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-8">
                       <div className="text-right">
-                        <div className="text-4xl font-medium text-charcoal mb-2">
+                        <div className="text-5xl font-bold text-slate-900 mb-3">
                           {contractData.compliance}%
                         </div>
-                        <Progress value={contractData.compliance} className="w-32 mb-3" />
-                        <div className="text-sm text-slate">
+                        <Progress value={contractData.compliance} className="w-40 h-4 mb-4" />
+                        <div className="text-lg font-medium text-slate-600">
                           Overall Compliance
                         </div>
                       </div>
@@ -228,55 +234,55 @@ const Analysis = () => {
 
                 {/* Metadata Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-                  <div className="flex items-center space-x-3">
-                    <Calendar className="w-5 h-5 text-primary" />
+                  <div className="flex items-center space-x-4 p-6 bg-white/40 rounded-xl">
+                    <Calendar className="w-6 h-6 text-primary" />
                     <div>
-                      <p className="text-sm font-medium text-charcoal">Date</p>
-                      <p className="text-sm text-slate">{contractData.metadata.contractDate}</p>
+                      <p className="font-semibold text-slate-900">Date</p>
+                      <p className="text-slate-600">{contractData.metadata.contractDate}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center space-x-3">
-                    <CreditCard className="w-5 h-5 text-primary" />
+                  <div className="flex items-center space-x-4 p-6 bg-white/40 rounded-xl">
+                    <CreditCard className="w-6 h-6 text-primary" />
                     <div>
-                      <p className="text-sm font-medium text-charcoal">Value</p>
-                      <p className="text-sm text-slate">{contractData.contractValue} {contractData.currency}</p>
+                      <p className="font-semibold text-slate-900">Value</p>
+                      <p className="text-slate-600">{contractData.contractValue} {contractData.currency}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3">
-                    <Clock className="w-5 h-5 text-primary" />
+                  <div className="flex items-center space-x-4 p-6 bg-white/40 rounded-xl">
+                    <Clock className="w-6 h-6 text-primary" />
                     <div>
-                      <p className="text-sm font-medium text-charcoal">Duration</p>
-                      <p className="text-sm text-slate">{contractData.metadata.duration}</p>
+                      <p className="font-semibold text-slate-900">Duration</p>
+                      <p className="text-slate-600">{contractData.metadata.duration}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3">
-                    <Users className="w-5 h-5 text-primary" />
+                  <div className="flex items-center space-x-4 p-6 bg-white/40 rounded-xl">
+                    <Users className="w-6 h-6 text-primary" />
                     <div>
-                      <p className="text-sm font-medium text-charcoal">Parties</p>
-                      <p className="text-sm text-slate">2 entities</p>
+                      <p className="font-semibold text-slate-900">Parties</p>
+                      <p className="text-slate-600">2 entities</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Parties Information */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  <div className="p-6 bg-primary/5 rounded-lg border border-primary/20">
-                    <p className="text-xs font-medium text-primary mb-2">Provider</p>
-                    <p className="text-sm font-medium text-charcoal">{contractData.parties.provider}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                  <div className="p-8 bg-primary/5 rounded-2xl border border-primary/20">
+                    <p className="text-sm font-semibold text-primary mb-3">Provider</p>
+                    <p className="font-semibold text-slate-900">{contractData.parties.provider}</p>
                   </div>
-                  <div className="p-6 bg-primary/5 rounded-lg border border-primary/20">
-                    <p className="text-xs font-medium text-primary mb-2">Beneficiary</p>
-                    <p className="text-sm font-medium text-charcoal">{contractData.parties.beneficiary}</p>
+                  <div className="p-8 bg-primary/5 rounded-2xl border border-primary/20">
+                    <p className="text-sm font-semibold text-primary mb-3">Beneficiary</p>
+                    <p className="font-semibold text-slate-900">{contractData.parties.beneficiary}</p>
                   </div>
                 </div>
 
                 {/* Contract Object */}
-                <div className="p-6 bg-soft rounded-lg border border-softer">
-                  <p className="text-xs font-medium text-slate mb-2">Contract Object</p>
-                  <p className="text-sm text-charcoal">{contractData.metadata.contractObject}</p>
+                <div className="p-8 bg-white/40 rounded-2xl border border-slate-200/60">
+                  <p className="text-sm font-semibold text-slate-600 mb-3">Contract Object</p>
+                  <p className="text-slate-900">{contractData.metadata.contractObject}</p>
                 </div>
               </div>
             </div>
@@ -288,7 +294,7 @@ const Analysis = () => {
           <div className="lg:col-span-2">
             <Card className="card-premium">
               <CardHeader>
-                <CardTitle className="text-lg font-medium text-charcoal">Document Analysis</CardTitle>
+                <CardTitle className="text-heading text-slate-900">Document Analysis</CardTitle>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="space-y-1">
@@ -296,18 +302,18 @@ const Analysis = () => {
                     <div key={section.id}>
                       {/* Section Header */}
                       <div 
-                        className="flex items-center justify-between p-6 bg-soft border-b border-softer cursor-pointer transition-colors duration-200 hover:bg-softer"
+                        className="flex items-center justify-between p-8 bg-white/40 backdrop-blur-sm border-b border-slate-200/60 cursor-pointer transition-colors duration-200 hover:bg-white/60"
                         onClick={() => toggleSection(section.id)}
                       >
-                        <div className="flex items-center space-x-3">
+                        <div className="flex items-center space-x-4">
                           <ChevronRight 
-                            className={`w-4 h-4 text-slate transition-all duration-300 ${
+                            className={`w-5 h-5 text-slate-400 transition-all duration-300 ${
                               expandedSections.has(section.id) ? 'rotate-90' : ''
                             }`}
                           />
-                          <span className="font-medium text-charcoal">{section.title}</span>
+                          <span className="font-semibold text-slate-900 text-lg">{section.title}</span>
                         </div>
-                        <Badge variant="secondary" className="bg-softer text-slate">
+                        <Badge variant="secondary" className="bg-slate-100 text-slate-600 px-3 py-1">
                           {section.clauses.length} clauses
                         </Badge>
                       </div>
@@ -324,30 +330,30 @@ const Analysis = () => {
                           {section.clauses.map((clause) => (
                             <div
                               key={clause.id}
-                              className={`p-6 border-l-4 cursor-pointer transition-colors duration-200 hover:bg-soft group ${
+                              className={`p-8 border-l-4 cursor-pointer transition-colors duration-200 hover:bg-white/40 group ${
                                 getStatusColor(clause.status)
                               } ${
-                                selectedClause === clause.id ? "bg-softer" : ""
+                                selectedClause === clause.id ? "bg-white/60" : ""
                               }`}
                               onClick={() => setSelectedClause(clause.id)}
                             >
                               <div className="flex items-start justify-between">
                                 <div className="flex-1 pr-4">
-                                  <div className="flex items-center space-x-3 mb-3">
+                                  <div className="flex items-center space-x-4 mb-4">
                                     {getStatusIcon(clause.status)}
-                                    <span className="text-sm font-medium text-charcoal">
+                                    <span className="font-semibold text-slate-900">
                                       Clause {clause.id}
                                     </span>
-                                    <span className="text-sm text-slate">
+                                    <span className="text-slate-600">
                                       {clause.compliance}% compliant
                                     </span>
                                   </div>
-                                  <p className="text-sm text-charcoal leading-relaxed group-hover:text-charcoal">
+                                  <p className="text-slate-700 leading-relaxed group-hover:text-slate-900">
                                     {clause.text}
                                   </p>
                                   {clause.issues.length > 0 && (
-                                    <div className="mt-3">
-                                      <span className="text-xs text-red-600 font-medium">
+                                    <div className="mt-4">
+                                      <span className="text-sm text-red-600 font-medium">
                                         {clause.issues.length} issue(s) found
                                       </span>
                                     </div>
@@ -371,11 +377,13 @@ const Analysis = () => {
               <Card className="card-premium">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg font-medium flex items-center text-charcoal">
-                      <FileText className="w-5 h-5 mr-2 text-primary" />
+                    <CardTitle className="text-heading flex items-center text-slate-900">
+                      <div className="icon-container-sm mr-3">
+                        <FileText className="w-5 h-5 text-primary" />
+                      </div>
                       Clause {selectedClause} Analysis
                     </CardTitle>
-                    <Button variant="ghost" size="sm" onClick={() => setSelectedClause(null)} className="btn-ghost">
+                    <Button variant="ghost" size="sm" onClick={() => setSelectedClause(null)} className="btn-glass">
                       ×
                     </Button>
                   </div>
@@ -383,9 +391,9 @@ const Analysis = () => {
                 <CardContent className="space-y-8">
                   {/* Clause Text */}
                   <div>
-                    <h4 className="font-medium text-charcoal mb-3">Clause Text</h4>
-                    <div className="p-4 bg-soft rounded-md">
-                      <p className="text-sm text-charcoal italic">
+                    <h4 className="font-semibold text-slate-900 mb-4">Clause Text</h4>
+                    <div className="p-6 bg-white/40 rounded-xl">
+                      <p className="text-slate-700 italic">
                         "{clauseMetadata[selectedClause].clause}"
                       </p>
                     </div>
@@ -393,28 +401,28 @@ const Analysis = () => {
 
                   {/* Compliance Status */}
                   <div>
-                    <h4 className="font-medium text-charcoal mb-3">Compliance Status</h4>
-                    <div className="flex items-center space-x-3 mb-3">
+                    <h4 className="font-semibold text-slate-900 mb-4">Compliance Status</h4>
+                    <div className="flex items-center space-x-4 mb-4">
                       {getStatusIcon(sections.find(s => s.clauses.some(c => c.id === selectedClause))?.clauses.find(c => c.id === selectedClause)?.status || "")}
-                      <span className="text-sm font-medium capitalize text-charcoal">
+                      <span className="font-medium capitalize text-slate-900">
                         {sections.find(s => s.clauses.some(c => c.id === selectedClause))?.clauses.find(c => c.id === selectedClause)?.status?.replace("-", " ")}
                       </span>
                     </div>
                     <Progress 
                       value={sections.find(s => s.clauses.some(c => c.id === selectedClause))?.clauses.find(c => c.id === selectedClause)?.compliance || 0} 
-                      className="w-full"
+                      className="w-full h-3"
                     />
                   </div>
 
                   {/* Legal Articles Analysis */}
                   <div>
-                    <h4 className="font-medium text-charcoal mb-4">Legal Articles Analysis</h4>
+                    <h4 className="font-semibold text-slate-900 mb-6">Legal Articles Analysis</h4>
                     <div className="space-y-6">
                       {clauseMetadata[selectedClause].articles.map((article, index) => (
-                        <div key={index} className="border border-soft rounded-lg p-6 bg-white">
-                          <div className="flex items-start justify-between mb-4">
-                            <div className="flex items-center space-x-3">
-                              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+                        <div key={index} className="glass-card p-8">
+                          <div className="flex items-start justify-between mb-6">
+                            <div className="flex items-center space-x-4">
+                              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 px-3 py-1">
                                 Article {article.articleNumber}
                               </Badge>
                               <Badge 
@@ -424,23 +432,23 @@ const Analysis = () => {
                                 {article.rule.isViolated ? "Violation" : "Compliant"}
                               </Badge>
                             </div>
-                            <ExternalLink className="w-4 h-4 text-primary cursor-pointer" />
+                            <ExternalLink className="w-5 h-5 text-primary cursor-pointer" />
                           </div>
                           
-                          <div className="space-y-4">
+                          <div className="space-y-6">
                             <div>
-                              <p className="text-xs font-medium text-slate mb-2">Article Text</p>
-                              <p className="text-sm text-charcoal">{article.articleText}</p>
+                              <p className="text-sm font-semibold text-slate-600 mb-3">Article Text</p>
+                              <p className="text-slate-900">{article.articleText}</p>
                             </div>
                             
                             <div>
-                              <p className="text-xs font-medium text-slate mb-2">Rule</p>
-                              <p className="text-sm text-charcoal">{article.rule.ruleNaturalLanguage}</p>
+                              <p className="text-sm font-semibold text-slate-600 mb-3">Rule</p>
+                              <p className="text-slate-900">{article.rule.ruleNaturalLanguage}</p>
                             </div>
                             
                             <div>
-                              <p className="text-xs font-medium text-slate mb-2">Analysis</p>
-                              <p className="text-sm text-charcoal">{article.rule.justification}</p>
+                              <p className="text-sm font-semibold text-slate-600 mb-3">Analysis</p>
+                              <p className="text-slate-900">{article.rule.justification}</p>
                             </div>
                           </div>
                         </div>
@@ -452,11 +460,13 @@ const Analysis = () => {
             ) : (
               <Card className="card-premium">
                 <CardContent className="p-16 text-center">
-                  <FileText className="w-12 h-12 text-slate mx-auto mb-6" />
-                  <h3 className="text-lg font-medium text-charcoal mb-3">
+                  <div className="icon-container w-16 h-16 mx-auto mb-8">
+                    <FileText className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-heading text-slate-900 mb-4">
                     Select a Clause
                   </h3>
-                  <p className="text-sm text-slate">
+                  <p className="text-slate-600">
                     Click on any clause in the document to view detailed analysis, legal compliance, and recommendations.
                   </p>
                 </CardContent>
