@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { 
   FileText, 
   Search, 
@@ -28,14 +27,19 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [openFamilies, setOpenFamilies] = useState<Record<number, boolean>>({});
+  const [expandedFamilies, setExpandedFamilies] = useState<Set<number>>(new Set());
   const navigate = useNavigate();
 
   const toggleFamily = (familyId: number) => {
-    setOpenFamilies(prev => ({
-      ...prev,
-      [familyId]: !prev[familyId]
-    }));
+    setExpandedFamilies(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(familyId)) {
+        newSet.delete(familyId);
+      } else {
+        newSet.add(familyId);
+      }
+      return newSet;
+    });
   };
 
   const stats = [
@@ -144,10 +148,45 @@ const Dashboard = () => {
     }
   };
 
+  const stats = [
+    { 
+      title: "Total Contracts", 
+      value: "247", 
+      icon: FileText, 
+      trend: "+12%", 
+      trendUp: true,
+      description: "This month"
+    },
+    { 
+      title: "Compliance Rate", 
+      value: "94%", 
+      icon: Shield, 
+      trend: "+3%", 
+      trendUp: true,
+      description: "Quality score"
+    },
+    { 
+      title: "Active Reviews", 
+      value: "18", 
+      icon: Clock, 
+      trend: "+5%", 
+      trendUp: true,
+      description: "In progress"
+    },
+    { 
+      title: "Risk Score", 
+      value: "Low", 
+      icon: BarChart3, 
+      trend: "Improved", 
+      trendUp: true,
+      description: "Overall rating"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-warm-gray-50 to-background">
       {/* Premium Header */}
-      <header className="border-b border-warm-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-warm-gray-200 bg-white/90 backdrop-blur-xl sticky top-0 z-50 shadow-premium-sm">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -163,14 +202,14 @@ const Dashboard = () => {
                   placeholder="Search contracts..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-80 border-warm-gray-200 focus:border-primary/50 bg-white/80 backdrop-blur-sm"
+                  className="pl-10 w-80 border-warm-gray-200 focus:border-primary/50 bg-white/90 backdrop-blur-sm transition-premium"
                 />
               </div>
-              <Button variant="outline" size="sm" className="border-warm-gray-200 hover:border-primary/20">
+              <Button variant="outline" size="sm" className="border-warm-gray-200 hover:border-primary/30 transition-premium hover:shadow-premium">
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
-              <Button size="sm" className="shadow-premium bg-gradient-primary border-0">
+              <Button size="sm" className="shadow-premium bg-gradient-primary border-0 hover:shadow-premium-md transition-premium">
                 <FileText className="w-4 h-4 mr-2" />
                 New Contract
               </Button>
@@ -183,7 +222,7 @@ const Dashboard = () => {
         {/* Enhanced Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           {stats.map((stat, index) => (
-            <Card key={index} className="bg-gradient-card border-warm-gray-200 shadow-premium">
+            <Card key={index} className="bg-gradient-card border-warm-gray-200 shadow-premium-lg hover:shadow-premium-xl transition-premium hover-lift">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
@@ -213,118 +252,127 @@ const Dashboard = () => {
               <h2 className="text-3xl font-serif font-bold text-foreground mb-2 tracking-tight">Contract Families</h2>
               <p className="text-warm-gray-600">Manage and analyze your contract templates</p>
             </div>
-            <Button variant="outline" size="sm" className="border-warm-gray-200 hover:border-primary/20">
+            <Button variant="outline" size="sm" className="border-warm-gray-200 hover:border-primary/30 transition-premium hover:shadow-premium">
               <Download className="w-4 h-4 mr-2" />
               Export Report
             </Button>
           </div>
 
           {contractFamilies.map((family) => (
-            <Card key={family.id} className="overflow-hidden bg-gradient-card border-warm-gray-200 shadow-premium">
-              <Collapsible open={openFamilies[family.id]} onOpenChange={() => toggleFamily(family.id)}>
-                <CardHeader className="bg-gradient-to-r from-warm-gray-50 to-white border-b border-warm-gray-200">
-                  <CollapsibleTrigger className="w-full">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1 text-left">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="flex items-center gap-2">
-                            {openFamilies[family.id] ? (
-                              <ChevronDown className="w-5 h-5 text-warm-gray-500" />
-                            ) : (
-                              <ChevronRight className="w-5 h-5 text-warm-gray-500" />
-                            )}
-                            <CardTitle className="text-xl font-serif font-semibold">{family.name}</CardTitle>
-                          </div>
-                          <Badge 
-                            variant={family.status === "active" ? "default" : "secondary"}
-                            className={`capitalize px-3 py-1 ${family.status === "active" ? "bg-emerald-100 text-emerald-700 border-emerald-200" : ""}`}
-                          >
-                            {family.status}
-                          </Badge>
-                          <Badge 
-                            variant="outline"
-                            className={`capitalize px-3 py-1 border ${getRiskColor(family.riskLevel)}`}
-                          >
-                            {family.riskLevel} risk
-                          </Badge>
-                        </div>
-                        <div className="flex items-center space-x-6 text-sm text-warm-gray-600">
-                          <div className="flex items-center gap-2">
-                            <Activity className="w-4 h-4" />
-                            <span>{family.totalVersions} versions</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4" />
-                            <span>Updated {family.lastUpdated}</span>
-                          </div>
-                        </div>
+            <Card key={family.id} className="overflow-hidden bg-gradient-card border-warm-gray-200 shadow-premium-lg hover:shadow-premium-xl transition-premium">
+              <CardHeader 
+                className="bg-gradient-to-r from-warm-gray-50/80 to-white/90 border-b border-warm-gray-200 cursor-pointer transition-premium hover:bg-gradient-to-r hover:from-warm-gray-100/80 hover:to-warm-gray-50/90"
+                onClick={() => toggleFamily(family.id)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex-1 text-left">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="flex items-center gap-2">
+                        <ChevronRight 
+                          className={`w-5 h-5 text-warm-gray-500 transition-premium ${
+                            expandedFamilies.has(family.id) ? 'rotate-90' : ''
+                          }`}
+                        />
+                        <CardTitle className="text-xl font-serif font-semibold">{family.name}</CardTitle>
                       </div>
+                      <Badge 
+                        variant={family.status === "active" ? "default" : "secondary"}
+                        className={`capitalize px-3 py-1 ${family.status === "active" ? "bg-emerald-100 text-emerald-700 border-emerald-200" : ""}`}
+                      >
+                        {family.status}
+                      </Badge>
+                      <Badge 
+                        variant="outline"
+                        className={`capitalize px-3 py-1 border ${getRiskColor(family.riskLevel)}`}
+                      >
+                        {family.riskLevel} risk
+                      </Badge>
+                    </div>
+                    <div className="flex items-center space-x-6 text-sm text-warm-gray-600">
+                      <div className="flex items-center gap-2">
+                        <Activity className="w-4 h-4" />
+                        <span>{family.totalVersions} versions</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4" />
+                        <span>Updated {family.lastUpdated}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="flex items-center space-x-3 mb-3">
                       <div className="text-right">
-                        <div className="flex items-center space-x-3 mb-3">
-                          <div className="text-right">
-                            <p className="text-sm font-medium text-warm-gray-600">Compliance</p>
-                            <p className={`text-2xl font-bold ${getComplianceColor(family.compliance)}`}>
-                              {family.compliance}%
-                            </p>
-                          </div>
-                          <div className="w-16">
-                            <Progress 
-                              value={family.compliance} 
-                              className="h-2"
-                            />
-                          </div>
-                        </div>
+                        <p className="text-sm font-medium text-warm-gray-600">Compliance</p>
+                        <p className={`text-2xl font-bold ${getComplianceColor(family.compliance)}`}>
+                          {family.compliance}%
+                        </p>
+                      </div>
+                      <div className="w-16">
+                        <Progress 
+                          value={family.compliance} 
+                          className="h-2"
+                        />
                       </div>
                     </div>
-                  </CollapsibleTrigger>
-                </CardHeader>
-                
-                <CollapsibleContent>
-                  <CardContent className="p-0">
-                    <div className="space-y-1">
-                      {family.versions.map((version, index) => (
-                        <div 
-                          key={index}
-                          className="flex items-center justify-between p-6 hover:bg-warm-gray-50/50 cursor-pointer border-l-4 border-transparent hover:border-primary/20"
-                          onClick={() => navigate("/analysis")}
-                        >
-                          <div className="flex items-center space-x-4">
-                            <div className={`w-3 h-3 rounded-full ${getStatusColor(version.status)}`} />
-                            <div>
-                              <div className="flex items-center gap-3">
-                                <span className="font-semibold text-foreground">{version.version}</span>
-                                <Badge 
-                                  variant="outline" 
-                                  className="text-xs px-2 py-0.5 capitalize border-warm-gray-300"
-                                >
-                                  {version.status}
-                                </Badge>
-                              </div>
-                              <div className="flex items-center space-x-4 mt-1 text-sm text-warm-gray-600">
-                                <span>{version.date}</span>
-                                <span>{version.issues} {version.issues === 1 ? 'issue' : 'issues'} found</span>
-                              </div>
+                  </div>
+                </div>
+              </CardHeader>
+              
+              {/* Animated Versions Panel */}
+              <div 
+                className={`overflow-hidden transition-premium ${
+                  expandedFamilies.has(family.id) 
+                    ? 'max-h-96 opacity-100' 
+                    : 'max-h-0 opacity-0'
+                }`}
+                style={{
+                  transition: 'max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out'
+                }}
+              >
+                <CardContent className="p-0">
+                  <div className="space-y-1">
+                    {family.versions.map((version, index) => (
+                      <div 
+                        key={index}
+                        className="flex items-center justify-between p-6 hover:bg-warm-gray-50/50 cursor-pointer border-l-4 border-transparent hover:border-primary/20 transition-premium group"
+                        onClick={() => navigate("/analysis")}
+                      >
+                        <div className="flex items-center space-x-4">
+                          <div className={`w-3 h-3 rounded-full ${getStatusColor(version.status)} shadow-premium-sm`} />
+                          <div>
+                            <div className="flex items-center gap-3">
+                              <span className="font-semibold text-foreground group-hover:text-primary transition-premium">{version.version}</span>
+                              <Badge 
+                                variant="outline" 
+                                className="text-xs px-2 py-0.5 capitalize border-warm-gray-300"
+                              >
+                                {version.status}
+                              </Badge>
                             </div>
-                          </div>
-                          <div className="flex items-center space-x-6">
-                            <div className="text-right">
-                              <div className={`text-lg font-bold ${getComplianceColor(version.compliance)}`}>
-                                {version.compliance}%
-                              </div>
-                              <div className="text-sm text-warm-gray-500">
-                                compliant
-                              </div>
+                            <div className="flex items-center space-x-4 mt-1 text-sm text-warm-gray-600">
+                              <span>{version.date}</span>
+                              <span>{version.issues} {version.issues === 1 ? 'issue' : 'issues'} found</span>
                             </div>
-                            <Button variant="ghost" size="sm">
-                              <Eye className="w-4 h-4" />
-                            </Button>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </CollapsibleContent>
-              </Collapsible>
+                        <div className="flex items-center space-x-6">
+                          <div className="text-right">
+                            <div className={`text-lg font-bold ${getComplianceColor(version.compliance)}`}>
+                              {version.compliance}%
+                            </div>
+                            <div className="text-sm text-warm-gray-500">
+                              compliant
+                            </div>
+                          </div>
+                          <Button variant="ghost" size="sm" className="opacity-60 group-hover:opacity-100 transition-premium">
+                            <Eye className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </div>
             </Card>
           ))}
         </div>

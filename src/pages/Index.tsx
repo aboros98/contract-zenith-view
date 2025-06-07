@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [dragActive, setDragActive] = useState(false);
+  const [showUploadZone, setShowUploadZone] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
@@ -16,7 +18,10 @@ const Index = () => {
 
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setDragActive(false);
+    // Only hide drag state if leaving the entire viewport
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setDragActive(false);
+    }
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -39,8 +44,6 @@ const Index = () => {
 
   const handleFile = (file: File) => {
     console.log("File uploaded:", file.name);
-    // Here you would typically handle the file upload,
-    // e.g., sending it to a server for processing.
     navigate("/dashboard");
   };
 
@@ -85,8 +88,31 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-warm-gray-50 to-background">
+      {/* Full-screen drag overlay */}
+      {dragActive && (
+        <div 
+          className="fixed inset-0 z-50 bg-primary/5 backdrop-blur-sm flex items-center justify-center transition-premium"
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          <div className="text-center">
+            <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+              <Upload className="w-12 h-12 text-primary" />
+            </div>
+            <h3 className="text-2xl font-serif font-semibold text-foreground mb-2">
+              Drop your contract here
+            </h3>
+            <p className="text-warm-gray-600">
+              Release to start analysis
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Premium Header */}
-      <header className="border-b border-warm-gray-200 bg-white/80 backdrop-blur-md">
+      <header className="border-b border-warm-gray-200 bg-white/90 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -96,13 +122,13 @@ const Index = () => {
               <span className="text-xl font-serif font-semibold text-foreground tracking-tight">Dobi</span>
             </div>
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" className="text-warm-gray-600 hover:text-foreground">
+              <Button variant="ghost" size="sm" className="text-warm-gray-600 hover:text-foreground transition-premium">
                 Features
               </Button>
-              <Button variant="ghost" size="sm" className="text-warm-gray-600 hover:text-foreground">
+              <Button variant="ghost" size="sm" className="text-warm-gray-600 hover:text-foreground transition-premium">
                 About
               </Button>
-              <Button size="sm" className="shadow-premium bg-gradient-primary border-0">
+              <Button size="sm" className="shadow-premium bg-gradient-primary border-0 hover:shadow-premium-md transition-premium">
                 Get Started
               </Button>
             </div>
@@ -111,7 +137,13 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-24 px-6">
+      <section 
+        className="relative py-24 px-6"
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <h1 className="text-display-lg font-serif font-bold text-foreground mb-6 tracking-tight leading-tight">
@@ -124,52 +156,59 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Upload Zone */}
+          {/* Minimalist Upload Interface */}
           <div className="max-w-xl mx-auto mb-16">
-            <Card className="border-2 border-dashed border-warm-gray-300 hover:border-primary/40 bg-gradient-card shadow-premium-lg hover:shadow-premium-xl">
-              <CardContent className="p-12">
-                <div
-                  className={`cursor-pointer rounded-xl p-8 transition-premium text-center ${
-                    dragActive 
-                      ? 'bg-primary/5 border-primary/20' 
-                      : 'hover:bg-warm-gray-50/50'
-                  }`}
-                  onDragEnter={handleDragEnter}
-                  onDragLeave={handleDragLeave}
-                  onDragOver={handleDragOver}
-                  onDrop={handleDrop}
-                  onClick={() => fileInputRef.current?.click()}
+            {!showUploadZone ? (
+              <div className="text-center">
+                <Button 
+                  size="lg" 
+                  className="shadow-premium-lg bg-gradient-primary border-0 hover:shadow-premium-xl transition-premium px-12 py-6 text-lg font-medium"
+                  onClick={() => setShowUploadZone(true)}
                 >
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <Upload className="w-8 h-8 text-primary" />
+                  <FileText className="w-5 h-5 mr-3" />
+                  Analyze Contract
+                </Button>
+                <p className="text-sm text-warm-gray-500 mt-4">
+                  Or drag and drop your document anywhere on this page
+                </p>
+              </div>
+            ) : (
+              <Card className="border-2 border-dashed border-primary/30 bg-primary/5 shadow-premium-lg hover:shadow-premium-xl transition-premium">
+                <CardContent className="p-12">
+                  <div
+                    className="cursor-pointer rounded-xl p-8 text-center transition-premium hover:bg-primary/10"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                      <Upload className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                      Choose your file
+                    </h3>
+                    <p className="text-warm-gray-600 mb-6 leading-relaxed">
+                      Upload PDF or Word document for analysis
+                    </p>
+                    <Button size="lg" className="shadow-premium bg-gradient-primary border-0 px-8">
+                      Browse Files
+                    </Button>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      className="hidden"
+                      onChange={handleFileSelect}
+                    />
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">
-                    Upload your contract
-                  </h3>
-                  <p className="text-warm-gray-600 mb-6 leading-relaxed">
-                    Drag and drop your PDF or Word document here, or click to browse
-                  </p>
-                  <Button size="lg" className="shadow-premium bg-gradient-primary border-0 px-8">
-                    <FileText className="w-4 h-4 mr-2" />
-                    Choose File
-                  </Button>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".pdf,.doc,.docx"
-                    className="hidden"
-                    onChange={handleFileSelect}
-                  />
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           {/* Feature Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {features.map((feature, index) => (
-              <div key={index} className="text-center">
-                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <div key={index} className="text-center group">
+                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-premium shadow-premium group-hover:shadow-premium-md">
                   <feature.icon className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-2">{feature.title}</h3>
@@ -185,11 +224,11 @@ const Index = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {processSteps.map((step, index) => (
-                <div key={index} className="text-center">
-                  <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4">
+                <div key={index} className="text-center group">
+                  <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4 shadow-premium group-hover:shadow-premium-md transition-premium">
                     <span className="text-lg font-semibold">{step.step}</span>
                   </div>
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-premium shadow-premium group-hover:shadow-premium-md">
                     <step.icon className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold text-foreground mb-2">{step.title}</h3>

@@ -15,7 +15,12 @@ import {
   ChevronDown,
   ChevronRight,
   GitCompare,
-  ExternalLink
+  ExternalLink,
+  Building,
+  Calendar,
+  DollarSign,
+  Users,
+  Scale
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -29,7 +34,48 @@ const Analysis = () => {
     compliance: 92,
     totalClauses: 24,
     issues: 2,
-    lastAnalyzed: "2024-01-15"
+    lastAnalyzed: "2024-01-15",
+    metadata: {
+      contractDate: "21.01.2025",
+      parties: {
+        provider: "NEWPORT SOLUTIONS S.R.L.",
+        beneficiary: "AROBS TRANSILVANIA SOFTWARE S.A."
+      },
+      contractValue: "1850",
+      currency: "EUR",
+      duration: "Duration of training programs",
+      contractObject: "Provision of training program - Python Course"
+    }
+  };
+
+  const clauseMetadata = {
+    1: {
+      clause: "4.1 The total price of this contract is 1850 EUR (excluding VAT)",
+      articles: [
+        {
+          articleNumber: 1660,
+          articleText: "Art. 1.660. – (1) The price consists of a sum of money. (2) It must be serious and determined or at least determinable.",
+          justifications: "The clause specifies 'The total price of this contract is 1850 EUR'. The article provides that 'The price consists of a sum of money' and 'must be serious and determined or at least determinable'. There is evident conceptual overlap.",
+          rule: {
+            ruleNaturalLanguage: "The price must be a sum of money, serious and determined or at least determinable.",
+            logicalRule: "price_is_money == true AND price_is_determined == true AND price_is_serious == true",
+            isViolated: false,
+            justification: "The clause complies with Art. 1660 Civil Code. According to para. (1), 'the price consists of a sum of money', and the clause specifies 1850 EUR. According to para. (2), 'it must be serious and determined or at least determinable', and the price of 1850 EUR is a determined sum and appears to be serious for a Python course."
+          }
+        },
+        {
+          articleNumber: 1768,
+          articleText: "Art. 1.768. – (1) The price owed by the beneficiary is that provided in the contract or in law.",
+          justifications: "The clause specifies 'The total price of this contract is 1850 EUR'. The article provides that 'The price owed by the beneficiary is that provided in the contract'. There is direct terminological overlap with the term 'price'.",
+          rule: {
+            ruleNaturalLanguage: "The price owed by the beneficiary is that provided in the contract or in law.",
+            logicalRule: "contract_value == 1850",
+            isViolated: false,
+            justification: "According to Art. 1.768 Civil Code, 'the price owed by the beneficiary is that provided in the contract'. Clause 4.1 specifies a total price of 1850 EUR, which is in accordance with the contract value mentioned in metadata."
+          }
+        }
+      ]
+    }
   };
 
   const sections = [
@@ -122,9 +168,9 @@ const Analysis = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-warm-gray-50 to-background">
       {/* Header */}
-      <header className="border-b border-border bg-white">
+      <header className="border-b border-border bg-white/90 backdrop-blur-xl shadow-premium-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -132,6 +178,7 @@ const Analysis = () => {
                 variant="ghost" 
                 size="sm" 
                 onClick={() => navigate("/dashboard")}
+                className="hover:bg-warm-gray-100 transition-premium"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Dashboard
@@ -141,15 +188,15 @@ const Analysis = () => {
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="hover:shadow-premium transition-premium">
                 <GitCompare className="w-4 h-4 mr-2" />
                 Compare Versions
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="hover:shadow-premium transition-premium">
                 <Download className="w-4 h-4 mr-2" />
                 Export Report
               </Button>
-              <Button size="sm">
+              <Button size="sm" className="bg-gradient-primary hover:shadow-premium-md transition-premium">
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Ask AI
               </Button>
@@ -159,34 +206,95 @@ const Analysis = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-6">
-        {/* Contract Overview */}
-        <Card className="mb-6">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-xl font-medium">{contractData.title}</CardTitle>
-                <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
-                  <span>{contractData.totalClauses} clauses analyzed</span>
-                  <span>Last analyzed {contractData.lastAnalyzed}</span>
+        {/* Contract Overview with Metadata */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <Card className="lg:col-span-2 shadow-premium-lg">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-xl font-medium">{contractData.title}</CardTitle>
+                  <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
+                    <span>{contractData.totalClauses} clauses analyzed</span>
+                    <span>Last analyzed {contractData.lastAnalyzed}</span>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-semibold text-foreground mb-1">
+                    {contractData.compliance}%
+                  </div>
+                  <Progress value={contractData.compliance} className="w-32 mb-2" />
+                  <div className="text-sm text-muted-foreground">
+                    {contractData.issues} issues found
+                  </div>
                 </div>
               </div>
-              <div className="text-right">
-                <div className="text-2xl font-semibold text-foreground mb-1">
-                  {contractData.compliance}%
+            </CardHeader>
+          </Card>
+
+          {/* Contract Metadata Panel */}
+          <Card className="shadow-premium-lg">
+            <CardHeader>
+              <CardTitle className="text-lg font-medium flex items-center">
+                <Building className="w-5 h-5 mr-2 text-primary" />
+                Contract Details
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <Calendar className="w-4 h-4 text-warm-gray-500" />
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Date</p>
+                    <p className="text-sm text-warm-gray-600">{contractData.metadata.contractDate}</p>
+                  </div>
                 </div>
-                <Progress value={contractData.compliance} className="w-32 mb-2" />
-                <div className="text-sm text-muted-foreground">
-                  {contractData.issues} issues found
+                
+                <div className="flex items-center space-x-3">
+                  <DollarSign className="w-4 h-4 text-warm-gray-500" />
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Value</p>
+                    <p className="text-sm text-warm-gray-600">{contractData.metadata.contractValue} {contractData.metadata.currency}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-3">
+                  <Clock className="w-4 h-4 text-warm-gray-500" />
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Duration</p>
+                    <p className="text-sm text-warm-gray-600">{contractData.metadata.duration}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Users className="w-4 h-4 text-warm-gray-500" />
+                    <p className="text-sm font-medium text-foreground">Parties</p>
+                  </div>
+                  <div className="pl-6 space-y-1">
+                    <div>
+                      <p className="text-xs font-medium text-warm-gray-500">Provider</p>
+                      <p className="text-sm text-foreground">{contractData.metadata.parties.provider}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium text-warm-gray-500">Beneficiary</p>
+                      <p className="text-sm text-foreground">{contractData.metadata.parties.beneficiary}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-warm-gray-200">
+                  <p className="text-xs font-medium text-warm-gray-500 mb-1">Object</p>
+                  <p className="text-sm text-foreground">{contractData.metadata.contractObject}</p>
                 </div>
               </div>
-            </div>
-          </CardHeader>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Document Panel */}
           <div className="lg:col-span-2">
-            <Card>
+            <Card className="shadow-premium-lg">
               <CardHeader>
                 <CardTitle className="text-lg font-medium">Document Analysis</CardTitle>
               </CardHeader>
@@ -196,15 +304,15 @@ const Analysis = () => {
                     <div key={section.id}>
                       {/* Section Header */}
                       <div 
-                        className="flex items-center justify-between p-4 bg-muted/30 border-b border-border cursor-pointer hover:bg-muted/50 transition-colors"
+                        className="flex items-center justify-between p-4 bg-muted/30 border-b border-border cursor-pointer hover:bg-muted/50 transition-premium"
                         onClick={() => toggleSection(section.id)}
                       >
                         <div className="flex items-center space-x-3">
-                          {expandedSections.has(section.id) ? (
-                            <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                          ) : (
-                            <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                          )}
+                          <ChevronRight 
+                            className={`w-4 h-4 text-muted-foreground transition-premium ${
+                              expandedSections.has(section.id) ? 'rotate-90' : ''
+                            }`}
+                          />
                           <span className="font-medium text-foreground">{section.title}</span>
                         </div>
                         <Badge variant="secondary">
@@ -212,16 +320,25 @@ const Analysis = () => {
                         </Badge>
                       </div>
 
-                      {/* Section Clauses */}
-                      {expandedSections.has(section.id) && (
+                      {/* Section Clauses with smooth animation */}
+                      <div 
+                        className={`overflow-hidden transition-premium ${
+                          expandedSections.has(section.id) 
+                            ? 'max-h-96 opacity-100' 
+                            : 'max-h-0 opacity-0'
+                        }`}
+                        style={{
+                          transition: 'max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out'
+                        }}
+                      >
                         <div className="space-y-1">
                           {section.clauses.map((clause) => (
                             <div
                               key={clause.id}
-                              className={`p-4 border-l-4 cursor-pointer transition-all hover:bg-muted/20 ${
+                              className={`p-4 border-l-4 cursor-pointer transition-premium hover:bg-muted/20 group ${
                                 getStatusColor(clause.status)
                               } ${
-                                selectedClause === clause.id ? "bg-muted/40" : ""
+                                selectedClause === clause.id ? "bg-muted/40 shadow-premium-sm" : ""
                               }`}
                               onClick={() => setSelectedClause(clause.id)}
                             >
@@ -236,7 +353,7 @@ const Analysis = () => {
                                       {clause.compliance}% compliant
                                     </span>
                                   </div>
-                                  <p className="text-sm text-foreground leading-relaxed">
+                                  <p className="text-sm text-foreground leading-relaxed group-hover:text-foreground transition-premium">
                                     {clause.text}
                                   </p>
                                   {clause.issues.length > 0 && (
@@ -251,7 +368,7 @@ const Analysis = () => {
                             </div>
                           ))}
                         </div>
-                      )}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -259,13 +376,14 @@ const Analysis = () => {
             </Card>
           </div>
 
-          {/* Analysis Panel */}
+          {/* Enhanced Analysis Panel */}
           <div>
-            {selectedClause ? (
-              <Card>
+            {selectedClause && clauseMetadata[selectedClause] ? (
+              <Card className="shadow-premium-lg">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg font-medium">
+                    <CardTitle className="text-lg font-medium flex items-center">
+                      <Scale className="w-5 h-5 mr-2 text-primary" />
                       Clause {selectedClause} Analysis
                     </CardTitle>
                     <Button variant="ghost" size="sm" onClick={() => setSelectedClause(null)}>
@@ -274,6 +392,16 @@ const Analysis = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-6">
+                  {/* Clause Text */}
+                  <div>
+                    <h4 className="font-medium text-foreground mb-2">Clause Text</h4>
+                    <div className="p-3 bg-muted/50 rounded-md">
+                      <p className="text-sm text-foreground italic">
+                        "{clauseMetadata[selectedClause].clause}"
+                      </p>
+                    </div>
+                  </div>
+
                   {/* Compliance Status */}
                   <div>
                     <h4 className="font-medium text-foreground mb-2">Compliance Status</h4>
@@ -289,32 +417,42 @@ const Analysis = () => {
                     />
                   </div>
 
-                  {/* Issues */}
-                  {sections.find(s => s.clauses.some(c => c.id === selectedClause))?.clauses.find(c => c.id === selectedClause)?.issues.length > 0 && (
-                    <div>
-                      <h4 className="font-medium text-foreground mb-3">Issues Found</h4>
-                      <div className="space-y-2">
-                        {sections.find(s => s.clauses.some(c => c.id === selectedClause))?.clauses.find(c => c.id === selectedClause)?.issues.map((issue, index) => (
-                          <div key={index} className="p-3 bg-red-50 border border-red-200 rounded-md">
-                            <div className="flex items-start space-x-2">
-                              <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                              <span className="text-sm text-red-700">{issue}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Relevant Articles */}
+                  {/* Legal Articles Analysis */}
                   <div>
-                    <h4 className="font-medium text-foreground mb-3">Relevant Legal Articles</h4>
-                    <div className="space-y-2">
-                      {sections.find(s => s.clauses.some(c => c.id === selectedClause))?.clauses.find(c => c.id === selectedClause)?.articles.map((article, index) => (
-                        <div key={index} className="p-3 bg-blue-50 border border-blue-200 rounded-md">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium text-blue-700">{article}</span>
-                            <ExternalLink className="w-3 h-3 text-blue-500" />
+                    <h4 className="font-medium text-foreground mb-3">Legal Articles Analysis</h4>
+                    <div className="space-y-4">
+                      {clauseMetadata[selectedClause].articles.map((article, index) => (
+                        <div key={index} className="border border-warm-gray-200 rounded-lg p-4 bg-gradient-card">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex items-center space-x-2">
+                              <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                                Article {article.articleNumber}
+                              </Badge>
+                              <Badge 
+                                variant={article.rule.isViolated ? "destructive" : "default"}
+                                className={article.rule.isViolated ? "" : "bg-green-100 text-green-700 border-green-200"}
+                              >
+                                {article.rule.isViolated ? "Violation" : "Compliant"}
+                              </Badge>
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-blue-500 cursor-pointer" />
+                          </div>
+                          
+                          <div className="space-y-3">
+                            <div>
+                              <p className="text-xs font-medium text-warm-gray-500 mb-1">Article Text</p>
+                              <p className="text-sm text-foreground">{article.articleText}</p>
+                            </div>
+                            
+                            <div>
+                              <p className="text-xs font-medium text-warm-gray-500 mb-1">Rule</p>
+                              <p className="text-sm text-foreground">{article.rule.ruleNaturalLanguage}</p>
+                            </div>
+                            
+                            <div>
+                              <p className="text-xs font-medium text-warm-gray-500 mb-1">Analysis</p>
+                              <p className="text-sm text-foreground">{article.rule.justification}</p>
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -324,28 +462,28 @@ const Analysis = () => {
                   {/* AI Recommendations */}
                   <div>
                     <h4 className="font-medium text-foreground mb-3">AI Recommendations</h4>
-                    <div className="p-3 bg-muted/50 rounded-md">
-                      <p className="text-sm text-muted-foreground">
-                        Consider revising this clause to ensure full compliance with applicable regulations. 
-                        Click "Ask AI" for detailed recommendations.
+                    <div className="p-4 bg-gradient-muted rounded-lg border border-warm-gray-200">
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Based on the legal analysis, this clause appears to be in compliance with applicable regulations. 
+                        The price specification meets the requirements for being serious, determined, and properly documented.
                       </p>
+                      <Button variant="outline" size="sm" className="w-full hover:shadow-premium transition-premium">
+                        <MessageSquare className="w-4 h-4 mr-2" />
+                        Get Detailed Analysis
+                      </Button>
                     </div>
-                    <Button variant="outline" size="sm" className="mt-3 w-full">
-                      <MessageSquare className="w-4 h-4 mr-2" />
-                      Get Detailed Analysis
-                    </Button>
                   </div>
                 </CardContent>
               </Card>
             ) : (
-              <Card>
+              <Card className="shadow-premium-lg">
                 <CardContent className="p-12 text-center">
                   <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-foreground mb-2">
                     Select a Clause
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Click on any clause in the document to view detailed analysis and recommendations.
+                    Click on any clause in the document to view detailed analysis, legal compliance, and AI recommendations.
                   </p>
                 </CardContent>
               </Card>

@@ -224,7 +224,7 @@
     transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Hover effects */
+  /* Enhanced hover effects */
   .hover-lift {
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
   }
@@ -236,6 +236,15 @@
 
   .hover-glow:hover {
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+
+  /* Premium interaction states */
+  .hover-scale {
+    transition: transform 0.2s ease-out;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
   }
 
   /* Typography enhancements */
@@ -252,6 +261,15 @@
 
   .letter-spacing-wider {
     letter-spacing: 0.05em;
+  }
+
+  /* Premium borders */
+  .border-premium {
+    border: 1px solid hsl(var(--warm-gray-200));
+  }
+
+  .border-premium-hover:hover {
+    border-color: hsl(var(--primary) / 0.3);
   }
 }
 
