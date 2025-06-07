@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Enhanced Design System with Tesla-inspired Premium Color Scheme */
+/* Professional Legal Interface Design System */
 
 @layer base {
   :root {
@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 15% 12%;
 
-    --primary: 220 85% 45%;
+    --primary: 210 100% 47%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 220 15% 96%;
@@ -33,45 +33,42 @@
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 220 85% 45%;
+    --ring: 210 100% 47%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* Premium Tesla-inspired color palette */
-    --warm-gray-50: 220 14% 98%;
-    --warm-gray-100: 220 14% 96%;
-    --warm-gray-200: 220 11% 92%;
-    --warm-gray-300: 220 10% 84%;
-    --warm-gray-400: 220 9% 64%;
-    --warm-gray-500: 220 6% 48%;
-    --warm-gray-600: 220 5% 36%;
-    --warm-gray-700: 220 5% 26%;
-    --warm-gray-800: 220 5% 18%;
-    --warm-gray-900: 220 6% 12%;
+    /* Professional color palette */
+    --charcoal: 220 15% 10%;
+    --charcoal-light: 220 12% 15%;
+    --gray-50: 220 14% 98%;
+    --gray-100: 220 14% 96%;
+    --gray-200: 220 11% 92%;
+    --gray-300: 220 10% 84%;
+    --gray-400: 220 9% 64%;
+    --gray-500: 220 6% 48%;
+    --gray-600: 220 5% 36%;
+    --gray-700: 220 5% 26%;
+    --gray-800: 220 5% 18%;
+    --gray-900: 220 6% 12%;
 
-    /* Electric accent colors */
-    --electric-blue: 210 100% 60%;
-    --electric-green: 142 76% 36%;
-    --electric-amber: 45 93% 47%;
-    --electric-red: 0 84% 60%;
+    /* Professional status colors */
+    --status-success: 142 40% 28%;
+    --status-warning: 45 60% 35%;
+    --status-danger: 0 60% 45%;
+    --status-info: 210 60% 45%;
 
-    /* Enhanced gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(220 85% 45%) 0%, hsl(210 80% 50%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 15% 98%) 100%);
-    --gradient-muted: linear-gradient(135deg, hsl(220 12% 97%) 0%, hsl(220 10% 95%) 100%);
-    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(142 70% 45%) 100%);
-    --gradient-warning: linear-gradient(135deg, hsl(45 93% 47%) 0%, hsl(45 90% 55%) 100%);
-    --gradient-danger: linear-gradient(135deg, hsl(0 84% 60%) 0%, hsl(0 80% 67%) 100%);
-    
-    /* Premium shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-    --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
-    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1);
+    /* Legal document colors */
+    --legal-bg: 0 0% 100%;
+    --legal-text: 220 15% 10%;
+    --legal-border: 220 10% 90%;
+    --clause-highlight: 210 100% 97%;
+    --clause-border: 210 100% 88%;
+
+    /* Subtle shadows for professional appearance */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.03);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.03);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+    --shadow-subtle: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -93,7 +90,7 @@
     --popover: 220 15% 6%;
     --popover-foreground: 215 20% 95%;
 
-    --primary: 220 85% 60%;
+    --primary: 210 100% 60%;
     --primary-foreground: 220 15% 8%;
 
     --secondary: 220 15% 12%;
@@ -110,22 +107,26 @@
 
     --border: 220 15% 18%;
     --input: 220 15% 18%;
-    --ring: 220 85% 60%;
+    --ring: 210 100% 60%;
 
-    --warm-gray-50: 220 15% 8%;
-    --warm-gray-100: 220 15% 10%;
-    --warm-gray-200: 220 15% 15%;
-    --warm-gray-300: 220 15% 22%;
-    --warm-gray-400: 220 8% 40%;
-    --warm-gray-500: 220 8% 55%;
-    --warm-gray-600: 220 8% 70%;
-    --warm-gray-700: 220 8% 80%;
-    --warm-gray-800: 220 8% 88%;
-    --warm-gray-900: 220 8% 95%;
+    --charcoal: 220 15% 85%;
+    --charcoal-light: 220 12% 80%;
+    --gray-50: 220 15% 8%;
+    --gray-100: 220 15% 10%;
+    --gray-200: 220 15% 15%;
+    --gray-300: 220 15% 22%;
+    --gray-400: 220 8% 40%;
+    --gray-500: 220 8% 55%;
+    --gray-600: 220 8% 70%;
+    --gray-700: 220 8% 80%;
+    --gray-800: 220 8% 88%;
+    --gray-900: 220 8% 95%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(220 85% 60%) 0%, hsl(210 80% 70%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(220 15% 6%) 0%, hsl(220 15% 8%) 100%);
-    --gradient-muted: linear-gradient(135deg, hsl(220 15% 10%) 0%, hsl(220 15% 12%) 100%);
+    --legal-bg: 220 15% 6%;
+    --legal-text: 220 15% 90%;
+    --legal-border: 220 15% 18%;
+    --clause-highlight: 210 60% 12%;
+    --clause-border: 210 60% 20%;
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -146,11 +147,12 @@
   body {
     @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
+    line-height: 1.6;
   }
 }
 
 @layer utilities {
-  /* Enhanced Typography */
+  /* Professional Typography */
   .font-serif {
     font-family: 'Playfair Display', serif;
   }
@@ -159,88 +161,106 @@
     font-family: 'Inter', sans-serif;
   }
 
-  /* Premium Electric Colors */
-  .text-electric-blue { color: hsl(var(--electric-blue)); }
-  .text-electric-green { color: hsl(var(--electric-green)); }
-  .text-electric-amber { color: hsl(var(--electric-amber)); }
-  .text-electric-red { color: hsl(var(--electric-red)); }
-
-  .bg-electric-blue { background-color: hsl(var(--electric-blue)); }
-  .bg-electric-green { background-color: hsl(var(--electric-green)); }
-  .bg-electric-amber { background-color: hsl(var(--electric-amber)); }
-  .bg-electric-red { background-color: hsl(var(--electric-red)); }
-
-  /* Enhanced Gradients */
-  .bg-gradient-primary { background: var(--gradient-primary); }
-  .bg-gradient-card { background: var(--gradient-card); }
-  .bg-gradient-muted { background: var(--gradient-muted); }
-  .bg-gradient-success { background: var(--gradient-success); }
-  .bg-gradient-warning { background: var(--gradient-warning); }
-  .bg-gradient-danger { background: var(--gradient-danger); }
-
-  /* Glass Morphism */
-  .glass-card {
-    backdrop-filter: blur(20px);
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: var(--shadow-glass);
+  .font-mono {
+    font-family: 'Source Code Pro', 'Fira Code', 'Consolas', monospace;
   }
 
-  .glass-card-dark {
-    backdrop-filter: blur(20px);
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: var(--shadow-glass);
+  /* Professional Colors */
+  .text-charcoal { color: hsl(var(--charcoal)); }
+  .text-charcoal-light { color: hsl(var(--charcoal-light)); }
+  .bg-charcoal { background-color: hsl(var(--charcoal)); }
+  .bg-charcoal-light { background-color: hsl(var(--charcoal-light)); }
+
+  .text-gray-50 { color: hsl(var(--gray-50)); }
+  .text-gray-100 { color: hsl(var(--gray-100)); }
+  .text-gray-200 { color: hsl(var(--gray-200)); }
+  .text-gray-300 { color: hsl(var(--gray-300)); }
+  .text-gray-400 { color: hsl(var(--gray-400)); }
+  .text-gray-500 { color: hsl(var(--gray-500)); }
+  .text-gray-600 { color: hsl(var(--gray-600)); }
+  .text-gray-700 { color: hsl(var(--gray-700)); }
+  .text-gray-800 { color: hsl(var(--gray-800)); }
+  .text-gray-900 { color: hsl(var(--gray-900)); }
+
+  .bg-gray-50 { background-color: hsl(var(--gray-50)); }
+  .bg-gray-100 { background-color: hsl(var(--gray-100)); }
+  .bg-gray-200 { background-color: hsl(var(--gray-200)); }
+  .bg-gray-300 { background-color: hsl(var(--gray-300)); }
+  .bg-gray-400 { background-color: hsl(var(--gray-400)); }
+  .bg-gray-500 { background-color: hsl(var(--gray-500)); }
+  .bg-gray-600 { background-color: hsl(var(--gray-600)); }
+  .bg-gray-700 { background-color: hsl(var(--gray-700)); }
+  .bg-gray-800 { background-color: hsl(var(--gray-800)); }
+  .bg-gray-900 { background-color: hsl(var(--gray-900)); }
+
+  /* Professional Status Colors */
+  .status-success { @apply text-green-700 bg-green-50 border-green-200; }
+  .status-warning { @apply text-amber-700 bg-amber-50 border-amber-200; }
+  .status-danger { @apply text-red-700 bg-red-50 border-red-200; }
+  .status-info { @apply text-blue-700 bg-blue-50 border-blue-200; }
+
+  /* Legal Document Styling */
+  .legal-document {
+    @apply bg-white border border-gray-200 font-mono text-sm leading-relaxed;
+    background-color: hsl(var(--legal-bg));
+    color: hsl(var(--legal-text));
+    border-color: hsl(var(--legal-border));
   }
 
-  /* Enhanced Premium Shadows */
-  .shadow-premium { box-shadow: var(--shadow-base); }
-  .shadow-premium-md { box-shadow: var(--shadow-md); }
-  .shadow-premium-lg { box-shadow: var(--shadow-lg); }
-  .shadow-premium-xl { box-shadow: var(--shadow-xl); }
-  .shadow-premium-2xl { box-shadow: var(--shadow-2xl); }
-  .shadow-glass { box-shadow: var(--shadow-glass); }
-
-  /* Premium Interactions */
-  .hover-lift {
-    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  .clause-card {
+    @apply bg-white border border-gray-200 rounded-lg p-4 transition-all duration-200;
+    box-shadow: var(--shadow-subtle);
   }
 
-  .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-xl);
+  .clause-card:hover {
+    @apply border-gray-300;
+    box-shadow: var(--shadow-md);
   }
 
-  .card-premium {
-    @apply bg-gradient-card border border-warm-gray-200 shadow-premium-lg hover:shadow-premium-xl transition-all duration-300 hover-lift;
+  .clause-highlight {
+    background-color: hsl(var(--clause-highlight));
+    border-color: hsl(var(--clause-border));
   }
 
-  /* Progress Indicators */
-  .progress-glow {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  /* Professional Shadows */
+  .shadow-subtle { box-shadow: var(--shadow-subtle); }
+  .shadow-professional { box-shadow: var(--shadow-md); }
+  .shadow-professional-lg { box-shadow: var(--shadow-lg); }
+
+  /* Professional Cards */
+  .card-professional {
+    @apply bg-white border border-gray-200 shadow-subtle rounded-lg;
+    transition: box-shadow 0.2s ease-in-out;
   }
 
-  /* Status Colors */
-  .status-success { @apply text-electric-green bg-green-50 border-green-200; }
-  .status-warning { @apply text-electric-amber bg-amber-50 border-amber-200; }
-  .status-danger { @apply text-electric-red bg-red-50 border-red-200; }
-  .status-processing { @apply text-electric-blue bg-blue-50 border-blue-200; }
+  .card-professional:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Remove toy-like effects */
+  .no-transform {
+    transform: none !important;
+  }
+
+  .minimal-hover:hover {
+    @apply border-gray-300;
+  }
 }
 
-/* Enhanced Custom Scrollbar */
+/* Clean scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+  background: hsl(var(--gray-100));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
+  background: hsl(var(--gray-300));
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.5);
+  background: hsl(var(--gray-400));
 }
