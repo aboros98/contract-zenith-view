@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,7 +15,9 @@ import {
   Building,
   Scale,
   X,
-  Eye
+  Eye,
+  Edit,
+  Share
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -98,40 +99,28 @@ const Analysis = () => {
     }
   ];
 
-  const getStatusColor = (status: string) => {
+  const getStatusBorderColor = (status: string) => {
     switch (status) {
-      case "compliant": return "border-emerald-500/30 bg-emerald-50/80 backdrop-blur-sm";
-      case "partial": return "border-amber-500/30 bg-amber-50/80 backdrop-blur-sm";
-      case "non-compliant": return "border-red-500/30 bg-red-50/80 backdrop-blur-sm";
-      default: return "border-gray-300/30 bg-gray-50/80 backdrop-blur-sm";
+      case "compliant": return "border-emerald-400";
+      case "partial": return "border-amber-400";
+      case "non-compliant": return "border-red-400";
+      default: return "border-gray-300";
     }
   };
 
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
-      case "compliant": return "bg-emerald-100/90 text-emerald-800 border-emerald-200/50";
-      case "partial": return "bg-amber-100/90 text-amber-800 border-amber-200/50";
-      case "non-compliant": return "bg-red-100/90 text-red-800 border-red-200/50";
-      default: return "bg-gray-100/90 text-gray-800 border-gray-200/50";
+      case "compliant": return "bg-emerald-100 text-emerald-800 border-emerald-300";
+      case "partial": return "bg-amber-100 text-amber-800 border-amber-300";
+      case "non-compliant": return "bg-red-100 text-red-800 border-red-300";
+      default: return "bg-gray-100 text-gray-800 border-gray-300";
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "compliant": return CheckCircle;
-      case "partial": return AlertTriangle;
-      case "non-compliant": return X;
-      default: return Clock;
-    }
-  };
-
-  const getClauseHighlight = (status: string) => {
-    switch (status) {
-      case "compliant": return "bg-emerald-100/40 border-l-4 border-emerald-500";
-      case "partial": return "bg-amber-100/40 border-l-4 border-amber-500";
-      case "non-compliant": return "bg-red-100/40 border-l-4 border-red-500";
-      default: return "bg-gray-100/40 border-l-4 border-gray-500";
-    }
+  const getComplianceTextColor = (compliance: number) => {
+    if (compliance >= 95) return 'text-emerald-600';
+    if (compliance >= 75) return 'text-amber-600';
+    return 'text-red-600';
   };
 
   const handleClauseClick = (clauseId: number) => {
@@ -174,79 +163,218 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
 6.1 This Agreement shall be governed by Romanian law.`;
 
     return (
-      <div className="relative">
-        {/* Document Text */}
-        <div className="font-mono text-sm leading-8 text-foreground whitespace-pre-wrap tracking-wide">
-          {fullText.split('\n').map((line, lineIndex) => {
-            // Check if this line contains a clause
-            const clauseInLine = clauses.find(clause => 
-              line.includes(clause.text) || line.includes(clause.number)
-            );
-            
-            if (clauseInLine) {
-              return (
-                <div key={lineIndex} className="relative group">
-                  <div 
-                    className={`p-4 my-2 rounded-lg cursor-pointer transition-all duration-300 hover:shadow-md ${getClauseHighlight(clauseInLine.status)}`}
-                    onClick={() => handleClauseClick(clauseInLine.id)}
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <Badge variant="outline" className="text-xs font-mono bg-white/80 backdrop-blur-sm">
-                        {clauseInLine.number}
+      <div className="space-y-8">
+        {/* Contract Header */}
+        <div className="text-center pb-8 border-b border-gray-200">
+          <h2 className="text-3xl font-bold text-foreground mb-4 tracking-tight">SERVICE AGREEMENT</h2>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto">
+            This Service Agreement ("Agreement") is entered into on January 21, 2025, between NEWPORT SOLUTIONS S.R.L. ("Provider") and AROBS TRANSILVANIA SOFTWARE S.A. ("Beneficiary").
+          </p>
+        </div>
+
+        {/* Contract Sections */}
+        <div className="space-y-12">
+          {/* Section 1 */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-foreground border-b border-gray-200 pb-2">
+              1. DEFINITIONS AND INTERPRETATION
+            </h3>
+            <div className="space-y-4 text-foreground leading-7">
+              <p>1.1 In this Agreement, unless the context otherwise requires, the following terms shall have the meanings set forth below:</p>
+              <p>1.2 "Services" means the professional consulting services to be provided by the Contractor as described in Schedule A.</p>
+            </div>
+          </div>
+
+          {/* Section 2 with Clause Card */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-foreground border-b border-gray-200 pb-2">
+              2. SCOPE OF SERVICES
+            </h3>
+            <div className="space-y-6">
+              <Card 
+                className={`border-2 ${getStatusBorderColor('compliant')} bg-white shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer`}
+                onClick={() => handleClauseClick(4)}
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                      <Badge variant="outline" className="text-xs font-mono bg-white border-gray-300">
+                        2.1
                       </Badge>
-                      <div className={`text-sm font-bold ${
-                        clauseInLine.compliance >= 95 ? 'text-emerald-600' :
-                        clauseInLine.compliance >= 75 ? 'text-amber-600' : 'text-red-600'
-                      }`}>
-                        {clauseInLine.compliance}%
-                      </div>
+                      <Badge className={`text-xs border ${getStatusBadgeColor('compliant')}`}>
+                        Compliant
+                      </Badge>
                     </div>
-                    <div className="text-foreground">{line}</div>
-                    
-                    {/* Floating Clause Card */}
-                    <Card className={`absolute right-0 top-0 w-80 shadow-lg border-l-4 ${getStatusColor(clauseInLine.status)} opacity-0 group-hover:opacity-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 z-10`}>
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex items-center space-x-3">
-                            <Badge variant="outline" className="text-xs font-mono border-border">
-                              {clauseInLine.number}
-                            </Badge>
-                            <div className={`w-3 h-3 rounded-full ${
-                              clauseInLine.status === 'compliant' ? 'bg-emerald-500' :
-                              clauseInLine.status === 'partial' ? 'bg-amber-500' : 'bg-red-500'
-                            }`}></div>
-                          </div>
-                          <div className="text-right">
-                            <div className={`text-lg font-bold ${
-                              clauseInLine.compliance >= 95 ? 'text-emerald-600' :
-                              clauseInLine.compliance >= 75 ? 'text-amber-600' : 'text-red-600'
-                            }`}>
-                              {clauseInLine.compliance}%
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <h4 className="font-semibold text-foreground mb-2">{clauseInLine.title}</h4>
-                        <p className="text-sm text-muted-foreground line-clamp-2">{clauseInLine.text}</p>
-                        
-                        <div className="flex items-center justify-between mt-3 pt-3 border-t border-border/50">
-                          <Badge className={`text-xs border ${getStatusBadgeColor(clauseInLine.status)}`}>
-                            {clauseInLine.status.replace('-', ' ')}
-                          </Badge>
-                          <div className="flex items-center text-xs text-muted-foreground">
-                            <Eye className="w-3 h-3 mr-1" />
-                            View Details
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    <div className={`text-lg font-bold ${getComplianceTextColor(95)}`}>
+                      95%
+                    </div>
+                  </div>
+                  <p className="text-foreground leading-7 mb-4">
+                    The Contractor shall provide the Services in accordance with the specifications set forth in Schedule A and any applicable industry standards.
+                  </p>
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div className="flex space-x-2">
+                      <Button variant="outline" size="sm" className="text-xs">
+                        <Edit className="w-3 h-3 mr-1" />
+                        Edit
+                      </Button>
+                      <Button variant="outline" size="sm" className="text-xs">
+                        <Share className="w-3 h-3 mr-1" />
+                        Share
+                      </Button>
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      Low Risk • 0 Issues
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <p className="text-foreground leading-7">2.2 All Services shall be performed in a professional and workmanlike manner consistent with industry best practices.</p>
+            </div>
+          </div>
+
+          {/* Section 3 with Clause Card */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-foreground border-b border-gray-200 pb-2">
+              3. PAYMENT TERMS
+            </h3>
+            <Card 
+              className={`border-2 ${getStatusBorderColor('partial')} bg-white shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer`}
+              onClick={() => handleClauseClick(2)}
+            >
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <Badge variant="outline" className="text-xs font-mono bg-white border-gray-300">
+                      3.1
+                    </Badge>
+                    <Badge className={`text-xs border ${getStatusBadgeColor('partial')}`}>
+                      Partial
+                    </Badge>
+                  </div>
+                  <div className={`text-lg font-bold ${getComplianceTextColor(75)}`}>
+                    75%
                   </div>
                 </div>
-              );
-            }
-            
-            return <div key={lineIndex} className="leading-8">{line}</div>;
-          })}
+                <p className="text-foreground leading-7 mb-4">
+                  Payment shall be due within 30 days of receipt of invoice, with late fees of 1.5% per month on overdue amounts.
+                </p>
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <div className="flex space-x-2">
+                    <Button variant="outline" size="sm" className="text-xs">
+                      <Edit className="w-3 h-3 mr-1" />
+                      Edit
+                    </Button>
+                    <Button variant="outline" size="sm" className="text-xs">
+                      <Share className="w-3 h-3 mr-1" />
+                      Share
+                    </Button>
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    Medium Risk • 1 Issue
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Section 4 with Clause Card */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-foreground border-b border-gray-200 pb-2">
+              4. CONTRACT VALUE
+            </h3>
+            <Card 
+              className={`border-2 ${getStatusBorderColor('compliant')} bg-white shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer`}
+              onClick={() => handleClauseClick(1)}
+            >
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <Badge variant="outline" className="text-xs font-mono bg-white border-gray-300">
+                      4.1
+                    </Badge>
+                    <Badge className={`text-xs border ${getStatusBadgeColor('compliant')}`}>
+                      Compliant
+                    </Badge>
+                  </div>
+                  <div className={`text-lg font-bold ${getComplianceTextColor(100)}`}>
+                    100%
+                  </div>
+                </div>
+                <p className="text-foreground leading-7 mb-4">
+                  The total price of this contract is 1850 EUR (excluding VAT).
+                </p>
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <div className="flex space-x-2">
+                    <Button variant="outline" size="sm" className="text-xs">
+                      <Edit className="w-3 h-3 mr-1" />
+                      Edit
+                    </Button>
+                    <Button variant="outline" size="sm" className="text-xs">
+                      <Share className="w-3 h-3 mr-1" />
+                      Share
+                    </Button>
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    Low Risk • 0 Issues
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Section 5 with Clause Card */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-foreground border-b border-gray-200 pb-2">
+              5. TERMINATION
+            </h3>
+            <Card 
+              className={`border-2 ${getStatusBorderColor('non-compliant')} bg-white shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer`}
+              onClick={() => handleClauseClick(3)}
+            >
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <Badge variant="outline" className="text-xs font-mono bg-white border-gray-300">
+                      5.1
+                    </Badge>
+                    <Badge className={`text-xs border ${getStatusBadgeColor('non-compliant')}`}>
+                      Non-compliant
+                    </Badge>
+                  </div>
+                  <div className={`text-lg font-bold ${getComplianceTextColor(40)}`}>
+                    40%
+                  </div>
+                </div>
+                <p className="text-foreground leading-7 mb-4">
+                  Either party may terminate this Agreement with 30 days written notice.
+                </p>
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <div className="flex space-x-2">
+                    <Button variant="outline" size="sm" className="text-xs">
+                      <Edit className="w-3 h-3 mr-1" />
+                      Edit
+                    </Button>
+                    <Button variant="outline" size="sm" className="text-xs">
+                      <Share className="w-3 h-3 mr-1" />
+                      Share
+                    </Button>
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    High Risk • 2 Issues
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Section 6 */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-foreground border-b border-gray-200 pb-2">
+              6. GOVERNING LAW
+            </h3>
+            <p className="text-foreground leading-7">6.1 This Agreement shall be governed by Romanian law.</p>
+          </div>
         </div>
       </div>
     );
@@ -255,7 +383,7 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
   return (
     <div className="min-h-screen bg-background">
       {/* Premium Header */}
-      <header className="bg-card/95 border-b border-border/50 sticky top-0 z-50 backdrop-blur-xl">
+      <header className="bg-white/95 border-b border-gray-200/50 sticky top-0 z-50 backdrop-blur-xl">
         <div className="max-w-full px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
@@ -273,11 +401,11 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button variant="outline" size="sm" className="border-border rounded-xl backdrop-blur-sm">
+              <Button variant="outline" size="sm" className="border-gray-300 rounded-xl">
                 <GitCompare className="w-4 h-4 mr-2" />
                 Compare
               </Button>
-              <Button variant="outline" size="sm" className="border-border rounded-xl backdrop-blur-sm">
+              <Button variant="outline" size="sm" className="border-gray-300 rounded-xl">
                 <Download className="w-4 h-4 mr-2" />
                 Export
               </Button>
@@ -290,13 +418,13 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
         {/* Main Document View */}
         <div className="flex-1 flex flex-col">
           {/* Document Metadata */}
-          <div className="bg-card/80 border-b border-border/50 px-12 py-8 backdrop-blur-sm">
+          <div className="bg-white/80 border-b border-gray-200/50 px-12 py-8">
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h1 className="text-3xl font-light text-foreground mb-3 tracking-tight">
                   {contractData.title}
                 </h1>
-                <div className="flex items-center space-x-8 text-sm text-muted-foreground font-mono">
+                <div className="flex items-center space-x-8 text-sm text-muted-foreground">
                   <span className="flex items-center">
                     <Building className="w-4 h-4 mr-2" />
                     {contractData.metadata.contractValue} {contractData.metadata.currency}
@@ -310,16 +438,16 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
                   {contractData.compliance}%
                 </div>
                 <Progress value={contractData.compliance} className="w-32 mb-2" />
-                <div className="text-sm text-muted-foreground font-mono">
+                <div className="text-sm text-muted-foreground">
                   compliance score
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Integrated Contract Document */}
-          <div className="flex-1 overflow-y-auto bg-card/30 backdrop-blur-sm">
-            <div className="max-w-5xl mx-auto px-12 py-12">
+          {/* Enhanced Contract Document */}
+          <div className="flex-1 overflow-y-auto bg-gray-50/30">
+            <div className="max-w-4xl mx-auto px-12 py-12">
               {renderDocumentWithClauses()}
             </div>
           </div>
@@ -327,13 +455,13 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
 
         {/* Premium Analysis Panel */}
         {selectedClauseData && (
-          <div className="w-96 bg-card/95 backdrop-blur-xl border-l border-border/50 flex flex-col shadow-2xl animate-slide-in-right">
+          <div className="w-96 bg-white/95 backdrop-blur-xl border-l border-gray-200 flex flex-col shadow-2xl">
             {/* Premium Panel Header */}
-            <div className="px-8 py-6 border-b border-border/30 bg-gradient-to-r from-card/80 to-card/60 backdrop-blur-xl">
-              <div className="flex items-center justify-between mb-4">
+            <div className="px-8 py-8 border-b border-gray-200/50 bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <div className="flex items-center space-x-3 mb-2">
-                    <Badge variant="outline" className="text-xs font-mono border-border/50 bg-white/80 backdrop-blur-sm">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <Badge variant="outline" className="text-xs font-mono border-gray-300 bg-white">
                       {selectedClauseData.number}
                     </Badge>
                     <div className={`w-3 h-3 rounded-full shadow-sm ${
@@ -341,7 +469,7 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
                       selectedClauseData.status === 'partial' ? 'bg-amber-500' : 'bg-red-500'
                     }`}></div>
                   </div>
-                  <h3 className="font-semibold text-foreground text-lg tracking-tight">
+                  <h3 className="font-semibold text-foreground text-xl tracking-tight leading-tight">
                     {selectedClauseData.title}
                   </h3>
                 </div>
@@ -354,19 +482,20 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
                   <X className="w-4 h-4" />
                 </Button>
               </div>
-              <div className="text-3xl font-light text-foreground">
+              <div className="text-4xl font-light text-foreground mb-2">
                 {selectedClauseData.compliance}%
               </div>
+              <Progress value={selectedClauseData.compliance} className="w-full" />
             </div>
 
             {/* Premium Panel Content */}
-            <div className="flex-1 overflow-y-auto p-8 space-y-8 bg-gradient-to-b from-card/60 to-card/80 backdrop-blur-xl">
+            <div className="flex-1 overflow-y-auto p-8 space-y-8 bg-gradient-to-b from-gray-50/40 to-white/60 backdrop-blur-xl">
               {/* Clause Text */}
               <div>
-                <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wider">
+                <h4 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wider">
                   Clause Text
-                </p>
-                <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-border/30 shadow-sm">
+                </h4>
+                <div className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl border border-gray-200/50 shadow-sm">
                   <p className="text-sm text-foreground leading-relaxed">
                     "{selectedClauseData.text}"
                   </p>
@@ -375,61 +504,61 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
 
               {/* Analysis Summary */}
               <div>
-                <p className="text-xs font-medium text-muted-foreground mb-4 uppercase tracking-wider">
-                  Analysis
-                </p>
-                <div className="space-y-4 bg-white/50 backdrop-blur-sm p-6 rounded-2xl border border-border/30">
-                  <div className="flex items-center justify-between py-2">
-                    <span className="text-sm text-muted-foreground">Compliance</span>
-                    <span className="text-sm font-medium text-foreground">
+                <h4 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wider">
+                  Analysis Summary
+                </h4>
+                <div className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl border border-gray-200/50 shadow-sm space-y-4">
+                  <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                    <span className="text-sm font-medium text-muted-foreground">Compliance Score</span>
+                    <span className={`text-sm font-bold ${getComplianceTextColor(selectedClauseData.compliance)}`}>
                       {selectedClauseData.compliance}%
                     </span>
                   </div>
-                  <div className="flex items-center justify-between py-2">
-                    <span className="text-sm text-muted-foreground">Risk Level</span>
-                    <span className="text-sm font-medium text-foreground capitalize">
+                  <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                    <span className="text-sm font-medium text-muted-foreground">Risk Assessment</span>
+                    <span className="text-sm font-semibold text-foreground capitalize">
                       {selectedClauseData.riskLevel}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between py-2">
-                    <span className="text-sm text-muted-foreground">Issues</span>
-                    <span className="text-sm font-medium text-foreground">
+                  <div className="flex items-center justify-between py-3">
+                    <span className="text-sm font-medium text-muted-foreground">Issues Found</span>
+                    <span className="text-sm font-semibold text-foreground">
                       {selectedClauseData.issues}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Detailed Analysis */}
+              {/* Legal Assessment */}
               <div>
-                <p className="text-xs font-medium text-muted-foreground mb-4 uppercase tracking-wider">
+                <h4 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wider">
                   Legal Assessment
-                </p>
-                <div className="space-y-6">
-                  <div className="bg-white/50 backdrop-blur-sm p-6 rounded-2xl border border-border/30">
-                    <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">
-                      Compliance
-                    </p>
+                </h4>
+                <div className="space-y-4">
+                  <div className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl border border-gray-200/50 shadow-sm">
+                    <h5 className="text-xs font-semibold text-muted-foreground mb-3 uppercase tracking-wider">
+                      Compliance Details
+                    </h5>
                     <p className="text-sm text-foreground leading-relaxed">
                       This clause meets Romanian Civil Code requirements for price determination under Art. 1660. 
                       The pricing structure is clearly defined and legally enforceable.
                     </p>
                   </div>
                   
-                  <div className="bg-white/50 backdrop-blur-sm p-6 rounded-2xl border border-border/30">
-                    <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">
-                      Risk Assessment
-                    </p>
+                  <div className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl border border-gray-200/50 shadow-sm">
+                    <h5 className="text-xs font-semibold text-muted-foreground mb-3 uppercase tracking-wider">
+                      Risk Analysis
+                    </h5>
                     <p className="text-sm text-foreground leading-relaxed">
                       Low risk profile. No significant legal vulnerabilities identified. 
                       Standard commercial terms apply.
                     </p>
                   </div>
                   
-                  <div className="bg-white/50 backdrop-blur-sm p-6 rounded-2xl border border-border/30">
-                    <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">
+                  <div className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl border border-gray-200/50 shadow-sm">
+                    <h5 className="text-xs font-semibold text-muted-foreground mb-3 uppercase tracking-wider">
                       Recommendations
-                    </p>
+                    </h5>
                     <p className="text-sm text-foreground leading-relaxed">
                       No immediate changes required. Consider adding inflation adjustment clause 
                       for contracts exceeding 12 months duration.
@@ -439,12 +568,12 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
               </div>
 
               {/* Premium Actions */}
-              <div className="pt-6 border-t border-border/30 space-y-3">
-                <Button variant="outline" size="sm" className="w-full border-border/50 justify-start rounded-xl bg-white/50 backdrop-blur-sm hover:bg-white/80">
+              <div className="pt-6 border-t border-gray-200/50 space-y-3">
+                <Button variant="outline" size="sm" className="w-full border-gray-300 justify-start rounded-xl bg-white/50 hover:bg-white/80">
                   <ExternalLink className="w-4 h-4 mr-2" />
                   Legal References
                 </Button>
-                <Button variant="outline" size="sm" className="w-full border-border/50 justify-start rounded-xl bg-white/50 backdrop-blur-sm hover:bg-white/80">
+                <Button variant="outline" size="sm" className="w-full border-gray-300 justify-start rounded-xl bg-white/50 hover:bg-white/80">
                   <Scale className="w-4 h-4 mr-2" />
                   Compare Standards
                 </Button>
@@ -468,13 +597,6 @@ This Service Agreement ("Agreement") is entered into on January 21, 2025, betwee
             transform: translateX(0);
             opacity: 1;
           }
-        }
-
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
         }
       `}</style>
     </div>
